@@ -11,3 +11,18 @@ target = "java8"
     path = "../ldap-native/build/libs/ldap-native-@project.version@.jar"
     groupId = "ballerina"
     modules = ["ldap"]
+
+    [[platform.libraries]]
+    artifactId = "ldap"
+    version = "@project.version@"
+    path = "../ldap-test-utils/build/libs/ldap-test-utils-@project.version@.jar"
+    groupId = "org.ballerinalang.stdlib.ldap"
+    modules = ["ldap"]
+    scope = "testOnly"
+
+    [[platform.libraries]]
+    artifactId = "apacheds-all"
+    version = "2.0.0-M24"
+    path = "./lib/apacheds-all-2.0.0-M24.jar"
+    groupId = "org.apache.directory.server"
+    modules = ["ldap"]

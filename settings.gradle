@@ -13,8 +13,9 @@ plugins {
 
 rootProject.name = 'ldap'
 include(':build-config:checkstyle')
-include ':ldap-native', ':ldap-ballerina'
-
+include ':ldap-native', ':ldap-test-utils', ':ldap-ballerina'
+include 'ldap-test-utils'
+include 'ldap-native'
 
 gradleEnterprise {
     buildScan {
