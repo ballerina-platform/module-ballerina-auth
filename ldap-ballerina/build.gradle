@@ -196,6 +196,5 @@ publishing {
 
 unpackJballerinaTools.dependsOn copyToLib
 ballerinaBuild.dependsOn ":ldap-native:build"
-ballerinaBuild.dependsOn ":ldap-test-utils:build"
 ballerinaBuild.dependsOn unpackJballerinaTools
 build.dependsOn ballerinaBuild
