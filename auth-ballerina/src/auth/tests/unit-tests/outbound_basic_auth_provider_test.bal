@@ -14,29 +14,48 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/auth;
+import ballerina/test;
 
-function testCreateOutboundBasicAuthProvider() returns auth:OutboundBasicAuthProvider {
-    auth:OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
-    return basicAuthProvider;
+@test:Config {}
+function testTokenGeneration() {
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
+    string|Error result = basicAuthProvider.generateToken();
+    if (result is string) {
+        test:assertEquals(result, "dG9tOjEyMw==");
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testTokenGeneration() returns string|auth:Error {
-    auth:OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
-    return basicAuthProvider.generateToken();
+@test:Config {}
+function testTokenGenerationWithEmptyUsername() {
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
+    string|Error result = basicAuthProvider.generateToken();
+    if (result is Error) {
+        test:assertEquals(result.message(), "Username or password cannot be empty.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-function testTokenGenerationWithEmptyUsername() returns string|auth:Error {
-    auth:OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
-    return basicAuthProvider.generateToken();
+@test:Config {}
+function testTokenGenerationWithEmptyPassword() {
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
+    string|Error result = basicAuthProvider.generateToken();
+    if (result is Error) {
+        test:assertEquals(result.message(), "Username or password cannot be empty.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-function testTokenGenerationWithEmptyPassword() returns string|auth:Error {
-    auth:OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
-    return basicAuthProvider.generateToken();
-}
-
-function testTokenGenerationWithEmptyUsernameAndEmptyPassword() returns string|auth:Error {
-    auth:OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
-    return basicAuthProvider.generateToken();
+@test:Config {}
+function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
+    string|Error result = basicAuthProvider.generateToken();
+    if (result is Error) {
+        test:assertEquals(result.message(), "Username or password cannot be empty.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }

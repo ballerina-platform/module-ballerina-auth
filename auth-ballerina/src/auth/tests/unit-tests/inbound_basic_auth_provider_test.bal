@@ -14,92 +14,176 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/auth;
+import ballerina/test;
 
-function testCreateInboundBasicAuthProvider() returns auth:InboundBasicAuthProvider {
-    auth:InboundBasicAuthProvider basicAuthProvider = new;
-    return basicAuthProvider;
-}
-
-function testAuthenticationOfNonExistingUser() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "amila:abc";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationOfNonExistingPassword() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationOfNonExistingPassword() {
     string usernameAndPassword = "isuru:xxy";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthentication() returns boolean|auth:Error {
+@test:Config {}
+function testAuthentication() {
     string usernameAndPassword = "isuru:xxx";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationWithEmptyUsername() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationWithEmptyPassword() returns boolean|auth:Error {
-    auth:InboundBasicAuthProvider basicAuthProvider = new;
+@test:Config {}
+function testAuthenticationWithEmptyPassword() {
+    InboundBasicAuthProvider basicAuthProvider = new;
     string usernameAndPassword = "isuru:";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-function testAuthenticationWithEmptyPasswordAndInvalidUsername() returns boolean|auth:Error {
-    auth:InboundBasicAuthProvider basicAuthProvider = new;
+@test:Config {}
+function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
+    InboundBasicAuthProvider basicAuthProvider = new;
     string usernameAndPassword = "invalid:";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-function testAuthenticationWithEmptyUsernameAndEmptyPassword() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-function testAuthenticationSha256() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationSha256() {
     string usernameAndPassword = "hashedSha256:xxx";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationSha384() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationSha384() {
     string usernameAndPassword = "hashedSha384:xxx";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationSha512() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationSha512() {
     string usernameAndPassword = "hashedSha512:xxx";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationPlain() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationPlain() {
     string usernameAndPassword = "plain:plainpassword";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationSha512Negative() returns boolean|auth:Error {
+function testAuthenticationSha512Negative() {
     string usernameAndPassword = "hashedSha512:xxx ";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationPlainNegative() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationPlainNegative() {
     string usernameAndPassword = "plain:plainpassword ";
-    return authenticate(usernameAndPassword);
+    boolean|Error result = authenticate(usernameAndPassword);
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationWithCustomTableName() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationWithCustomTableName() {
     string usernameAndPassword = "alice:123";
-    return authenticate(usernameAndPassword, "custom.users");
+    boolean|Error result = authenticate(usernameAndPassword, "custom.users");
+    if (result is boolean) {
+        test:assertTrue(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function testAuthenticationWithNonExistingTableName() returns boolean|auth:Error {
+@test:Config {}
+function testAuthenticationWithNonExistingTableName() {
     string usernameAndPassword = "alice:123";
-    return authenticate(usernameAndPassword, "invalid.table");
+    boolean|Error result = authenticate(usernameAndPassword, "invalid.table");
+    if (result is boolean) {
+        test:assertFalse(result);
+    } else {
+        test:assertFail(msg = "Test Failed! " + <string>result.message());
+    }
 }
 
-function authenticate(string usernameAndPassword, string? tableName = ()) returns boolean|auth:Error {
-    auth:InboundBasicAuthProvider basicAuthProvider;
+function authenticate(string usernameAndPassword, string? tableName = ()) returns boolean|Error {
+    InboundBasicAuthProvider basicAuthProvider;
     if (tableName is string) {
         basicAuthProvider = new({ tableName: tableName });
     } else {
