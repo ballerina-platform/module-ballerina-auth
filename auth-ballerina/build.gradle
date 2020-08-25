@@ -85,14 +85,24 @@ task ballerinaBuild {
             additionalBuildParams = "--skip-tests"
         }
 
+        // Copy secret file to a separate directory since it is automatically deleted once read.
+        copy {
+            from file("$project.projectDir/src/auth/tests/resources/datafiles/secret.txt")
+            into file("$project.projectDir/src/auth/tests/resources")
+        }
+
+        // Define config parameters used for basic authentication test cases
+        def configParams = "--b7a.config.file=$project.projectDir/src/auth/tests/resources/datafiles/ballerina.conf";
+        configParams += " --b7a.config.secret=$project.projectDir/src/auth/tests/resources/secret.txt";
+
         // Build and populate caches
         exec {
             workingDir project.projectDir
             environment "JAVA_OPTS", "-DBALLERINA_DEV_COMPILE_BALLERINA_ORG=true"
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'cmd', '/c', "$distributionBinPath/ballerina.bat build ${additionalBuildParams} -c ${moduleName}"
+                commandLine 'cmd', '/c', "$distributionBinPath/ballerina.bat build ${additionalBuildParams} -c ${moduleName} ${configParams}"
             } else {
-                commandLine 'sh', '-c', "$distributionBinPath/ballerina build ${additionalBuildParams} -c ${moduleName}"
+                commandLine 'sh', '-c', "$distributionBinPath/ballerina build ${additionalBuildParams} -c ${moduleName} ${configParams}"
             }
         }
         copy {
