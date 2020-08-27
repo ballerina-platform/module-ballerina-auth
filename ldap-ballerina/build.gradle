@@ -33,9 +33,6 @@ dependencies {
         transitive = false
     }
     compile project(':ldap-native')
-    externalJars (group: 'org.apache.directory.server', name: 'apacheds-all', version: "${apachedsVersion}") {
-        transitive = false
-    }
 }
 
 clean {
