@@ -1,0 +1,14 @@
+[project]
+org-name = "ballerina"
+version = "@toml.version@"
+
+[platform]
+target = "java8"
+
+    [[platform.libraries]]
+    artifactId = "auth"
+    version = "@project.version@"
+    path = "../auth-native/build/libs/auth-native-@project.version@.jar"
+    groupId = "ballerina"
+    modules = ["auth"]
+
