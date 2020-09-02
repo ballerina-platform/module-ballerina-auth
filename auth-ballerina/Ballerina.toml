@@ -5,14 +5,13 @@ version = "@toml.version@"
 [dependencies]
 "ballerina/cache" = "@stdlib.cache.version@"
 "ballerina/crypto" = "@stdlib.crypto.version@"
-"ballerina/task" = "@stdlib.task.version@"
 "ballerina/log" = "@stdlib.log.version@"
-"ballerina/time" = "@stdlib.time.version@"
-"ballerina/runtime" = "@stdlib.runtime.version@"
-"ballerina/system" = "@stdlib.system.version@"
 "ballerina/config" = "@stdlib.config.version@"
-"ballerina/io" = "@stdlib.io.version@"
 "ballerina/stringutils" = "@stdlib.stringutils.version@"
+"ballerina/task" = "@stdlib.task.version@"
+"ballerina/time" = "@stdlib.time.version@"
+"ballerina/system" = "@stdlib.system.version@"
+"ballerina/io" = "@stdlib.io.version@"
 
 [platform]
 target = "java8"
@@ -23,4 +22,3 @@ target = "java8"
     path = "../auth-native/build/libs/auth-native-@project.version@.jar"
     groupId = "ballerina"
     modules = ["auth"]
-
