@@ -2,6 +2,18 @@
 org-name = "ballerina"
 version = "@toml.version@"
 
+[dependencies]
+"ballerina/auth" = "@stdlib.auth.version@"
+"ballerina/crypto" = "@stdlib.crypto.version@"
+"ballerina/log" = "@stdlib.log.version@"
+"ballerina/config" = "@stdlib.config.version@"
+"ballerina/time" = "@stdlib.time.version@"
+"ballerina/system" = "@stdlib.system.version@"
+"ballerina/cache" = "@stdlib.cache.version@"
+"ballerina/stringutils" = "@stdlib.stringutils.version@"
+"ballerina/io" = "@stdlib.io.version@"
+"ballerina/task" = "@stdlib.task.version@"
+
 [platform]
 target = "java8"
 
