@@ -30,7 +30,7 @@ import ballerina/stringutils;
 # password="<password>"
 # scopes="<comma_separated_scopes>"
 # ```
-public type InboundBasicAuthProvider object {
+public class InboundBasicAuthProvider {
 
     *InboundAuthProvider;
 
@@ -47,14 +47,14 @@ public type InboundBasicAuthProvider object {
         }
     }
 
-# Attempts to authenticate the base64-encoded `username:password` credentials.
-# ```ballerina
-# boolean|auth:Error authenticationResult = inboundBasicAuthProvider.authenticate("<credential>");
-# ```
-#
-# + credential - Base64-encoded `username:password` value
-# + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` occurred
-#             while authenticating the credentials
+    # Attempts to authenticate the base64-encoded `username:password` credentials.
+    # ```ballerina
+    # boolean|auth:Error authenticationResult = inboundBasicAuthProvider.authenticate("<credential>");
+    # ```
+    #
+    # + credential - Base64-encoded `username:password` value
+    # + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` occurred
+    #             while authenticating the credentials
     public function authenticate(string credential) returns boolean|Error {
         if (credential == "") {
             return false;
@@ -88,7 +88,7 @@ public type InboundBasicAuthProvider object {
         }
         return authenticated;
     }
-};
+}
 
 # Represents the inbound Basic Authentication configurations.
 #

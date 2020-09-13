@@ -24,7 +24,7 @@ import ballerina/log;
 #      password: "123"
 #  });
 #  ```
-public type OutboundBasicAuthProvider object {
+public class OutboundBasicAuthProvider {
 
     *OutboundAuthProvider;
 
@@ -37,12 +37,12 @@ public type OutboundBasicAuthProvider object {
         self.credential = credential;
     }
 
-# Generates a token for Basic authentication.
-# ```ballerina
-# string|auth:Error token = outboundBasicAuthProvider.generateToken();
-# ```
-#
-# + return - The generated token or else an `auth:Error` occurred during the validation
+    # Generates a token for Basic authentication.
+    # ```ballerina
+    # string|auth:Error token = outboundBasicAuthProvider.generateToken();
+    # ```
+    #
+    # + return - The generated token or else an `auth:Error` occurred during the validation
     public function generateToken() returns string|Error {
         Credential? credential = self.credential;
         if (credential is ()) {
@@ -64,7 +64,7 @@ public type OutboundBasicAuthProvider object {
     public function inspect(map<anydata> data) returns string|Error? {
         return ();
     }
-};
+}
 
 # Represents the Basic Authentication configurations, which are used by the HTTP endpoint.
 #
