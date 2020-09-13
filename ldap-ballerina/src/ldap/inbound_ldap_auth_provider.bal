@@ -24,7 +24,7 @@ import ballerina/java;
 # ```ballerina
 # ldap:InboundLdapAuthProvider inboundLdapAuthProvider = new(ldapConfig, "instanceId");
 # ```
-public type InboundLdapAuthProvider object {
+public class InboundLdapAuthProvider {
 
     *auth:InboundAuthProvider;
 
@@ -47,14 +47,14 @@ public type InboundLdapAuthProvider object {
         }
     }
 
-# Authenticates the base64-encoded `username:password` credentials.
-# ```ballerina
-# boolean|auth:Error result = inboundLdapAuthProvider.authenticate("<credential>");
-# ```
-#
-# + credential - Base64-encoded `username:password` value
-# + return - `true` if authentication is successful, `false` otherwise, or else an `auth:Error` occurred while
-#            authenticating the credentials
+    # Authenticates the base64-encoded `username:password` credentials.
+    # ```ballerina
+    # boolean|auth:Error result = inboundLdapAuthProvider.authenticate("<credential>");
+    # ```
+    #
+    # + credential - Base64-encoded `username:password` value
+    # + return - `true` if authentication is successful, `false` otherwise, or else an `auth:Error` occurred while
+    #            authenticating the credentials
     public function authenticate(string credential) returns boolean|auth:Error {
         if (credential == "") {
             return false;
@@ -78,7 +78,7 @@ public type InboundLdapAuthProvider object {
             return prepareAuthError("Failed to authenticate LDAP with username: " + username, authenticated);
         }
     }
-};
+}
 
 # Represents the configurations that are required for an LDAP auth store.
 #
@@ -154,7 +154,7 @@ public type LdapConnection record {|
 # + return - Array of groups of the provided user or else an `ldap:Error` if it fails
 public function getGroups(LdapConnection ldapConnection, string username) returns string[]|Error = @java:Method {
     name: "getGroups",
-    class: "org.ballerinalang.stdlib.ldap.nativeimpl.GetGroups"
+    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.GetGroups"
 } external;
 
 # Authenticates with the username and password.
@@ -169,7 +169,7 @@ public function getGroups(LdapConnection ldapConnection, string username) return
 public function doAuthenticate(LdapConnection ldapConnection, string username, string password)
                                returns boolean|Error = @java:Method {
     name: "doAuthenticate",
-    class: "org.ballerinalang.stdlib.ldap.nativeimpl.Authenticate"
+    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.Authenticate"
 } external;
 
 # Initailizes the LDAP connection context.
@@ -183,5 +183,5 @@ public function doAuthenticate(LdapConnection ldapConnection, string username, s
 public function initLdapConnectionContext(LdapConnectionConfig ldapConnectionConfig, string instanceId)
                                           returns LdapConnection|Error = @java:Method {
     name: "initLdapConnectionContext",
-    class: "org.ballerinalang.stdlib.ldap.nativeimpl.InitLdapConnectionContext"
+    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.InitLdapConnectionContext"
 } external;
