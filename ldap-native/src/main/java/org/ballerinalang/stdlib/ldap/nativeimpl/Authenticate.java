@@ -18,8 +18,8 @@
 
 package org.ballerinalang.stdlib.ldap.nativeimpl;
 
-import org.ballerinalang.jvm.values.MapValue;
-import org.ballerinalang.jvm.values.api.BString;
+import org.ballerinalang.jvm.api.values.BMap;
+import org.ballerinalang.jvm.api.values.BString;
 import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
 import org.ballerinalang.stdlib.ldap.LdapConnectionContext;
 import org.ballerinalang.stdlib.ldap.LdapConstants;
@@ -43,7 +43,7 @@ public class Authenticate {
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
     private static LdapConnectionContext connectionSource;
 
-    public static Object doAuthenticate(MapValue<BString, Object> ldapConnection, BString userName, BString password) {
+    public static Object doAuthenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
             return LdapUtils.createError("Username is null or empty.");
         }
