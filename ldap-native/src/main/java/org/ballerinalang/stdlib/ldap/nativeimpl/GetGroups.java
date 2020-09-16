@@ -18,11 +18,11 @@
 
 package org.ballerinalang.stdlib.ldap.nativeimpl;
 
-import org.ballerinalang.jvm.StringUtils;
+import org.ballerinalang.jvm.api.BStringUtils;
+import org.ballerinalang.jvm.api.values.BError;
+import org.ballerinalang.jvm.api.values.BMap;
+import org.ballerinalang.jvm.api.values.BString;
 import org.ballerinalang.jvm.values.ArrayValueImpl;
-import org.ballerinalang.jvm.values.ErrorValue;
-import org.ballerinalang.jvm.values.MapValue;
-import org.ballerinalang.jvm.values.api.BString;
 import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
 import org.ballerinalang.stdlib.ldap.LdapConstants;
 import org.ballerinalang.stdlib.ldap.util.LdapUtils;
@@ -51,7 +51,7 @@ public class GetGroups {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGroups.class);
 
-    public static Object getGroups(MapValue<BString, Object> ldapConnection, BString userName) {
+    public static Object getGroups(BMap<BString, Object> ldapConnection, BString userName) {
         try {
             LdapUtils.setServiceName((String) ldapConnection.getNativeData(LdapConstants.ENDPOINT_INSTANCE_ID));
             DirContext ldapConnectionContext = (DirContext) ldapConnection.getNativeData(
@@ -60,8 +60,8 @@ public class GetGroups {
                     LdapConstants.LDAP_CONFIGURATION);
             String[] externalRoles = doGetGroupsListOfUser(userName.getValue(), ldapConfiguration,
                                                            ldapConnectionContext);
-            return new ArrayValueImpl(StringUtils.fromStringArray(externalRoles));
-        } catch (NamingException | ErrorValue e) {
+            return new ArrayValueImpl(BStringUtils.fromStringArray(externalRoles));
+        } catch (NamingException | BError e) {
             return LdapUtils.createError(e.getMessage());
         } finally {
             LdapUtils.removeServiceName();
