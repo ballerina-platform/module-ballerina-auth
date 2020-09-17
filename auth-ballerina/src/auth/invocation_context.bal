@@ -37,7 +37,7 @@ public type InvocationContext record {|
 # ```
 #
 # + return - The `auth:InvocationContext` instance
-public function getInvocationContext() returns InvocationContext = @java:Method {
+public isolated function getInvocationContext() returns InvocationContext = @java:Method {
     'class: "org.ballerinalang.stdlib.auth.GetInvocationContext"
 } external;
 
@@ -51,8 +51,8 @@ public function getInvocationContext() returns InvocationContext = @java:Method 
 # + userId - User ID of the authenticated user
 # + scopes - Authenticated user scopes
 # + claims - Claims of the authenticated user
-public function setInvocationContext(string? scheme = (), string? token = (), string? userId = (),
-                                     string[]? scopes = (), map<any>? claims = ()) {
+public isolated function setInvocationContext(string? scheme = (), string? token = (), string? userId = (),
+                                              string[]? scopes = (), map<any>? claims = ()) {
     InvocationContext invocationContext = getInvocationContext();
     if (!(scheme is ())) {
         invocationContext.scheme = scheme;

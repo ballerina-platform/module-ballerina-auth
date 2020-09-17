@@ -21,7 +21,7 @@ public type OutboundAuthProvider object {
     # Generates an authentication token for the outbound request with outbound Auth providers such as JWT and OAuth2.
     #
     # + return - The token as a `string` or else an `auth:Error` occurred when generating the token
-    public function generateToken() returns string|Error;
+    public isolated function generateToken() returns string|Error;
 
     # Inspects the incoming data and generates the authentication token as needed. For example, if the incoming data
     # indicates that it needs to regenerate the token because the previously-generated token is invalid, this method
@@ -30,5 +30,5 @@ public type OutboundAuthProvider object {
     # + data - Map of data, which is extracted from the HTTP response
     # + return - The token as a `string`, an `auth:Error` occurred when generating the token,
     #            or else `()` if nothing is to be returned
-    public function inspect(map<anydata> data) returns string|Error?;
+    public isolated function inspect(map<anydata> data) returns string|Error?;
 };
