@@ -28,7 +28,7 @@ public type Error LdapError;
 # + message - Error message as a `string`
 # + err - `error` instance
 # + return - Prepared `auth:Error` instance
-function prepareAuthError(string message, error? err = ()) returns auth:Error {
+isolated function prepareAuthError(string message, error? err = ()) returns auth:Error {
     log:printError(message, err);
     auth:Error authError;
     if (err is error) {
