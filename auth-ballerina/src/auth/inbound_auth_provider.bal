@@ -24,5 +24,5 @@ public type InboundAuthProvider object {
     #
     # + credential - The `string` credential value
     # + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` in case of an error
-    public function authenticate(string credential) returns boolean|Error;
+    public isolated function authenticate(string credential) returns boolean|Error;
 };
