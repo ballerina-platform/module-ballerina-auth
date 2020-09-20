@@ -39,7 +39,7 @@ public class InboundBasicAuthProvider {
     # Provides authentication based on the provided configurations.
     #
     # + basicAuthConfig - Basic Auth provider configurations
-    public isolated function init(BasicAuthConfig? basicAuthConfig = ()) {
+    public function init(BasicAuthConfig? basicAuthConfig = ()) {
         if (basicAuthConfig is BasicAuthConfig) {
             self.basicAuthConfig = basicAuthConfig;
         } else {
@@ -55,7 +55,7 @@ public class InboundBasicAuthProvider {
     # + credential - Base64-encoded `username:password` value
     # + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` occurred
     #             while authenticating the credentials
-    public isolated function authenticate(string credential) returns boolean|Error {
+    public function authenticate(string credential) returns boolean|Error {
         if (credential == "") {
             return false;
         }
@@ -102,7 +102,7 @@ public type BasicAuthConfig record {|
 # + username - Username of the user
 # + tableName - Table name specified in the user-store TOML configuration
 # + return - An array of scopes of the user identified by the username
-isolated function getScopes(string username, string tableName) returns string[] {
+function getScopes(string username, string tableName) returns string[] {
     // First, reads the user ID from the user->id mapping.
     // Then, reads the scopes of the user-id.
     return getArray(getConfigAuthValue(tableName + "." + username, "scopes"));
@@ -112,7 +112,7 @@ isolated function getScopes(string username, string tableName) returns string[] 
 #
 # + configValue - Config value to extract the password from
 # + return - Password hash extracted from the configuration field
-isolated function extractHash(string configValue) returns string {
+function extractHash(string configValue) returns string {
     return configValue.substring((<int> configValue.indexOf("{")) + 1, stringutils:lastIndexOf(configValue, "}"));
 }
 
@@ -120,13 +120,13 @@ isolated function extractHash(string configValue) returns string {
 #
 # + username - Username of the user
 # + return - Password hash read from the userstore or else `()` if not found
-isolated function readPassword(string username, string tableName) returns string {
+function readPassword(string username, string tableName) returns string {
     // First, reads the user ID from the user->id mapping.
     // Then, reads the hashed password from the user-store file using the user ID.
     return getConfigAuthValue(tableName + "." + username, "password");
 }
 
-isolated function getConfigAuthValue(string instanceId, string property) returns string {
+function getConfigAuthValue(string instanceId, string property) returns string {
     return config:getAsString(instanceId + "." + property, "");
 }
 
@@ -134,7 +134,7 @@ isolated function getConfigAuthValue(string instanceId, string property) returns
 #
 # + groupString - Comma-separated string of groups
 # + return - An array of groups or else `()` if the groups string is empty/`()`
-isolated function getArray(string groupString) returns string[] {
+function getArray(string groupString) returns string[] {
     if (groupString.length() == 0) {
         return [];
     }

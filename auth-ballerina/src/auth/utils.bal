@@ -52,7 +52,7 @@ const string CONFIG_USER_SECTION = "b7a.users";
 # + credential - Base64-encoded `username:password` value
 # + return - A `string` tuple with the extracted username and password or else an `auth:Error` occurred while
 #            extracting credentials
-public isolated function extractUsernameAndPassword(string credential) returns [string, string]|Error {
+public function extractUsernameAndPassword(string credential) returns [string, string]|Error {
     byte[]|error result = arrays:fromBase64(credential);
     if (result is error) {
         return prepareError(result.message(), result);
@@ -79,9 +79,8 @@ public isolated function extractUsernameAndPassword(string credential) returns [
 # + positiveAuthzCache - The `cache:Cache` for positive authorizations
 # + negativeAuthzCache - The `cache:Cache` for negative authorizations
 # + return - `true` if there is a match between the resource and user scopes or else `false` otherwise
-public isolated function checkForScopeMatch(string[]|string[][] resourceScopes, string[] userScopes,
-                                            string authzCacheKey, cache:Cache? positiveAuthzCache,
-                                            cache:Cache? negativeAuthzCache) returns boolean {
+public function checkForScopeMatch(string[]|string[][] resourceScopes, string[] userScopes, string authzCacheKey,
+                                   cache:Cache? positiveAuthzCache, cache:Cache? negativeAuthzCache) returns boolean {
     boolean? authorizedFromCache = authorizeFromCache(authzCacheKey, positiveAuthzCache, negativeAuthzCache);
     if (authorizedFromCache is boolean) {
         return authorizedFromCache;
@@ -107,8 +106,8 @@ public isolated function checkForScopeMatch(string[]|string[][] resourceScopes, 
 # + positiveAuthzCache - Cache for positive authorizations
 # + negativeAuthzCache - Cache for negative authorizations
 # + return - `true` or `false` in case of a cache hit or else `()` in case of a cache miss
-isolated function authorizeFromCache(string authzCacheKey, cache:Cache? positiveAuthzCache,
-                                     cache:Cache? negativeAuthzCache) returns boolean? {
+function authorizeFromCache(string authzCacheKey, cache:Cache? positiveAuthzCache, cache:Cache? negativeAuthzCache)
+                            returns boolean? {
     cache:Cache? pCache = positiveAuthzCache;
     if (pCache is cache:Cache) {
         any|cache:Error positiveCacheResponse = pCache.get(authzCacheKey);
@@ -133,8 +132,8 @@ isolated function authorizeFromCache(string authzCacheKey, cache:Cache? positive
 # + authzCacheKey - Cache key
 # + positiveAuthzCache - The `cache:Cache` for positive authorizations
 # + negativeAuthzCache - The `cache:Cache` for negative authorizations
-isolated function cacheAuthzResult(boolean authorized, string authzCacheKey, cache:Cache? positiveAuthzCache,
-                                   cache:Cache? negativeAuthzCache) {
+function cacheAuthzResult(boolean authorized, string authzCacheKey, cache:Cache? positiveAuthzCache,
+                          cache:Cache? negativeAuthzCache) {
     if (authorized) {
         cache:Cache? pCache = positiveAuthzCache;
         if (pCache is cache:Cache) {
@@ -165,7 +164,7 @@ isolated function cacheAuthzResult(boolean authorized, string authzCacheKey, cac
 # + resourceScopes - Scopes of the resource
 # + userScopes - Scopes of the user
 # + return - `true` if one of the resourceScopes can be found at `userScopes` or else `false` otherwise
-isolated function matchScopes(string[] resourceScopes, string[] userScopes) returns boolean {
+function matchScopes(string[] resourceScopes, string[] userScopes) returns boolean {
     foreach string resourceScope in resourceScopes {
         foreach string userScope in userScopes {
             if (resourceScope == userScope) {

@@ -43,7 +43,7 @@ public class OutboundBasicAuthProvider {
     # ```
     #
     # + return - The generated token or else an `auth:Error` occurred during the validation
-    public isolated function generateToken() returns string|Error {
+    public function generateToken() returns string|Error {
         Credential? credential = self.credential;
         if (credential is ()) {
             string? authToken = getInvocationContext()?.token;
@@ -61,7 +61,7 @@ public class OutboundBasicAuthProvider {
     # + data - Map of the data, which is extracted from the HTTP response.
     # + return - The token as a `string`, an `auth:Error` occurred when generating the token, or else `()`
     #            if nothing is to be returned
-    public isolated function inspect(map<anydata> data) returns string|Error? {
+    public function inspect(map<anydata> data) returns string|Error? {
         return ();
     }
 }
@@ -79,7 +79,7 @@ public type Credential record {|
 #
 # + credential - The `auth:Credential` configurations
 # + return - The auth token or else an `auth:Error` occurred during the validation
-isolated function getBasicAuthToken(Credential credential) returns string|Error {
+function getBasicAuthToken(Credential credential) returns string|Error {
     string username = credential.username;
     string password = credential.password;
     if (username == "" || password == "") {
