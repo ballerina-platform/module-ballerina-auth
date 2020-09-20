@@ -36,7 +36,7 @@ public class InboundLdapAuthProvider {
     #
     # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
     # + instanceId - Instance ID of the endpoint
-    public isolated function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
+    public function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
         self.instanceId = instanceId;
         self.ldapConnectionConfig = ldapConnectionConfig;
         LdapConnection|Error ldapConnection = initLdapConnectionContext(self.ldapConnectionConfig, instanceId);
@@ -55,7 +55,7 @@ public class InboundLdapAuthProvider {
     # + credential - Base64-encoded `username:password` value
     # + return - `true` if authentication is successful, `false` otherwise, or else an `auth:Error` occurred while
     #            authenticating the credentials
-    public isolated function authenticate(string credential) returns boolean|auth:Error {
+    public function authenticate(string credential) returns boolean|auth:Error {
         if (credential == "") {
             return false;
         }
