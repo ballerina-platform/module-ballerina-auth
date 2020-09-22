@@ -102,7 +102,7 @@ public type BasicAuthConfig record {|
 # + username - Username of the user
 # + tableName - Table name specified in the user-store TOML configuration
 # + return - An array of scopes of the user identified by the username
-function getScopes(string username, string tableName) returns string[] {
+isolated function getScopes(string username, string tableName) returns string[] {
     // First, reads the user ID from the user->id mapping.
     // Then, reads the scopes of the user-id.
     return getArray(getConfigAuthValue(tableName + "." + username, "scopes"));
@@ -112,7 +112,7 @@ function getScopes(string username, string tableName) returns string[] {
 #
 # + configValue - Config value to extract the password from
 # + return - Password hash extracted from the configuration field
-function extractHash(string configValue) returns string {
+isolated function extractHash(string configValue) returns string {
     return configValue.substring((<int> configValue.indexOf("{")) + 1, stringutils:lastIndexOf(configValue, "}"));
 }
 
@@ -120,13 +120,13 @@ function extractHash(string configValue) returns string {
 #
 # + username - Username of the user
 # + return - Password hash read from the userstore or else `()` if not found
-function readPassword(string username, string tableName) returns string {
+isolated function readPassword(string username, string tableName) returns string {
     // First, reads the user ID from the user->id mapping.
     // Then, reads the hashed password from the user-store file using the user ID.
     return getConfigAuthValue(tableName + "." + username, "password");
 }
 
-function getConfigAuthValue(string instanceId, string property) returns string {
+isolated function getConfigAuthValue(string instanceId, string property) returns string {
     return config:getAsString(instanceId + "." + property, "");
 }
 
@@ -134,7 +134,7 @@ function getConfigAuthValue(string instanceId, string property) returns string {
 #
 # + groupString - Comma-separated string of groups
 # + return - An array of groups or else `()` if the groups string is empty/`()`
-function getArray(string groupString) returns string[] {
+isolated function getArray(string groupString) returns string[] {
     if (groupString.length() == 0) {
         return [];
     }
