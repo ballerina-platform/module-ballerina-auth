@@ -33,7 +33,7 @@ public class OutboundBasicAuthProvider {
     # Provides authentication based on the provided Basic Auth configurations.
     #
     # + credential - Credential configurations
-    public isolated function init(Credential? credential = ()) {
+    public function init(Credential? credential = ()) {
         self.credential = credential;
     }
 
@@ -79,7 +79,7 @@ public type Credential record {|
 #
 # + credential - The `auth:Credential` configurations
 # + return - The auth token or else an `auth:Error` occurred during the validation
-function getBasicAuthToken(Credential credential) returns string|Error {
+isolated function getBasicAuthToken(Credential credential) returns string|Error {
     string username = credential.username;
     string password = credential.password;
     if (username == "" || password == "") {

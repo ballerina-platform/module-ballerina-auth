@@ -28,7 +28,7 @@ public type Error AuthError;
 # + message - Error message
 # + err - `error` instance
 # + return - Prepared `Error` instance
-function prepareError(string message, error? err = ()) returns Error {
+isolated function prepareError(string message, error? err = ()) returns Error {
     log:printError(message, err);
     Error authError;
     if (err is error) {
