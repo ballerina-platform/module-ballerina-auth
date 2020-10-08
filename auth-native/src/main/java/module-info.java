@@ -15,21 +15,7 @@
  *
  */
 
-plugins {
-    id 'java'
-}
-
-description = 'Ballerina - Auth Java Utils'
-
-dependencies {
-    compile group: 'org.ballerinalang', name: 'ballerina-runtime', version: "${ballerinaLangVersion}"
-}
-
-compileJava {
-    doFirst {
-        options.compilerArgs = [
-                '--module-path', classpath.asPath,
-        ]
-        classpath = files()
-    }
+module io.ballerina.stdlib.auth {
+    requires io.ballerina.jvm;
+    exports org.ballerinalang.stdlib.auth;
 }
