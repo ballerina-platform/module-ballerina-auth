@@ -15,22 +15,9 @@
  *
  */
 
-plugins {
-    id 'java'
-}
-
-description = 'Ballerina - LDAP Java Utils'
-
-dependencies {
-    compile group: 'org.ballerinalang', name: 'ballerina-runtime', version: "${ballerinaLangVersion}"
-    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: "${slf4jVersion}"
-}
-
-compileJava {
-    doFirst {
-        options.compilerArgs = [
-                '--module-path', classpath.asPath,
-        ]
-        classpath = files()
-    }
+module io.ballerina.stdlib.ldap {
+    requires io.ballerina.jvm;
+    requires java.naming;
+    requires org.slf4j;
+    exports org.ballerinalang.stdlib.ldap.nativeimpl;
 }
