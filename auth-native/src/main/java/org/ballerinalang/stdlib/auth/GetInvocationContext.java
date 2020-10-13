@@ -30,7 +30,7 @@ import org.ballerinalang.jvm.scheduling.Strand;
  */
 public class GetInvocationContext {
 
-    public synchronized static BMap<BString, Object> getInvocationContext() {
+    public static synchronized BMap<BString, Object> getInvocationContext() {
         Strand strand = Scheduler.getStrand();
         BMap<BString, Object> invocationContext =
                 (BMap<BString, Object>) strand.getProperty(Constants.AUTH_INVOCATION_CONTEXT_PROPERTY);
