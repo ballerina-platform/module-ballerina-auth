@@ -17,9 +17,9 @@
  */
 package org.ballerinalang.stdlib.ldap.util;
 
-import org.ballerinalang.jvm.api.BErrorCreator;
-import org.ballerinalang.jvm.api.BStringUtils;
-import org.ballerinalang.jvm.api.values.BError;
+import io.ballerina.runtime.api.ErrorCreator;
+import io.ballerina.runtime.api.StringUtils;
+import io.ballerina.runtime.api.values.BError;
 import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -258,6 +258,6 @@ public class LdapUtils {
     }
 
     public static BError createError(String errMsg) {
-        return BErrorCreator.createDistinctError(LDAP_ERROR_TYPE, LDAP_PACKAGE_ID, BStringUtils.fromString(errMsg));
+        return ErrorCreator.createDistinctError(LDAP_ERROR_TYPE, LDAP_PACKAGE_ID, StringUtils.fromString(errMsg));
     }
 }

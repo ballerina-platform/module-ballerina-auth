@@ -16,7 +16,7 @@
  */
 
 module io.ballerina.stdlib.ldap {
-    requires io.ballerina.jvm;
+    requires io.ballerina.runtime;
     requires java.naming;
     requires org.slf4j;
     exports org.ballerinalang.stdlib.ldap.nativeimpl;
