@@ -18,11 +18,11 @@
 
 package org.ballerinalang.stdlib.auth;
 
-import org.ballerinalang.jvm.api.BValueCreator;
-import org.ballerinalang.jvm.api.values.BMap;
-import org.ballerinalang.jvm.api.values.BString;
-import org.ballerinalang.jvm.scheduling.Scheduler;
-import org.ballerinalang.jvm.scheduling.Strand;
+import io.ballerina.runtime.api.ValueCreator;
+import io.ballerina.runtime.api.values.BMap;
+import io.ballerina.runtime.api.values.BString;
+import io.ballerina.runtime.scheduling.Scheduler;
+import io.ballerina.runtime.scheduling.Strand;
 
 /**
  * Extern function to get auth invocation context record.
@@ -35,7 +35,7 @@ public class GetInvocationContext {
         BMap<BString, Object> invocationContext =
                 (BMap<BString, Object>) strand.getProperty(Constants.AUTH_INVOCATION_CONTEXT_PROPERTY);
         if (invocationContext == null) {
-            invocationContext = BValueCreator.
+            invocationContext = ValueCreator.
                     createRecordValue(Constants.AUTH_PACKAGE_ID, Constants.RECORD_TYPE_INVOCATION_CONTEXT);
             strand.setProperty(Constants.AUTH_INVOCATION_CONTEXT_PROPERTY, invocationContext);
         }
