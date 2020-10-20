@@ -1,8 +1,8 @@
 package org.ballerinalang.stdlib.auth;
 
-import org.ballerinalang.jvm.types.BPackage;
+import io.ballerina.runtime.api.Module;
 
-import static org.ballerinalang.jvm.util.BLangConstants.BALLERINA_BUILTIN_PKG_PREFIX;
+import static io.ballerina.runtime.util.BLangConstants.BALLERINA_BUILTIN_PKG_PREFIX;
 
 /**
  * Constants related to Ballerina auth stdlib.
@@ -10,7 +10,7 @@ import static org.ballerinalang.jvm.util.BLangConstants.BALLERINA_BUILTIN_PKG_PR
 public class Constants {
 
     public static final String PACKAGE_NAME = "auth";
-    public static final BPackage AUTH_PACKAGE_ID = new BPackage(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.1");
+    public static final Module AUTH_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.1");
 
     public static final String AUTH_INVOCATION_CONTEXT_PROPERTY = "AuthInvocationContext";
     public static final String RECORD_TYPE_INVOCATION_CONTEXT = "InvocationContext";
