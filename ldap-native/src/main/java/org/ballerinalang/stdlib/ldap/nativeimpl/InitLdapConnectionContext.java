@@ -18,10 +18,10 @@
 
 package org.ballerinalang.stdlib.ldap.nativeimpl;
 
-import org.ballerinalang.jvm.api.BStringUtils;
-import org.ballerinalang.jvm.api.BValueCreator;
-import org.ballerinalang.jvm.api.values.BMap;
-import org.ballerinalang.jvm.api.values.BString;
+import io.ballerina.runtime.api.StringUtils;
+import io.ballerina.runtime.api.ValueCreator;
+import io.ballerina.runtime.api.values.BMap;
+import io.ballerina.runtime.api.values.BString;
 import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
 import org.ballerinalang.stdlib.ldap.LdapConnectionContext;
 import org.ballerinalang.stdlib.ldap.LdapConstants;
@@ -54,53 +54,53 @@ public class InitLdapConnectionContext {
         CommonLdapConfiguration commonLdapConfiguration = new CommonLdapConfiguration();
 
         commonLdapConfiguration.setDomainName(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.DOMAIN_NAME)).getValue());
+                StringUtils.fromString(LdapConstants.DOMAIN_NAME)).getValue());
         commonLdapConfiguration.setConnectionURL(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.CONNECTION_URL)).getValue());
+                StringUtils.fromString(LdapConstants.CONNECTION_URL)).getValue());
         commonLdapConfiguration.setConnectionName(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.CONNECTION_NAME)).getValue());
+                StringUtils.fromString(LdapConstants.CONNECTION_NAME)).getValue());
         commonLdapConfiguration.setConnectionPassword(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.CONNECTION_PASSWORD)).getValue());
+                StringUtils.fromString(LdapConstants.CONNECTION_PASSWORD)).getValue());
 
         commonLdapConfiguration.setUserSearchBase(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.USER_SEARCH_BASE)).getValue());
+                StringUtils.fromString(LdapConstants.USER_SEARCH_BASE)).getValue());
         commonLdapConfiguration.setUserEntryObjectClass(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.USER_ENTRY_OBJECT_CLASS)).getValue());
+                StringUtils.fromString(LdapConstants.USER_ENTRY_OBJECT_CLASS)).getValue());
         commonLdapConfiguration.setUserNameAttribute(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.USER_NAME_ATTRIBUTE)).getValue());
+                StringUtils.fromString(LdapConstants.USER_NAME_ATTRIBUTE)).getValue());
         commonLdapConfiguration.setUserNameSearchFilter(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.USER_NAME_SEARCH_FILTER)).getValue());
+                StringUtils.fromString(LdapConstants.USER_NAME_SEARCH_FILTER)).getValue());
         commonLdapConfiguration.setUserNameListFilter(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.USER_NAME_LIST_FILTER)).getValue());
+                StringUtils.fromString(LdapConstants.USER_NAME_LIST_FILTER)).getValue());
 
         commonLdapConfiguration.setGroupSearchBase(getAsStringList(authProviderConfig.getArrayValue(
-                BStringUtils.fromString(LdapConstants.GROUP_SEARCH_BASE)).getStringArray()));
+                StringUtils.fromString(LdapConstants.GROUP_SEARCH_BASE)).getStringArray()));
         commonLdapConfiguration.setGroupEntryObjectClass(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.GROUP_ENTRY_OBJECT_CLASS)).getValue());
+                StringUtils.fromString(LdapConstants.GROUP_ENTRY_OBJECT_CLASS)).getValue());
         commonLdapConfiguration.setGroupNameAttribute(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.GROUP_NAME_ATTRIBUTE)).getValue());
+                StringUtils.fromString(LdapConstants.GROUP_NAME_ATTRIBUTE)).getValue());
         commonLdapConfiguration.setGroupNameSearchFilter(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.GROUP_NAME_SEARCH_FILTER)).getValue());
+                StringUtils.fromString(LdapConstants.GROUP_NAME_SEARCH_FILTER)).getValue());
         commonLdapConfiguration.setGroupNameListFilter(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.GROUP_NAME_LIST_FILTER)).getValue());
+                StringUtils.fromString(LdapConstants.GROUP_NAME_LIST_FILTER)).getValue());
 
         commonLdapConfiguration.setMembershipAttribute(authProviderConfig.getStringValue(
-                BStringUtils.fromString(LdapConstants.MEMBERSHIP_ATTRIBUTE)).getValue());
+                StringUtils.fromString(LdapConstants.MEMBERSHIP_ATTRIBUTE)).getValue());
         commonLdapConfiguration.setUserRolesCacheEnabled(authProviderConfig.getBooleanValue(
-                BStringUtils.fromString(LdapConstants.USER_ROLE_CACHE_ENABLE)));
+                StringUtils.fromString(LdapConstants.USER_ROLE_CACHE_ENABLE)));
         commonLdapConfiguration.setConnectionPoolingEnabled(authProviderConfig.getBooleanValue(
-                BStringUtils.fromString(LdapConstants.CONNECTION_POOLING_ENABLED)));
+                StringUtils.fromString(LdapConstants.CONNECTION_POOLING_ENABLED)));
         commonLdapConfiguration.setLdapConnectionTimeout(authProviderConfig.getIntValue(
-                BStringUtils.fromString(LdapConstants.CONNECTION_TIME_OUT_IN_MILLIS)).intValue());
+                StringUtils.fromString(LdapConstants.CONNECTION_TIME_OUT_IN_MILLIS)).intValue());
         commonLdapConfiguration.setReadTimeoutInMillis(authProviderConfig.getIntValue(
-                BStringUtils.fromString(LdapConstants.READ_TIME_OUT_IN_MILLIS)).intValue());
+                StringUtils.fromString(LdapConstants.READ_TIME_OUT_IN_MILLIS)).intValue());
         commonLdapConfiguration.setRetryAttempts(authProviderConfig.getIntValue(
-                BStringUtils.fromString(LdapConstants.RETRY_ATTEMPTS)).intValue());
+                StringUtils.fromString(LdapConstants.RETRY_ATTEMPTS)).intValue());
 
         BMap<BString, Object> sslConfig = authProviderConfig.containsKey(
-                BStringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) ?
+                StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) ?
                 (BMap<BString, Object>) authProviderConfig.getMapValue(
-                        BStringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) : null;
+                        StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) : null;
         try {
             if (sslConfig != null) {
                 setSslConfig(sslConfig, commonLdapConfiguration, instanceId.getValue());
@@ -109,14 +109,14 @@ public class InitLdapConnectionContext {
             LdapConnectionContext connectionSource = new LdapConnectionContext(commonLdapConfiguration);
             DirContext dirContext = connectionSource.getContext();
 
-            BMap<BString, Object> ldapConnectionRecord = BValueCreator.
+            BMap<BString, Object> ldapConnectionRecord = ValueCreator.
                     createRecordValue(LdapConstants.LDAP_PACKAGE_ID, LdapConstants.LDAP_CONNECTION);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONFIGURATION, commonLdapConfiguration);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_SOURCE, connectionSource);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_CONTEXT, dirContext);
             ldapConnectionRecord.addNativeData(LdapConstants.ENDPOINT_INSTANCE_ID, instanceId.getValue());
-            ldapConnectionRecord.put(BStringUtils.fromString(LdapConstants.ENDPOINT_INSTANCE_ID),
-                                     BStringUtils.fromString(instanceId.getValue()));
+            ldapConnectionRecord.put(StringUtils.fromString(LdapConstants.ENDPOINT_INSTANCE_ID),
+                                     StringUtils.fromString(instanceId.getValue()));
             return ldapConnectionRecord;
         } catch (KeyStoreException | KeyManagementException | NoSuchAlgorithmException
                 | CertificateException | NamingException | IOException | IllegalArgumentException e) {
@@ -136,16 +136,16 @@ public class InitLdapConnectionContext {
             throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
             CertificateException {
         BMap<BString, BString> trustStore = (BMap<BString, BString>) sslConfig.getMapValue(
-                BStringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_STORE));
+                StringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_STORE));
         String trustCerts = sslConfig.containsKey(LdapConstants.AUTH_STORE_CONFIG_TRUST_CERTIFICATES) ?
                 sslConfig.getStringValue(
-                        BStringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_CERTIFICATES)).getValue() : null;
+                        StringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_CERTIFICATES)).getValue() : null;
 
         if (trustStore != null) {
             String trustStoreFilePath = trustStore.getStringValue(
-                    BStringUtils.fromString(LdapConstants.FILE_PATH)).getValue();
+                    StringUtils.fromString(LdapConstants.FILE_PATH)).getValue();
             String trustStorePassword = trustStore.getStringValue(
-                    BStringUtils.fromString(LdapConstants.PASSWORD)).getValue();
+                    StringUtils.fromString(LdapConstants.PASSWORD)).getValue();
             File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
             if (!trustStoreFile.exists()) {
                 throw new IllegalArgumentException("trustStore File " + trustStoreFilePath + " not found");
