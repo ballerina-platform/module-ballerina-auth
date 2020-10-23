@@ -10,7 +10,7 @@ import static io.ballerina.runtime.util.BLangConstants.BALLERINA_BUILTIN_PKG_PRE
 public class Constants {
 
     public static final String PACKAGE_NAME = "auth";
-    public static final Module AUTH_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.1");
+    public static final Module AUTH_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.2");
 
     public static final String AUTH_INVOCATION_CONTEXT_PROPERTY = "AuthInvocationContext";
     public static final String RECORD_TYPE_INVOCATION_CONTEXT = "InvocationContext";
