@@ -17,8 +17,8 @@
  */
 package org.ballerinalang.stdlib.ldap.util;
 
-import io.ballerina.runtime.api.ErrorCreator;
-import io.ballerina.runtime.api.StringUtils;
+import io.ballerina.runtime.api.creators.ErrorCreator;
+import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
 import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
 import org.slf4j.Logger;
