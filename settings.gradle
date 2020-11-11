@@ -14,7 +14,6 @@ plugins {
 rootProject.name = 'auth'
 include(':build-config:checkstyle')
 include ':auth-native', ':auth-ballerina'
-include 'auth-native'
 
 gradleEnterprise {
     buildScan {
