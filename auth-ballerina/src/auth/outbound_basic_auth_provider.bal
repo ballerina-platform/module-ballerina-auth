@@ -87,7 +87,7 @@ isolated function getBasicAuthToken(Credential credential) returns string|Error 
     }
     string str = username + ":" + password;
     string token = str.toBytes().toBase64();
-    log:printDebug(function () returns string {
+    log:printDebug(isolated function () returns string {
         return "Authorization header is generated for basic auth scheme.";
     });
     return token;
