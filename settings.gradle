@@ -14,7 +14,6 @@ plugins {
 rootProject.name = 'ldap'
 include(':build-config:checkstyle')
 include ':ldap-native', ':ldap-ballerina'
-include 'ldap-native'
 
 gradleEnterprise {
     buildScan {
