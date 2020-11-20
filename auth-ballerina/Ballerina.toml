@@ -10,6 +10,11 @@ version = "@stdlib.cache.version@"
 
 [[dependency]]
 org = "ballerina"
+name = "config"
+version = "@stdlib.config.version@"
+
+[[dependency]]
+org = "ballerina"
 name = "crypto"
 version = "@stdlib.crypto.version@"
 
@@ -17,11 +22,6 @@ version = "@stdlib.crypto.version@"
 org = "ballerina"
 name = "log"
 version = "@stdlib.log.version@"
-
-[[dependency]]
-org = "ballerina"
-name = "config"
-version = "@stdlib.config.version@"
 
 [[dependency]]
 org = "ballerina"
