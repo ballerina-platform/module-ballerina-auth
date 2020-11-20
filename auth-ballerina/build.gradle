@@ -73,7 +73,7 @@ task copyStdlibs(type: Copy) {
         into("repo/balo") {
             from "${artifactExtractedPath}/balo/"
         }
-        //TODO: enable once the fix is available for loading from cache
+//TODO: enable once the fix is available for loading from cache
 //        into("repo/cache") {
 //            from "${artifactExtractedPath}/cache"
 //        }
@@ -125,14 +125,14 @@ task revertTomlFile {
 
 //TODO: remove this once loading dependencies from bir cache is fixed
 task deleteCache(type: Delete) {
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/cache"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/config"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/crypto"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/io"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/stringutils"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/system"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/task"
-    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-2.0.0-Preview6-SNAPSHOT/repo/cache/ballerina/time"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/cache"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/config"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/crypto"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/io"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/stringutils"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/system"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/task"
+    delete "${buildDir}/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/cache/ballerina/time"
 }
 
 task ballerinaTest {
@@ -217,8 +217,8 @@ task ballerinaBuild {
             }
 
         }
-        //TODO: enable once the issue is fixed
-        // Doc creation and packing
+//TODO: enable once the issue is fixed
+//         Doc creation and packing
 //        exec {
 //            workingDir project.projectDir
 //            environment "JAVA_OPTS", "-DBALLERINA_DEV_COMPILE_BALLERINA_ORG=true"
