@@ -28,26 +28,6 @@ org = "ballerina"
 name = "stringutils"
 version = "@stdlib.stringutils.version@"
 
-[[dependency]]
-org = "ballerina"
-name = "task"
-version = "@stdlib.task.version@"
-
-[[dependency]]
-org = "ballerina"
-name = "time"
-version = "@stdlib.time.version@"
-
-[[dependency]]
-org = "ballerina"
-name = "system"
-version = "@stdlib.system.version@"
-
-[[dependency]]
-org = "ballerina"
-name = "io"
-version = "@stdlib.io.version@"
-
 [[platform.java11.dependency]]
 path = "../auth-native/build/libs/auth-native-@project.version@.jar"
 groupId = "ballerina"
