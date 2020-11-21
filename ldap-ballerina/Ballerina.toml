@@ -1,25 +1,25 @@
-[project]
-org-name = "ballerina"
+[package]
+org = "ballerina"
+name = "ldap"
 version = "@toml.version@"
 
-[dependencies]
-"ballerina/auth" = "@stdlib.auth.version@"
-"ballerina/crypto" = "@stdlib.crypto.version@"
-"ballerina/log" = "@stdlib.log.version@"
-"ballerina/config" = "@stdlib.config.version@"
-"ballerina/time" = "@stdlib.time.version@"
-"ballerina/system" = "@stdlib.system.version@"
-"ballerina/cache" = "@stdlib.cache.version@"
-"ballerina/stringutils" = "@stdlib.stringutils.version@"
-"ballerina/io" = "@stdlib.io.version@"
-"ballerina/task" = "@stdlib.task.version@"
+[[dependency]]
+org = "ballerina"
+name = "auth"
+version = "@stdlib.auth.version@"
 
-[platform]
-target = "java11"
+[[dependency]]
+org = "ballerina"
+name = "crypto"
+version = "@stdlib.crypto.version@"
 
-    [[platform.libraries]]
-    artifactId = "ldap"
-    version = "@project.version@"
-    path = "../ldap-native/build/libs/ldap-native-@project.version@.jar"
-    groupId = "ballerina"
-    modules = ["ldap"]
+[[dependency]]
+org = "ballerina"
+name = "log"
+version = "@stdlib.log.version@"
+
+[[platform.java11.dependency]]
+path = "../ldap-native/build/libs/ldap-native-@project.version@.jar"
+groupId = "ballerina"
+artifactId = "ldap"
+version = "@project.version@"
