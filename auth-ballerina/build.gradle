@@ -40,8 +40,7 @@ clean {
 
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version)
+        attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
     }
 }
 
@@ -132,7 +131,7 @@ task ballerinaTest {
         into file("$project.projectDir/tests/resources")
     }
 
-    // Define config parameters used for basic authentication test cases
+    // Define config parameters used for basic authentication test cases.
     def configParams = "--b7a.config.file=$project.projectDir/tests/resources/datafiles/ballerina.conf";
     configParams += " --b7a.config.secret=$project.projectDir/tests/resources/secret.txt";
 
@@ -195,8 +194,8 @@ task ballerinaBuild {
                     commandLine 'sh', '-c', "$distributionBinPath/ballerina push"
                 }
             }
-
         }
+
         // Doc creation and packing
         exec {
             workingDir project.projectDir
