@@ -31,7 +31,7 @@ public class LdapConstants {
 
     // Name of the Ballerina ldap module, used to create struct instances.
     public static final String PACKAGE_NAME = "ldap";
-    public static final Module LDAP_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.2");
+    public static final Module LDAP_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.3");
 
     // Record used to reference to a LDAP connection.
     public static final String LDAP_CONNECTION = "LdapConnection";
