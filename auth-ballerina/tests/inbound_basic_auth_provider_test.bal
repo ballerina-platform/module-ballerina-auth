@@ -17,54 +17,57 @@
 import ballerina/test;
 
 @test:Config {}
+function testAuthenticationEmptyCredential() {
+    string usernameAndPassword = "";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Credential cannot be empty.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {}
 function testAuthenticationOfNonExistingUser() {
-    string usernameAndPassword = "amila:abc";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertFalse(result);
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
+    string usernameAndPassword = "dave:123";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationOfNonExistingPassword() {
-    string usernameAndPassword = "isuru:xxy";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertFalse(result);
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
+function testAuthenticationOfInvalidPassword() {
+    string usernameAndPassword = "alice:xxy";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthentication() {
-    string usernameAndPassword = "isuru:xxx";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertTrue(result);
+function testAuthenticationSuccess() {
+    string usernameAndPassword = "alice:xxx";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "alice");
+        test:assertEquals(result.scopes, ["read", "write"]);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
 }
 
 @test:Config {}
 function testAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertFalse(result);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
 }
 
 @test:Config {}
 function testAuthenticationWithEmptyPassword() {
-    InboundBasicAuthProvider basicAuthProvider = new;
-    string usernameAndPassword = "isuru:";
-    boolean|Error result = authenticate(usernameAndPassword);
+    string usernameAndPassword = "alice:";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -74,9 +77,8 @@ function testAuthenticationWithEmptyPassword() {
 
 @test:Config {}
 function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
-    InboundBasicAuthProvider basicAuthProvider = new;
     string usernameAndPassword = "invalid:";
-    boolean|Error result = authenticate(usernameAndPassword);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -87,7 +89,7 @@ function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
 @test:Config {}
 function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
-    boolean|Error result = authenticate(usernameAndPassword);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -98,96 +100,104 @@ function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
 @test:Config {}
 function testAuthenticationSha256() {
     string usernameAndPassword = "hashedSha256:xxx";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertTrue(result);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "hashedSha256");
+        test:assertEquals(result.scopes, ["read"]);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
+}
+
+@test:Config {}
+function testAuthenticationSha256Negative() {
+    string usernameAndPassword = "hashedSha256:invalid";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
 }
 
 @test:Config {}
 function testAuthenticationSha384() {
     string usernameAndPassword = "hashedSha384:xxx";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertTrue(result);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "hashedSha384");
+        test:assertEquals(result.scopes, ["read"]);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
+}
+
+@test:Config {}
+function testAuthenticationSha384Negative() {
+    string usernameAndPassword = "hashedSha384:invalid";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
 }
 
 @test:Config {}
 function testAuthenticationSha512() {
     string usernameAndPassword = "hashedSha512:xxx";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertTrue(result);
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "hashedSha512");
+        test:assertEquals(result.scopes, ["read"]);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
 }
 
 @test:Config {}
-function testAuthenticationPlain() {
-    string usernameAndPassword = "plain:plainpassword";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertTrue(result);
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
-}
-
 function testAuthenticationSha512Negative() {
-    string usernameAndPassword = "hashedSha512:xxx ";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertFalse(result);
+    string usernameAndPassword = "hashedSha512:invalid";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
+}
+
+@test:Config {}
+function testAuthenticationWithPlainTextCredentials() {
+    string usernameAndPassword = "peter:plain-password";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "peter");
+        test:assertEquals(result.scopes, ["update", "write"]);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
 }
 
 @test:Config {}
-function testAuthenticationPlainNegative() {
-    string usernameAndPassword = "plain:plainpassword ";
-    boolean|Error result = authenticate(usernameAndPassword);
-    if (result is boolean) {
-        test:assertFalse(result);
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
+function testAuthenticationPlainWithPlainTextCredentialsNegative() {
+    string usernameAndPassword = "peter:plain-password ";
+    UserDetails|Error? result = authenticate(usernameAndPassword);
+    test:assertTrue(result is ());
 }
 
 @test:Config {}
 function testAuthenticationWithCustomTableName() {
-    string usernameAndPassword = "alice:123";
-    boolean|Error result = authenticate(usernameAndPassword, "custom.users");
-    if (result is boolean) {
-        test:assertTrue(result);
+    string usernameAndPassword = "eve:123";
+    UserDetails|Error? result = authenticate(usernameAndPassword, "custom.users");
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "eve");
+        test:assertEquals(result.scopes, []);
     } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
+        test:assertFail(msg = "Test Failed!");
     }
 }
 
 @test:Config {}
 function testAuthenticationWithNonExistingTableName() {
-    string usernameAndPassword = "alice:123";
-    boolean|Error result = authenticate(usernameAndPassword, "invalid.table");
-    if (result is boolean) {
-        test:assertFalse(result);
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
+    string usernameAndPassword = "eve:123";
+    UserDetails|Error? result = authenticate(usernameAndPassword, "invalid.table");
+    test:assertTrue(result is ());
 }
 
-function authenticate(string usernameAndPassword, string? tableName = ()) returns boolean|Error {
-    InboundBasicAuthProvider basicAuthProvider;
+function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error? {
+    ListenerBasicAuthFileProvider basicAuthProvider;
     if (tableName is string) {
         basicAuthProvider = new({ tableName: tableName });
     } else {
-        basicAuthProvider = new;
+        basicAuthProvider = new({});
     }
     string credential = usernameAndPassword.toBytes().toBase64();
     return basicAuthProvider.authenticate(credential);
