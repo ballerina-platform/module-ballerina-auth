@@ -14,8 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/log;
-
 # Represents the Basic Authentication configurations, which are used by the HTTP endpoint.
 #
 # + username - Username for Basic authentication
@@ -67,6 +65,5 @@ isolated function prepareBasicAuthToken(Credential credential) returns string|Er
     }
     string str = username + ":" + password;
     string token = str.toBytes().toBase64();
-    log:printDebug("Authorization header is generated for basic auth scheme.");
     return token;
 }
