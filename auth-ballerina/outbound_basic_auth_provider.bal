@@ -14,8 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/log;
-
 # Represents the outbound Basic Auth authenticator, which is an implementation of the `auth:OutboundAuthProvider` interface.
 # This uses the usernames and passwords provided by the Ballerina configurations to authenticate external endpoints.
 # ```ballerina
@@ -87,6 +85,5 @@ isolated function getBasicAuthToken(Credential credential) returns string|Error 
     }
     string str = username + ":" + password;
     string token = str.toBytes().toBase64();
-    log:printDebug("Authorization header is generated for basic auth scheme.");
     return token;
 }
