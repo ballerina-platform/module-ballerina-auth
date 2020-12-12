@@ -24,6 +24,7 @@ plugins {
 }
 
 ext.puppycrawlCheckstyleVersion = project.puppycrawlCheckstyleVersion
+ext.slf4jVersion = project.slf4jVersion
 ext.ballerinaLangVersion = project.ballerinaLangVersion
 ext.stdlibCacheVersion = project.stdlibCacheVersion
 ext.stdlibConfigVersion = project.stdlibConfigVersion
