@@ -16,9 +16,9 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap;
+package org.ballerinalang.stdlib.auth.ldap;
 
-import org.ballerinalang.stdlib.ldap.util.LdapUtils;
+import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -33,18 +33,18 @@ import javax.net.ssl.SSLSocketFactory;
  *
  * @since 0.983.0
  */
-public class LdapSslSocketFactory extends SSLSocketFactory {
+public class SslSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory socketFactory;
 
-    public LdapSslSocketFactory() {
+    public SslSocketFactory() {
         SSLContext sslContext = SslContextTrustManager.getInstance().getSSLContext(LdapUtils
                 .getInstanceIdFromThreadLocal());
         socketFactory = sslContext.getSocketFactory();
     }
 
     public static SocketFactory getDefault() {
-        return new LdapSslSocketFactory();
+        return new SslSocketFactory();
     }
 
     @Override

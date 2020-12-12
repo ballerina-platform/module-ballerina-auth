@@ -15,9 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.ballerinalang.stdlib.ldap.util;
 
-import org.ballerinalang.stdlib.ldap.LdapConstants;
+package org.ballerinalang.stdlib.auth.ldap.utils;
+
+import org.ballerinalang.stdlib.auth.ldap.LdapConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +37,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 /**
- * Utility class for handle ssl related LDAP operations.
+ * Utility class for SSL related LDAP operations.
  *
  * @since 0.983.0
  */

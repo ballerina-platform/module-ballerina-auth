@@ -15,12 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.ballerinalang.stdlib.ldap.util;
+
+package org.ballerinalang.stdlib.auth.ldap.utils;
 
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
-import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
+import org.ballerinalang.stdlib.auth.AuthConstants;
+import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +37,6 @@ import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
-
-import static org.ballerinalang.stdlib.ldap.LdapConstants.LDAP_ERROR_TYPE;
-import static org.ballerinalang.stdlib.ldap.LdapConstants.LDAP_PACKAGE_ID;
 
 /**
  * Utility class for LDAP related common operations.
@@ -258,6 +257,7 @@ public class LdapUtils {
     }
 
     public static BError createError(String errMsg) {
-        return ErrorCreator.createDistinctError(LDAP_ERROR_TYPE, LDAP_PACKAGE_ID, StringUtils.fromString(errMsg));
+        return ErrorCreator.createDistinctError(AuthConstants.AUTH_ERROR_TYPE, AuthConstants.AUTH_PACKAGE_ID,
+                                                StringUtils.fromString(errMsg));
     }
 }

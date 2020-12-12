@@ -16,14 +16,14 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap.nativeimpl;
+package org.ballerinalang.stdlib.auth.ldap.nativeimpl;
 
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
-import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
-import org.ballerinalang.stdlib.ldap.LdapConnectionContext;
-import org.ballerinalang.stdlib.ldap.LdapConstants;
-import org.ballerinalang.stdlib.ldap.util.LdapUtils;
+import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
+import org.ballerinalang.stdlib.auth.ldap.ConnectionContext;
+import org.ballerinalang.stdlib.auth.ldap.LdapConstants;
+import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,14 +34,14 @@ import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
 
 /**
- * Ballerina function to authenticate users with LDAP user store.
+ * Authenticate a user with LDAP user store.
  *
  * @since 0.983.0
  */
 public class Authenticate {
 
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
-    private static LdapConnectionContext connectionSource;
+    private static ConnectionContext connectionSource;
 
     public static Object doAuthenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
@@ -49,7 +49,7 @@ public class Authenticate {
         }
 
         byte[] credential = password.getValue().getBytes(StandardCharsets.UTF_8);
-        connectionSource = (LdapConnectionContext) ldapConnection.getNativeData(LdapConstants.LDAP_CONNECTION_SOURCE);
+        connectionSource = (ConnectionContext) ldapConnection.getNativeData(LdapConstants.LDAP_CONNECTION_SOURCE);
         DirContext ldapConnectionContext = (DirContext) ldapConnection.getNativeData(
                 LdapConstants.LDAP_CONNECTION_CONTEXT);
         CommonLdapConfiguration ldapConfiguration = (CommonLdapConfiguration) ldapConnection.getNativeData(

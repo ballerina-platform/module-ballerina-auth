@@ -16,9 +16,9 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap;
+package org.ballerinalang.stdlib.auth.ldap;
 
-import org.ballerinalang.stdlib.ldap.util.LdapUtils;
+import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 
 import java.util.Hashtable;
 
@@ -39,11 +39,11 @@ import static javax.naming.Context.SECURITY_PROTOCOL;
  *
  * @since 0.983.0
  */
-public class LdapConnectionContext {
+public class ConnectionContext {
 
     private Hashtable environment;
 
-    public LdapConnectionContext(CommonLdapConfiguration ldapConfiguration) {
+    public ConnectionContext(CommonLdapConfiguration ldapConfiguration) {
         String connectionURL = ldapConfiguration.getConnectionURL();
         String connectionName = ldapConfiguration.getConnectionName();
         String connectionPassword = ldapConfiguration.getConnectionPassword();
@@ -59,7 +59,7 @@ public class LdapConnectionContext {
 
         if (LdapUtils.isLdapsUrl(connectionURL)) {
             environment.put(SECURITY_PROTOCOL, LdapConstants.SSL);
-            environment.put("java.naming.ldap.factory.socket", LdapSslSocketFactory.class.getName());
+            environment.put("java.naming.ldap.factory.socket", SslSocketFactory.class.getName());
         }
 
         String connectTimeoutInMillis = String.valueOf(ldapConfiguration.getLdapConnectionTimeout());

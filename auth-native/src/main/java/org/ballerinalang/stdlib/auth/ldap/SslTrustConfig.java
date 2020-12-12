@@ -16,9 +16,10 @@
  *  under the License.
  *
  */
-package org.ballerinalang.stdlib.ldap;
 
-import org.ballerinalang.stdlib.ldap.util.LdapUtils;
+package org.ballerinalang.stdlib.auth.ldap;
+
+import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

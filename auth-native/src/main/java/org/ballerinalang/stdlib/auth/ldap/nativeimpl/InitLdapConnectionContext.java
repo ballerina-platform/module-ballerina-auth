@@ -16,18 +16,19 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap.nativeimpl;
+package org.ballerinalang.stdlib.auth.ldap.nativeimpl;
 
 import io.ballerina.runtime.api.creators.ValueCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
-import org.ballerinalang.stdlib.ldap.CommonLdapConfiguration;
-import org.ballerinalang.stdlib.ldap.LdapConnectionContext;
-import org.ballerinalang.stdlib.ldap.LdapConstants;
-import org.ballerinalang.stdlib.ldap.SslContextTrustManager;
-import org.ballerinalang.stdlib.ldap.util.LdapUtils;
-import org.ballerinalang.stdlib.ldap.util.SslUtils;
+import org.ballerinalang.stdlib.auth.AuthConstants;
+import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
+import org.ballerinalang.stdlib.auth.ldap.ConnectionContext;
+import org.ballerinalang.stdlib.auth.ldap.LdapConstants;
+import org.ballerinalang.stdlib.auth.ldap.SslContextTrustManager;
+import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
+import org.ballerinalang.stdlib.auth.ldap.utils.SslUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,6 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.net.ssl.SSLContext;
-
 
 /**
  * Initializes LDAP connection context.
@@ -106,11 +106,11 @@ public class InitLdapConnectionContext {
                 setSslConfig(sslConfig, commonLdapConfiguration, instanceId.getValue());
                 LdapUtils.setServiceName(instanceId.getValue());
             }
-            LdapConnectionContext connectionSource = new LdapConnectionContext(commonLdapConfiguration);
+            ConnectionContext connectionSource = new ConnectionContext(commonLdapConfiguration);
             DirContext dirContext = connectionSource.getContext();
 
             BMap<BString, Object> ldapConnectionRecord = ValueCreator.
-                    createRecordValue(LdapConstants.LDAP_PACKAGE_ID, LdapConstants.LDAP_CONNECTION);
+                    createRecordValue(AuthConstants.AUTH_PACKAGE_ID, LdapConstants.LDAP_CONNECTION);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONFIGURATION, commonLdapConfiguration);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_SOURCE, connectionSource);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_CONTEXT, dirContext);

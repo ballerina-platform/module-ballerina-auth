@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap;
+package org.ballerinalang.stdlib.auth.ldap;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap;
+package org.ballerinalang.stdlib.auth.ldap;
 
 import java.util.List;
 
 /**
- * Ballerina LDAP user store configurations.
+ * LDAP user store configurations.
  *
  * @since 0.983.0
  */

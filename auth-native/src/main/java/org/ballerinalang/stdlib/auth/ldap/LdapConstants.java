@@ -16,11 +16,7 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.ldap;
-
-import io.ballerina.runtime.api.Module;
-
-import static io.ballerina.runtime.api.constants.RuntimeConstants.BALLERINA_BUILTIN_PKG_PREFIX;
+package org.ballerinalang.stdlib.auth.ldap;
 
 /**
  * Constants to be used in LDAP user stores.
@@ -28,10 +24,6 @@ import static io.ballerina.runtime.api.constants.RuntimeConstants.BALLERINA_BUIL
  * @since 0.983.0
  */
 public class LdapConstants {
-
-    // Name of the Ballerina ldap module, used to create struct instances.
-    public static final String PACKAGE_NAME = "ldap";
-    public static final Module LDAP_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.4");
 
     // Record used to reference to a LDAP connection.
     public static final String LDAP_CONNECTION = "LdapConnection";
@@ -79,6 +71,4 @@ public class LdapConstants {
     public static final String PKCS_STORE_TYPE = "PKCS12";
     public static final String X_509 = "X.509";
     public static final String CERTIFICATE_ALIAS = "ca";
-
-    public static final String LDAP_ERROR_TYPE = "LdapError";
 }

@@ -14,71 +14,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/auth;
 import ballerina/crypto;
 import ballerina/java;
-
-# Represents the inbound LDAP auth provider. This connects to an active directory or an LDAP, retrieves the necessary
-# user information, and performs authentication and authorization.
-# The `ldap:InboundLdapAuthProvider` is another implementation of the `auth:InboundAuthProvider` interface.
-# ```ballerina
-# ldap:InboundLdapAuthProvider inboundLdapAuthProvider = new(ldapConfig, "instanceId");
-# ```
-public class InboundLdapAuthProvider {
-
-    *auth:InboundAuthProvider;
-
-    string instanceId;
-    LdapConnection ldapConnection;
-    LdapConnectionConfig ldapConnectionConfig;
-
-    # Creates an LDAP auth store with the given configurations.
-    #
-    # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
-    # + instanceId - Instance ID of the endpoint
-    public function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
-        self.instanceId = instanceId;
-        self.ldapConnectionConfig = ldapConnectionConfig;
-        LdapConnection|Error ldapConnection = initLdapConnectionContext(self.ldapConnectionConfig, instanceId);
-        if (ldapConnection is LdapConnection) {
-            self.ldapConnection = ldapConnection;
-        } else {
-            panic ldapConnection;
-        }
-    }
-
-    # Authenticates the base64-encoded `username:password` credentials.
-    # ```ballerina
-    # boolean|auth:Error result = inboundLdapAuthProvider.authenticate("<credential>");
-    # ```
-    #
-    # + credential - Base64-encoded `username:password` value
-    # + return - `true` if authentication is successful, `false` otherwise, or else an `auth:Error` occurred while
-    #            authenticating the credentials
-    public function authenticate(string credential) returns boolean|auth:Error {
-        if (credential == "") {
-            return false;
-        }
-        [string, string] [username, password] = check auth:extractUsernameAndPassword(credential);
-        boolean|Error authenticated = doAuthenticate(self.ldapConnection, username, password);
-        string[]|Error groups = getGroups(self.ldapConnection, username);
-        string[] scopes;
-        if (groups is string[]) {
-            scopes = groups;
-        } else {
-            return prepareAuthError("Failed to get groups from LDAP with the username: " + username, groups);
-        }
-        if (authenticated is boolean) {
-            if (authenticated) {
-                string userId = self.ldapConnectionConfig.domainName + ":" + username;
-                auth:setInvocationContext("ldap", credential, userId, scopes);
-            }
-            return authenticated;
-        } else {
-            return prepareAuthError("Failed to authenticate LDAP with username: " + username, authenticated);
-        }
-    }
-}
 
 # Represents the configurations that are required for an LDAP auth store.
 #
@@ -99,7 +36,7 @@ public class InboundLdapAuthProvider {
 # + membershipAttribute - Define the attribute, which contains the distinguished names (DN) of user objects that are there in a group
 # + userRolesCacheEnabled -  To indicate whether to cache the role list of a user
 # + connectionPoolingEnabled - Define whether LDAP connection pooling is enabled
-# + connectionTimeoutInMillis - Timeout (in milliseconds) in making the initial LDAP connection 
+# + connectionTimeoutInMillis - Timeout (in milliseconds) in making the initial LDAP connection
 # + readTimeoutInMillis - Reading timeout in milliseconds for LDAP operations
 # + retryAttempts - Retry the authentication request if a timeout happened
 # + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to
@@ -144,6 +81,62 @@ public type LdapConnection record {|
     string instanceId;
 |};
 
+# Represents the inbound LDAP auth provider. This connects to an active directory or an LDAP, retrieves the necessary
+# user information, and performs authentication and authorization.
+# The `ldap:InboundLdapAuthProvider` is another implementation of the `auth:InboundAuthProvider` interface.
+# ```ballerina
+# ldap:InboundLdapAuthProvider inboundLdapAuthProvider = new(ldapConfig, "instanceId");
+# ```
+public class InboundLdapAuthLdapProvider {
+
+    string instanceId;
+    LdapConnection ldapConnection;
+    LdapConnectionConfig ldapConnectionConfig;
+
+    # Creates an LDAP auth store with the given configurations.
+    #
+    # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
+    # + instanceId - Instance ID of the endpoint
+    public isolated function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
+        self.instanceId = instanceId;
+        self.ldapConnectionConfig = ldapConnectionConfig;
+        LdapConnection|Error ldapConnection = initLdapConnectionContext(self.ldapConnectionConfig, instanceId);
+        if (ldapConnection is LdapConnection) {
+            self.ldapConnection = ldapConnection;
+        } else {
+            panic ldapConnection;
+        }
+    }
+
+    # Authenticates the base64-encoded `username:password` credentials.
+    # ```ballerina
+    # boolean|auth:Error result = inboundLdapAuthProvider.authenticate("<credential>");
+    # ```
+    #
+    # + credential - Base64-encoded `username:password` value
+    # + return - `true` if authentication is successful, `false` otherwise, or else an `auth:Error` occurred while
+    #            authenticating the credentials
+    public isolated function authenticate(string credential) returns UserDetails|Error {
+        if (credential == "") {
+            return prepareError("Credential cannot be empty.");
+        }
+        [string, string] [username, password] = check extractUsernameAndPassword(credential);
+        boolean|Error authenticated = doAuthenticate(self.ldapConnection, username, password);
+        if (authenticated is Error) {
+            return prepareError("Failed to authenticate LDAP with username: " + username, authenticated);
+        }
+        string[]|Error groups = getGroups(self.ldapConnection, username);
+        if (groups is Error) {
+            return prepareError("Failed to get groups from LDAP with the username: " + username, groups);
+        }
+        UserDetails userDetails = {
+            username: username,
+            scopes: <string[]>groups
+        };
+        return userDetails;
+    }
+}
+
 # Retrieves the group(s) of the user related to the provided username.
 # ```ballerina
 # string[]|ldap:Error groups = ldap:getGroups(ldapConnection, username);
@@ -155,7 +148,7 @@ public type LdapConnection record {|
 public isolated function getGroups(LdapConnection ldapConnection, string username)
                                    returns string[]|Error = @java:Method {
     name: "getGroups",
-    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.GetGroups"
+    'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.GetGroups"
 } external;
 
 # Authenticates with the username and password.
@@ -170,7 +163,7 @@ public isolated function getGroups(LdapConnection ldapConnection, string usernam
 public isolated function doAuthenticate(LdapConnection ldapConnection, string username, string password)
                                         returns boolean|Error = @java:Method {
     name: "doAuthenticate",
-    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.Authenticate"
+    'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.Authenticate"
 } external;
 
 # Initailizes the LDAP connection context.
@@ -184,5 +177,5 @@ public isolated function doAuthenticate(LdapConnection ldapConnection, string us
 public isolated function initLdapConnectionContext(LdapConnectionConfig ldapConnectionConfig, string instanceId)
                                                    returns LdapConnection|Error = @java:Method {
     name: "initLdapConnectionContext",
-    'class: "org.ballerinalang.stdlib.ldap.nativeimpl.InitLdapConnectionContext"
+    'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.InitLdapConnectionContext"
 } external;
