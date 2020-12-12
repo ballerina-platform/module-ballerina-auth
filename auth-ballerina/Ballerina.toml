@@ -1,35 +1,35 @@
 [package]
 org = "ballerina"
 name = "auth"
-version = "1.0.4"
+version = "@toml.version@"
 
 [[dependency]]
 org = "ballerina"
 name = "cache"
-version = "2.0.4"
+version = "@stdlib.cache.version@"
 
 [[dependency]]
 org = "ballerina"
 name = "config"
-version = "1.0.4"
+version = "@stdlib.config.version@"
 
 [[dependency]]
 org = "ballerina"
 name = "crypto"
-version = "1.0.4"
+version = "@stdlib.crypto.version@"
 
 [[dependency]]
 org = "ballerina"
 name = "log"
-version = "1.0.4"
+version = "@stdlib.log.version@"
 
 [[dependency]]
 org = "ballerina"
 name = "stringutils"
-version = "0.5.4"
+version = "@stdlib.stringutils.version@"
 
 [[platform.java11.dependency]]
-path = "../auth-native/build/libs/auth-native-1.0.4-SNAPSHOT.jar"
+path = "../auth-native/build/libs/auth-native-@project.version@.jar"
 groupId = "ballerina"
 artifactId = "auth"
-version = "1.0.4-SNAPSHOT"
+version = "@project.version@"
