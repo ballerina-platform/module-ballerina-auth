@@ -43,7 +43,7 @@ public class Authenticate {
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
     private static ConnectionContext connectionSource;
 
-    public static Object doAuthenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
+    public static Object authenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
             return LdapUtils.createError("Username is null or empty.");
         }
@@ -78,18 +78,16 @@ public class Authenticate {
     }
 
     private static boolean bindAsUser(String dn, byte[] credentials) throws NamingException {
-        boolean authenticated;
         LdapContext cxt = null;
         try {
             cxt = connectionSource.getContextWithCredentials(dn, credentials);
-            authenticated = true;
         } finally {
             LdapUtils.closeContext(cxt);
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("User: " + dn + " is authenticated: " + authenticated);
+            LOG.debug("User: " + dn + " is authenticated");
         }
-        return authenticated;
+        return true;
     }
 }

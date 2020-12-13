@@ -48,9 +48,9 @@ import javax.net.ssl.SSLContext;
  *
  * @since 0.983.0
  */
-public class InitLdapConnectionContext {
+public class InitLdapConnection {
 
-    public static Object initLdapConnectionContext(BMap<BString, Object> authProviderConfig, BString instanceId) {
+    public static Object initLdapConnection(BMap<BString, Object> authProviderConfig, BString instanceId) {
         CommonLdapConfiguration commonLdapConfiguration = new CommonLdapConfiguration();
 
         commonLdapConfiguration.setDomainName(authProviderConfig.getStringValue(

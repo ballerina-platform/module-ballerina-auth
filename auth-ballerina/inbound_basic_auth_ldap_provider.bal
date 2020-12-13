@@ -87,7 +87,7 @@ public type LdapConnection record {|
 # ```ballerina
 # ldap:InboundLdapAuthProvider inboundLdapAuthProvider = new(ldapConfig, "instanceId");
 # ```
-public class InboundLdapAuthLdapProvider {
+public class InboundBasicAuthLdapProvider {
 
     string instanceId;
     LdapConnection ldapConnection;
@@ -100,7 +100,7 @@ public class InboundLdapAuthLdapProvider {
     public isolated function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
         self.instanceId = instanceId;
         self.ldapConnectionConfig = ldapConnectionConfig;
-        LdapConnection|Error ldapConnection = initLdapConnectionContext(self.ldapConnectionConfig, instanceId);
+        LdapConnection|Error ldapConnection = initLdapConnection(self.ldapConnectionConfig, instanceId);
         if (ldapConnection is LdapConnection) {
             self.ldapConnection = ldapConnection;
         } else {
@@ -121,11 +121,11 @@ public class InboundLdapAuthLdapProvider {
             return prepareError("Credential cannot be empty.");
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
-        boolean|Error authenticated = doAuthenticate(self.ldapConnection, username, password);
+        boolean|Error authenticated = authenticateWithLdap(self.ldapConnection, username, password);
         if (authenticated is Error) {
             return prepareError("Failed to authenticate LDAP with username: " + username, authenticated);
         }
-        string[]|Error groups = getGroups(self.ldapConnection, username);
+        string[]|Error groups = getLdapGroups(self.ldapConnection, username);
         if (groups is Error) {
             return prepareError("Failed to get groups from LDAP with the username: " + username, groups);
         }
@@ -145,8 +145,8 @@ public class InboundLdapAuthLdapProvider {
 # + ldapConnection - The `ldap:LdapConnection` instance
 # + username - Username of the user to be checked for the groups
 # + return - Array of groups of the provided user or else an `ldap:Error` if it fails
-public isolated function getGroups(LdapConnection ldapConnection, string username)
-                                   returns string[]|Error = @java:Method {
+public isolated function getLdapGroups(LdapConnection ldapConnection, string username)
+                                       returns string[]|Error = @java:Method {
     name: "getGroups",
     'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.GetGroups"
 } external;
@@ -160,9 +160,9 @@ public isolated function getGroups(LdapConnection ldapConnection, string usernam
 # + username - Username of the user to be authenticated
 # + password - Password of the user to be authenticated
 # + return - `true` if authentication is successful, `false` otherwise, or else an `ldap:Error` if an error occurred
-public isolated function doAuthenticate(LdapConnection ldapConnection, string username, string password)
-                                        returns boolean|Error = @java:Method {
-    name: "doAuthenticate",
+public isolated function authenticateWithLdap(LdapConnection ldapConnection, string username, string password)
+                                              returns boolean|Error = @java:Method {
+    name: "authenticate",
     'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.Authenticate"
 } external;
 
@@ -174,8 +174,8 @@ public isolated function doAuthenticate(LdapConnection ldapConnection, string us
 # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
 # + instanceId - Instance ID of the endpoint
 # + return - The `ldap:LdapConnection` instance or else an `ldap:Error` if an error occurred
-public isolated function initLdapConnectionContext(LdapConnectionConfig ldapConnectionConfig, string instanceId)
-                                                   returns LdapConnection|Error = @java:Method {
-    name: "initLdapConnectionContext",
-    'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.InitLdapConnectionContext"
+public isolated function initLdapConnection(LdapConnectionConfig ldapConnectionConfig, string instanceId)
+                                            returns LdapConnection|Error = @java:Method {
+    name: "initLdapConnection",
+    'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.InitLdapConnection"
 } external;
