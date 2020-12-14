@@ -17,7 +17,7 @@
 import ballerina/test;
 
 @test:Config {}
-function testAuthenticationEmptyCredential() {
+isolated function testAuthenticationEmptyCredential() {
     string usernameAndPassword = "";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
@@ -28,21 +28,21 @@ function testAuthenticationEmptyCredential() {
 }
 
 @test:Config {}
-function testAuthenticationOfNonExistingUser() {
+isolated function testAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationOfInvalidPassword() {
+isolated function testAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:xxy";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationSuccess() {
+isolated function testAuthenticationSuccess() {
     string usernameAndPassword = "alice:xxx";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
@@ -54,7 +54,7 @@ function testAuthenticationSuccess() {
 }
 
 @test:Config {}
-function testAuthenticationWithEmptyUsername() {
+isolated function testAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
@@ -65,7 +65,7 @@ function testAuthenticationWithEmptyUsername() {
 }
 
 @test:Config {}
-function testAuthenticationWithEmptyPassword() {
+isolated function testAuthenticationWithEmptyPassword() {
     string usernameAndPassword = "alice:";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
@@ -76,7 +76,7 @@ function testAuthenticationWithEmptyPassword() {
 }
 
 @test:Config {}
-function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
+isolated function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
     string usernameAndPassword = "invalid:";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
@@ -87,7 +87,7 @@ function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
 }
 
 @test:Config {}
-function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
+isolated function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is Error) {
@@ -98,7 +98,7 @@ function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
 }
 
 @test:Config {}
-function testAuthenticationSha256() {
+isolated function testAuthenticationSha256() {
     string usernameAndPassword = "hashedSha256:xxx";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
@@ -110,14 +110,14 @@ function testAuthenticationSha256() {
 }
 
 @test:Config {}
-function testAuthenticationSha256Negative() {
+isolated function testAuthenticationSha256Negative() {
     string usernameAndPassword = "hashedSha256:invalid";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationSha384() {
+isolated function testAuthenticationSha384() {
     string usernameAndPassword = "hashedSha384:xxx";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
@@ -129,14 +129,14 @@ function testAuthenticationSha384() {
 }
 
 @test:Config {}
-function testAuthenticationSha384Negative() {
+isolated function testAuthenticationSha384Negative() {
     string usernameAndPassword = "hashedSha384:invalid";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationSha512() {
+isolated function testAuthenticationSha512() {
     string usernameAndPassword = "hashedSha512:xxx";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
@@ -148,14 +148,14 @@ function testAuthenticationSha512() {
 }
 
 @test:Config {}
-function testAuthenticationSha512Negative() {
+isolated function testAuthenticationSha512Negative() {
     string usernameAndPassword = "hashedSha512:invalid";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationWithPlainTextCredentials() {
+isolated function testAuthenticationWithPlainTextCredentials() {
     string usernameAndPassword = "peter:plain-password";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
@@ -167,14 +167,14 @@ function testAuthenticationWithPlainTextCredentials() {
 }
 
 @test:Config {}
-function testAuthenticationPlainWithPlainTextCredentialsNegative() {
+isolated function testAuthenticationPlainWithPlainTextCredentialsNegative() {
     string usernameAndPassword = "peter:plain-password ";
     UserDetails|Error? result = authenticate(usernameAndPassword);
     test:assertTrue(result is ());
 }
 
 @test:Config {}
-function testAuthenticationWithCustomTableName() {
+isolated function testAuthenticationWithCustomTableName() {
     string usernameAndPassword = "eve:123";
     UserDetails|Error? result = authenticate(usernameAndPassword, "custom.users");
     if (result is UserDetails) {
@@ -186,13 +186,13 @@ function testAuthenticationWithCustomTableName() {
 }
 
 @test:Config {}
-function testAuthenticationWithNonExistingTableName() {
+isolated function testAuthenticationWithNonExistingTableName() {
     string usernameAndPassword = "eve:123";
     UserDetails|Error? result = authenticate(usernameAndPassword, "invalid.table");
     test:assertTrue(result is ());
 }
 
-function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error? {
+isolated function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error? {
     ListenerBasicAuthFileProvider basicAuthProvider;
     if (tableName is string) {
         basicAuthProvider = new({ tableName: tableName });

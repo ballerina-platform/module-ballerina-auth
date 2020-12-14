@@ -17,7 +17,7 @@
 import ballerina/test;
 
 @test:Config {}
-function testTokenGeneration() {
+isolated function testTokenGeneration() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is string) {
@@ -28,7 +28,7 @@ function testTokenGeneration() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyUsername() {
+isolated function testTokenGenerationWithEmptyUsername() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
@@ -39,7 +39,7 @@ function testTokenGenerationWithEmptyUsername() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyPassword() {
+isolated function testTokenGenerationWithEmptyPassword() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
@@ -50,7 +50,7 @@ function testTokenGenerationWithEmptyPassword() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
+isolated function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
