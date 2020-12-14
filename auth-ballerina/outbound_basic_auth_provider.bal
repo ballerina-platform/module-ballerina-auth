@@ -31,7 +31,7 @@ public type Credential record {|
 #      password: "123"
 #  });
 #  ```
-public class ClientBasicAuthProvider {
+public class OutboundBasicAuthProvider {
 
     Credential credential;
 
@@ -49,21 +49,10 @@ public class ClientBasicAuthProvider {
     #
     # + return - The generated token or else an `auth:Error` occurred during the validation
     public isolated function generateToken() returns string|Error {
-        return prepareBasicAuthToken(self.credential);
+        if (self.credential.username == "" || self.credential.password == "") {
+            return prepareError("Username or password cannot be empty.");
+        }
+        string token = self.credential.username + ":" + self.credential.password;
+        return token.toBytes().toBase64();
     }
-}
-
-# Processes the auth token for Basic Auth.
-#
-# + credential - The `auth:Credential` configurations
-# + return - The auth token or else an `auth:Error` occurred during the validation
-isolated function prepareBasicAuthToken(Credential credential) returns string|Error {
-    string username = credential.username;
-    string password = credential.password;
-    if (username == "" || password == "") {
-        return prepareError("Username or password cannot be empty.");
-    }
-    string str = username + ":" + password;
-    string token = str.toBytes().toBase64();
-    return token;
 }

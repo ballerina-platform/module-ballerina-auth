@@ -18,7 +18,7 @@ import ballerina/test;
 
 @test:Config {}
 isolated function testTokenGeneration() {
-    ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is string) {
         test:assertEquals(result, "dG9tOjEyMw==");
@@ -29,7 +29,7 @@ isolated function testTokenGeneration() {
 
 @test:Config {}
 isolated function testTokenGenerationWithEmptyUsername() {
-    ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
@@ -40,7 +40,7 @@ isolated function testTokenGenerationWithEmptyUsername() {
 
 @test:Config {}
 isolated function testTokenGenerationWithEmptyPassword() {
-    ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
@@ -51,7 +51,7 @@ isolated function testTokenGenerationWithEmptyPassword() {
 
 @test:Config {}
 isolated function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
-    ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
+    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
