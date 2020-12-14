@@ -17,5 +17,7 @@
 
 module io.ballerina.stdlib.auth {
     requires io.ballerina.runtime;
+    requires java.naming;
+    requires org.slf4j;
     exports org.ballerinalang.stdlib.auth;
 }
