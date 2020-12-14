@@ -20,10 +20,11 @@ import ballerina/crypto;
 # Represents the inbound Basic Authentication configurations.
 #
 # + tableName - The table name specified in the user-store TOML configuration
-public type UserStoreConfig record {|
+public type FileUserStoreConfig record {|
     // TODO: Support path
     // string path;
     string tableName = CONFIG_USER_SECTION;
+    string scopeKey = CONFIG_SCOPE_SECTION;
 |};
 
 public type UserDetails record {|
@@ -43,15 +44,15 @@ public type UserDetails record {|
 # password="<password>"
 # scopes="<comma_separated_scopes>"
 # ```
-public class ListenerBasicAuthFileProvider {
+public class ListenerFileUserStoreBasicAuthProvider {
 
-    UserStoreConfig userStoreConfig;
+    FileUserStoreConfig fileUserStoreConfig;
 
     # Provides authentication based on the provided configurations.
     #
     # + basicAuthConfig - Basic Auth provider configurations
-    public isolated function init(UserStoreConfig userStoreConfig) {
-        self.userStoreConfig = userStoreConfig;
+    public isolated function init(FileUserStoreConfig fileUserStoreConfig) {
+        self.fileUserStoreConfig = fileUserStoreConfig;
     }
 
     # Attempts to authenticate the base64-encoded `username:password` credentials.
@@ -67,10 +68,10 @@ public class ListenerBasicAuthFileProvider {
             return prepareError("Credential cannot be empty.");
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
-        string passwordFromConfig = readPassword(username, self.userStoreConfig.tableName);
+        string passwordFromConfig = readPassword(username, self.fileUserStoreConfig.tableName);
         boolean authenticated = checkPasswordEquality(passwordFromConfig, password);
         if (authenticated) {
-            string[] scopes = readScopes(username, self.userStoreConfig.tableName);
+            string[] scopes = readScopes(username, self.fileUserStoreConfig.tableName);
             UserDetails userDetails = {
                 username: username,
                 scopes: scopes

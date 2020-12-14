@@ -41,7 +41,7 @@ import ballerina/java;
 # + readTimeoutInMillis - Reading timeout in milliseconds for LDAP operations
 # + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to
 #                  communicate through LDAPs
-public type LdapConnectionConfig record {|
+public type LdapUserStoreConfig record {|
     string domainName;
     string connectionURL;
     string connectionName;
@@ -86,20 +86,20 @@ public type LdapConnection record {|
 # ```ballerina
 # ldap:InboundLdapAuthProvider inboundLdapAuthProvider = new(ldapConfig, "instanceId");
 # ```
-public class InboundBasicAuthLdapProvider {
+public class ListenerLdapUserStoreBasicAuthProvider {
 
     string instanceId;
     LdapConnection ldapConnection;
-    LdapConnectionConfig ldapConnectionConfig;
+    LdapUserStoreConfig ldapUserStoreConfig;
 
     # Creates an LDAP auth store with the given configurations.
     #
-    # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
+    # + ldapUserStoreConfig - The `ldap:LdapConnectionConfig` instance
     # + instanceId - Instance ID of the endpoint
-    public isolated function init(LdapConnectionConfig ldapConnectionConfig, string instanceId) {
+    public isolated function init(LdapUserStoreConfig ldapUserStoreConfig, string instanceId) {
         self.instanceId = instanceId;
-        self.ldapConnectionConfig = ldapConnectionConfig;
-        LdapConnection|Error ldapConnection = initLdapConnection(self.ldapConnectionConfig, instanceId);
+        self.ldapUserStoreConfig = ldapUserStoreConfig;
+        LdapConnection|Error ldapConnection = initLdapConnection(self.ldapUserStoreConfig, instanceId);
         if (ldapConnection is LdapConnection) {
             self.ldapConnection = ldapConnection;
         } else {
@@ -173,7 +173,7 @@ public isolated function authenticateWithLdap(LdapConnection ldapConnection, str
 # + ldapConnectionConfig - The `ldap:LdapConnectionConfig` instance
 # + instanceId - Instance ID of the endpoint
 # + return - The `ldap:LdapConnection` instance or else an `ldap:Error` if an error occurred
-public isolated function initLdapConnection(LdapConnectionConfig ldapConnectionConfig, string instanceId)
+public isolated function initLdapConnection(LdapUserStoreConfig ldapUserStoreConfig, string instanceId)
                                             returns LdapConnection|Error = @java:Method {
     name: "initLdapConnection",
     'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.InitLdapConnection"

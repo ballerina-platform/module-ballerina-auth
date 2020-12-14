@@ -37,3 +37,6 @@ public const string CONFIG_PREFIX_SHA512 = "@sha512:";
 
 # The table name specified in the user section of the TOML configuration.
 const string CONFIG_USER_SECTION = "b7a.users";
+
+# The key name specified in the scope section of the TOML configuration.
+const string CONFIG_SCOPE_SECTION = "scopes";

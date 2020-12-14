@@ -31,7 +31,7 @@ public type Credential record {|
 #      password: "123"
 #  });
 #  ```
-public class OutboundBasicAuthProvider {
+public class ClientBasicAuthProvider {
 
     Credential credential;
 

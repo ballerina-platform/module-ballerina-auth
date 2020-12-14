@@ -193,7 +193,7 @@ isolated function testAuthenticationWithNonExistingTableName() {
 }
 
 isolated function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error? {
-    ListenerBasicAuthFileProvider basicAuthProvider;
+    ListenerFileUserStoreBasicAuthProvider basicAuthProvider;
     if (tableName is string) {
         basicAuthProvider = new({ tableName: tableName });
     } else {
