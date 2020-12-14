@@ -88,6 +88,8 @@ public type LdapConnection record {|
 # ```
 public class ListenerLdapUserStoreBasicAuthProvider {
 
+    *ListenerBasicAuthProvider;
+
     string instanceId;
     LdapConnection ldapConnection;
     LdapUserStoreConfig ldapUserStoreConfig;
@@ -122,11 +124,11 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         boolean|Error authenticated = authenticateWithLdap(self.ldapConnection, username, password);
         if (authenticated is Error) {
-            return prepareError("Failed to authenticate LDAP with username: " + username, authenticated);
+            return prepareError("Failed to authenticate LDAP user store with username: " + username, authenticated);
         }
         string[]|Error groups = getLdapGroups(self.ldapConnection, username);
         if (groups is Error) {
-            return prepareError("Failed to get groups from LDAP with the username: " + username, groups);
+            return prepareError("Failed to get groups from LDAP user store with the username: " + username, groups);
         }
         UserDetails userDetails = {
             username: username,

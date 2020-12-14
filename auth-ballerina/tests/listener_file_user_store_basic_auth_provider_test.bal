@@ -19,7 +19,7 @@ import ballerina/test;
 @test:Config {}
 isolated function testAuthenticationEmptyCredential() {
     string usernameAndPassword = "";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Credential cannot be empty.");
     } else {
@@ -30,21 +30,29 @@ isolated function testAuthenticationEmptyCredential() {
 @test:Config {}
 isolated function testAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: dave");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:xxy";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: alice");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationSuccess() {
     string usernameAndPassword = "alice:xxx";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "alice");
         test:assertEquals(result.scopes, ["read", "write"]);
@@ -56,7 +64,7 @@ isolated function testAuthenticationSuccess() {
 @test:Config {}
 isolated function testAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -67,7 +75,7 @@ isolated function testAuthenticationWithEmptyUsername() {
 @test:Config {}
 isolated function testAuthenticationWithEmptyPassword() {
     string usernameAndPassword = "alice:";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -78,7 +86,7 @@ isolated function testAuthenticationWithEmptyPassword() {
 @test:Config {}
 isolated function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
     string usernameAndPassword = "invalid:";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -89,7 +97,7 @@ isolated function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
 @test:Config {}
 isolated function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
@@ -100,7 +108,7 @@ isolated function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
 @test:Config {}
 isolated function testAuthenticationSha256() {
     string usernameAndPassword = "hashedSha256:xxx";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "hashedSha256");
         test:assertEquals(result.scopes, ["read"]);
@@ -112,14 +120,18 @@ isolated function testAuthenticationSha256() {
 @test:Config {}
 isolated function testAuthenticationSha256Negative() {
     string usernameAndPassword = "hashedSha256:invalid";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: hashedSha256");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationSha384() {
     string usernameAndPassword = "hashedSha384:xxx";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "hashedSha384");
         test:assertEquals(result.scopes, ["read"]);
@@ -131,14 +143,18 @@ isolated function testAuthenticationSha384() {
 @test:Config {}
 isolated function testAuthenticationSha384Negative() {
     string usernameAndPassword = "hashedSha384:invalid";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: hashedSha384");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationSha512() {
     string usernameAndPassword = "hashedSha512:xxx";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "hashedSha512");
         test:assertEquals(result.scopes, ["read"]);
@@ -150,14 +166,18 @@ isolated function testAuthenticationSha512() {
 @test:Config {}
 isolated function testAuthenticationSha512Negative() {
     string usernameAndPassword = "hashedSha512:invalid";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: hashedSha512");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationWithPlainTextCredentials() {
     string usernameAndPassword = "peter:plain-password";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
+    UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "peter");
         test:assertEquals(result.scopes, ["update", "write"]);
@@ -169,14 +189,18 @@ isolated function testAuthenticationWithPlainTextCredentials() {
 @test:Config {}
 isolated function testAuthenticationPlainWithPlainTextCredentialsNegative() {
     string usernameAndPassword = "peter:plain-password ";
-    UserDetails|Error? result = authenticate(usernameAndPassword);
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: peter");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
 @test:Config {}
 isolated function testAuthenticationWithCustomTableName() {
     string usernameAndPassword = "eve:123";
-    UserDetails|Error? result = authenticate(usernameAndPassword, "custom.users");
+    UserDetails|Error result = authenticate(usernameAndPassword, "custom.users");
     if (result is UserDetails) {
         test:assertEquals(result.username, "eve");
         test:assertEquals(result.scopes, []);
@@ -188,11 +212,15 @@ isolated function testAuthenticationWithCustomTableName() {
 @test:Config {}
 isolated function testAuthenticationWithNonExistingTableName() {
     string usernameAndPassword = "eve:123";
-    UserDetails|Error? result = authenticate(usernameAndPassword, "invalid.table");
-    test:assertTrue(result is ());
+    UserDetails|Error result = authenticate(usernameAndPassword, "invalid.table");
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed authentication file user store with username: eve");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }
 
-isolated function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error? {
+isolated function authenticate(string usernameAndPassword, string? tableName = ()) returns UserDetails|Error {
     ListenerFileUserStoreBasicAuthProvider basicAuthProvider;
     if (tableName is string) {
         basicAuthProvider = new({ tableName: tableName });

@@ -17,9 +17,10 @@
 import ballerina/config;
 import ballerina/crypto;
 
-# Represents the inbound Basic Authentication configurations.
+# Represents the file user store configurations.
 #
 # + tableName - The table name specified in the user-store TOML configuration
+# + scopeKey - The key used for define scopes in the user-store TOML configuration
 public type FileUserStoreConfig record {|
     // TODO: Support path
     // string path;
@@ -27,6 +28,10 @@ public type FileUserStoreConfig record {|
     string scopeKey = CONFIG_SCOPE_SECTION;
 |};
 
+# Represents the details of the authenticated user.
+#
+# + username - The username of the authenticated user
+# + scopes - The scopes of the authenticated user
 public type UserDetails record {|
     string username;
     string[] scopes;
@@ -46,6 +51,8 @@ public type UserDetails record {|
 # ```
 public class ListenerFileUserStoreBasicAuthProvider {
 
+    *ListenerBasicAuthProvider;
+
     FileUserStoreConfig fileUserStoreConfig;
 
     # Provides authentication based on the provided configurations.
@@ -63,7 +70,7 @@ public class ListenerFileUserStoreBasicAuthProvider {
     # + credential - Base64-encoded `username:password` value
     # + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` occurred
     #             while authenticating the credentials
-    public isolated function authenticate(string credential) returns UserDetails|Error? {
+    public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {
             return prepareError("Credential cannot be empty.");
         }
@@ -78,6 +85,7 @@ public class ListenerFileUserStoreBasicAuthProvider {
             };
             return userDetails;
         }
+        return prepareError("Failed authentication file user store with username: " + username);
     }
 }
 
