@@ -94,8 +94,6 @@ public class InitLdapConnection {
                 StringUtils.fromString(LdapConstants.CONNECTION_TIME_OUT_IN_MILLIS)).intValue());
         commonLdapConfiguration.setReadTimeoutInMillis(authProviderConfig.getIntValue(
                 StringUtils.fromString(LdapConstants.READ_TIME_OUT_IN_MILLIS)).intValue());
-        commonLdapConfiguration.setRetryAttempts(authProviderConfig.getIntValue(
-                StringUtils.fromString(LdapConstants.RETRY_ATTEMPTS)).intValue());
 
         BMap<BString, Object> sslConfig = authProviderConfig.containsKey(
                 StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) ?

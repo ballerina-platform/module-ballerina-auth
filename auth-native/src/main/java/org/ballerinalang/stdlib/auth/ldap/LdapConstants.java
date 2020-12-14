@@ -36,7 +36,6 @@ public class LdapConstants {
     public static final String CONNECTION_POOLING_ENABLED = "connectionPoolingEnabled";
     public static final String CONNECTION_TIME_OUT_IN_MILLIS = "connectionTimeoutInMillis";
     public static final String READ_TIME_OUT_IN_MILLIS = "readTimeoutInMillis";
-    public static final String RETRY_ATTEMPTS = "retryAttempts";
 
     // Filter attribute in LDAP auth store configs that filters users by user name
     public static final String USER_NAME_SEARCH_FILTER = "userNameSearchFilter";

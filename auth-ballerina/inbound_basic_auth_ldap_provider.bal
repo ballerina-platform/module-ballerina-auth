@@ -17,6 +17,7 @@
 import ballerina/crypto;
 import ballerina/java;
 
+// TODO: Group the configuration under connection, user, group sections
 # Represents the configurations that are required for an LDAP auth store.
 #
 # + domainName - Unique name to identify the user store
@@ -38,7 +39,6 @@ import ballerina/java;
 # + connectionPoolingEnabled - Define whether LDAP connection pooling is enabled
 # + connectionTimeoutInMillis - Timeout (in milliseconds) in making the initial LDAP connection
 # + readTimeoutInMillis - Reading timeout in milliseconds for LDAP operations
-# + retryAttempts - Retry the authentication request if a timeout happened
 # + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to
 #                  communicate through LDAPs
 public type LdapConnectionConfig record {|
@@ -61,7 +61,6 @@ public type LdapConnectionConfig record {|
     boolean connectionPoolingEnabled = true;
     int connectionTimeoutInMillis = 5000;
     int readTimeoutInMillis = 60000;
-    int retryAttempts = 0;
     SecureSocket secureSocket?;
 |};
 
