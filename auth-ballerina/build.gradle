@@ -131,7 +131,7 @@ task ballerinaTest {
         into file("$project.projectDir/tests/resources")
     }
 
-    // Define config parameters used for basic authentication test cases.
+    // Define config parameters used for Basic Auth authentication test cases.
     def configParams = "--b7a.config.file=$project.projectDir/tests/resources/datafiles/ballerina.conf";
     configParams += " --b7a.config.secret=$project.projectDir/tests/resources/secret.txt";
 

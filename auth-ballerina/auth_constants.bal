@@ -29,12 +29,6 @@ public const string CONFIG_PREFIX_SHA384 = "@sha384:";
 # Prefix used to denote that the config value is a SHA-512 hash.
 public const string CONFIG_PREFIX_SHA512 = "@sha512:";
 
-//# Prefix used to denote Basic Authentication scheme.
-//public const string AUTH_SCHEME_BASIC = "Basic ";
-//
-//# The prefix used to denote the Bearer Authentication scheme.
-//public const string AUTH_SCHEME_BEARER = "Bearer ";
-
 # The table name specified in the user section of the TOML configuration.
 const string CONFIG_USER_SECTION = "b7a.users";
 

@@ -14,8 +14,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-# Represents the listener basic auth provider, which could be used to authenticate credentials.
-# The `auth:ListenerBasicAuthProvider` acts as the interface for all the basic auth inbound authentication providers.
+# Represents the listener Basic Auth provider, which could be used to authenticate credentials.
+# The `auth:ListenerBasicAuthProvider` acts as the interface for all the Basic Auth listener authentication providers.
 # Any type of implementation such as file store, LDAP user store, in memory user store, JDBC user store etc. should be
 # object-wise similar.
 public type ListenerBasicAuthProvider object {

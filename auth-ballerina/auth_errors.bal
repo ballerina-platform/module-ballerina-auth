@@ -16,18 +16,18 @@
 
 import ballerina/log;
 
-# Represents the Auth error. This will be returned if an error occurred while inbound auth providers
-# try to authenticate the received credentials and outbound auth providers try to generate the token.
+# Represents the Auth error. This will be returned if an error occurred while listener Basic Auth providers
+# try to authenticate the received credentials and client Basic Auth provider try to generate the token.
 public type AuthError distinct error;
 
 # Represents the Auth module related error.
 public type Error AuthError;
 
-# Log and prepare `error` as a `Error`.
+# Log and prepare `error` as a `auth:Error`.
 #
 # + message - Error message
 # + err - `error` instance
-# + return - Prepared `Error` instance
+# + return - Prepared `auth:Error` instance
 isolated function prepareError(string message, error? err = ()) returns Error {
     log:printError(message, err = err);
     Error authError;

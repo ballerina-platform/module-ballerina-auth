@@ -37,10 +37,13 @@ public type UserDetails record {|
     string[] scopes;
 |};
 
-# Represents the configuration file based inbound Basic Auth provider, which is an implementation of the
-# `auth:InboundAuthProvider` interface.
+# Represents the configuration file based listener Basic Auth provider, which is an implementation of the
+# `auth:ListenerBasicAuthProvider` object.
 # ```ballerina
-#  auth:InboundBasicAuthProvider inboundBasicAuthProvider = new;
+#  auth:FileUserStoreConfig config = {
+#      path: "/path/to/toml/file"
+#  };
+#  auth:ListenerFileUserStoreBasicAuthProvider provider = new(config);
 #  ```
 # A user is denoted by a section in the Ballerina configuration file. The password and the scopes assigned to the user
 # are denoted as keys under the relevant user section as shown below.
@@ -57,19 +60,19 @@ public class ListenerFileUserStoreBasicAuthProvider {
 
     # Provides authentication based on the provided configurations.
     #
-    # + basicAuthConfig - Basic Auth provider configurations
+    # + fileUserStoreConfig - file user store configurations
     public isolated function init(FileUserStoreConfig fileUserStoreConfig) {
         self.fileUserStoreConfig = fileUserStoreConfig;
     }
 
-    # Attempts to authenticate the base64-encoded `username:password` credentials.
+    # Authenticate the base64-encoded `username:password` credentials.
     # ```ballerina
-    # boolean|auth:Error authenticationResult = inboundBasicAuthProvider.authenticate("<credential>");
+    # auth:UserDetails|auth:Error result = provider.authenticate("<credential>");
     # ```
     #
     # + credential - Base64-encoded `username:password` value
-    # + return - `true` if the authentication is successful, `false` otherwise, or else an `auth:Error` occurred
-    #             while authenticating the credentials
+    # + return - `auth:UserDetails` if the authentication is successful, `auth:Error` in case of an error of
+    #            authentication failure
     public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {
             return prepareError("Credential cannot be empty.");
@@ -89,6 +92,7 @@ public class ListenerFileUserStoreBasicAuthProvider {
     }
 }
 
+// Check the password equality of token password and configuration password
 isolated function checkPasswordEquality(string passwordFromConfig, string passwordFromToken) returns boolean {
     // This check is added to avoid having to go through multiple condition evaluations, when value is plain text.
     if (passwordFromConfig.startsWith(CONFIG_PREFIX)) {

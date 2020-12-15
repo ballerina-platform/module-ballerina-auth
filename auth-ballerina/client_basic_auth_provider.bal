@@ -14,22 +14,23 @@
 // specific language governing permissions and limitations
 // under the License.
 
-# Represents the Basic Authentication configurations, which are used by the HTTP endpoint.
+# Represents the Basic Auth authentication configurations.
 #
-# + username - Username for Basic authentication
-# + password - Password for Basic authentication
+# + username - Username for Basic Auth authentication
+# + password - Password for Basic Auth authentication
 public type Credential record {|
     string username;
     string password;
 |};
 
-# Represents the outbound Basic Auth authenticator, which is an implementation of the `auth:OutboundAuthProvider` interface.
-# This uses the usernames and passwords provided by the Ballerina configurations to authenticate external endpoints.
+# Represents the client Basic Auth provider. This uses the `auth:Credential` configuration provided and generes the
+# token for Basic Auth authentication.
 # ```ballerina
-#  auth:OutboundBasicAuthProvider outboundBasicAuthProvider = new({
+#  auth:Credential config = {
 #      username: "tom",
 #      password: "123"
-#  });
+#  }
+#  auth:ClientBasicAuthProvider provider = new(config);
 #  ```
 public class ClientBasicAuthProvider {
 
@@ -42,9 +43,9 @@ public class ClientBasicAuthProvider {
         self.credential = credential;
     }
 
-    # Generates a token for Basic authentication.
+    # Generates a token for Basic Auth authentication.
     # ```ballerina
-    # string|auth:Error token = outboundBasicAuthProvider.generateToken();
+    # string|auth:Error token = provider.generateToken();
     # ```
     #
     # + return - The generated token or else an `auth:Error` occurred during the validation
