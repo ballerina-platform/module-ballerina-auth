@@ -23,18 +23,11 @@ public type AuthError distinct error;
 # Represents the Auth module related error.
 public type Error AuthError;
 
-# Log and prepare `error` as a `auth:Error`.
-#
-# + message - Error message
-# + err - `error` instance
-# + return - Prepared `auth:Error` instance
+// Logs and prepares the `error` as an `auth:Error`.
 isolated function prepareError(string message, error? err = ()) returns Error {
     log:printError(message, err = err);
-    Error authError;
     if (err is error) {
-        authError = AuthError(message, err);
-    } else {
-        authError = AuthError(message);
+        return AuthError(message, err);
     }
-    return authError;
+    return AuthError(message);
 }

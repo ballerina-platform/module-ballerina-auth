@@ -14,10 +14,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-//import ballerina/cache;
 import ballerina/lang.'array;
 import ballerina/lang.'string;
-//import ballerina/log;
 import ballerina/stringutils;
 
 # Extracts the username and the password from the base64-encoded `username:password` value.
@@ -54,104 +52,3 @@ isolated function convertToArray(string commaSeperatedString) returns string[] {
     }
     return stringutils:split(commaSeperatedString, ",");
 }
-
-//# Checks whether the scopes of the user match the scopes of the resource.
-//#
-//# + resourceScopes - Scopes of the resource
-//# + userScopes - Scopes of the user
-//# + authzCacheKey - Authorization cache key
-//# + positiveAuthzCache - The `cache:Cache` for positive authorizations
-//# + negativeAuthzCache - The `cache:Cache` for negative authorizations
-//# + return - `true` if there is a match between the resource and user scopes or else `false` otherwise
-//public isolated function checkForScopeMatch(string[]|string[][] resourceScopes, string[] userScopes,
-//                                            string authzCacheKey, cache:Cache? positiveAuthzCache,
-//                                            cache:Cache? negativeAuthzCache) returns boolean {
-//    boolean? authorizedFromCache = authorizeFromCache(authzCacheKey, positiveAuthzCache, negativeAuthzCache);
-//    if (authorizedFromCache is boolean) {
-//        return authorizedFromCache;
-//    }
-//    if (userScopes.length() > 0) {
-//        boolean authorized = true;
-//        if (resourceScopes is string[]) {
-//            authorized = matchScopes(resourceScopes, userScopes);
-//        } else {
-//            foreach string[] resourceScope in resourceScopes {
-//                authorized = authorized && matchScopes(resourceScope, userScopes);
-//            }
-//        }
-//        cacheAuthzResult(authorized, authzCacheKey, positiveAuthzCache, negativeAuthzCache);
-//        return authorized;
-//    }
-//    return false;
-//}
-
-//# Tries to retrieve an authorization decision from the cached information if any.
-//#
-//# + authzCacheKey - Cache key
-//# + positiveAuthzCache - Cache for positive authorizations
-//# + negativeAuthzCache - Cache for negative authorizations
-//# + return - `true` or `false` in case of a cache hit or else `()` in case of a cache miss
-//isolated function authorizeFromCache(string authzCacheKey, cache:Cache? positiveAuthzCache, cache:Cache? negativeAuthzCache)
-//                            returns boolean? {
-//    cache:Cache? pCache = positiveAuthzCache;
-//    if (pCache is cache:Cache) {
-//        any|cache:Error positiveCacheResponse = pCache.get(authzCacheKey);
-//        if (positiveCacheResponse is boolean) {
-//            return true;
-//        }
-//    }
-//
-//    cache:Cache? nCache = negativeAuthzCache;
-//    if (nCache is cache:Cache) {
-//        any|cache:Error negativeCacheResponse = nCache.get(authzCacheKey);
-//        if (negativeCacheResponse is boolean) {
-//            return false;
-//        }
-//    }
-//    return ();
-//}
-
-//# Caches the authorization result.
-//#
-//# + authorized - The `boolean` flag to indicate the authorization decision
-//# + authzCacheKey - Cache key
-//# + positiveAuthzCache - The `cache:Cache` for positive authorizations
-//# + negativeAuthzCache - The `cache:Cache` for negative authorizations
-//isolated function cacheAuthzResult(boolean authorized, string authzCacheKey, cache:Cache? positiveAuthzCache,
-//                                   cache:Cache? negativeAuthzCache) {
-//    if (authorized) {
-//        cache:Cache? pCache = positiveAuthzCache;
-//        if (pCache is cache:Cache) {
-//            cache:Error? result = pCache.put(authzCacheKey, authorized);
-//            if (result is cache:Error) {
-//                log:printDebug("Failed to add entry to positive authz cache");
-//                return;
-//            }
-//        }
-//    } else {
-//        cache:Cache? nCache = negativeAuthzCache;
-//        if (nCache is cache:Cache) {
-//            cache:Error? result = nCache.put(authzCacheKey, authorized);
-//            if (result is cache:Error) {
-//                log:printDebug("Failed to add entry to negative authz cache");
-//                return;
-//            }
-//         }
-//    }
-//}
-
-//# Tries to find a match between the two scope arrays.
-//#
-//# + resourceScopes - Scopes of the resource
-//# + userScopes - Scopes of the user
-//# + return - `true` if one of the resourceScopes can be found at `userScopes` or else `false` otherwise
-//isolated function matchScopes(string[] resourceScopes, string[] userScopes) returns boolean {
-//    foreach string resourceScope in resourceScopes {
-//        foreach string userScope in userScopes {
-//            if (resourceScope == userScope) {
-//                return true;
-//            }
-//        }
-//    }
-//    return false;
-//}
