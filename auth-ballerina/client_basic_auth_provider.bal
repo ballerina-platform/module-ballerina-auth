@@ -14,19 +14,19 @@
 // specific language governing permissions and limitations
 // under the License.
 
-# Represents the Basic Auth authentication configurations.
+# Represents credentials for Basic Auth authentication.
 #
 # + username - Username for Basic Auth authentication
 # + password - Password for Basic Auth authentication
-public type Credential record {|
+public type CredentialsConfig record {|
     string username;
     string password;
 |};
 
-# Represents the client Basic Auth provider. This uses the `auth:Credential` configuration provided and generes the
+# Represents the client Basic Auth provider. This uses the `auth:CredentialsConfig` configuration provided and generes the
 # token for Basic Auth authentication.
 # ```ballerina
-#  auth:Credential config = {
+#  auth:CredentialsConfig config = {
 #      username: "tom",
 #      password: "123"
 #  }
@@ -34,13 +34,13 @@ public type Credential record {|
 #  ```
 public class ClientBasicAuthProvider {
 
-    Credential credential;
+    CredentialsConfig credentialsConfig;
 
     # Provides authentication based on the provided Basic Auth configurations.
     #
-    # + credential - Credential configurations
-    public isolated function init(Credential credential) {
-        self.credential = credential;
+    # + credentialsConfig - Credential configurations
+    public isolated function init(CredentialsConfig credentialsConfig) {
+        self.credentialsConfig = credentialsConfig;
     }
 
     # Generates a token for Basic Auth authentication.
@@ -50,10 +50,10 @@ public class ClientBasicAuthProvider {
     #
     # + return - The generated token or else an `auth:Error` occurred during the validation
     public isolated function generateToken() returns string|Error {
-        if (self.credential.username == "" || self.credential.password == "") {
+        if (self.credentialsConfig.username == "" || self.credentialsConfig.password == "") {
             return prepareError("Username or password cannot be empty.");
         }
-        string token = self.credential.username + ":" + self.credential.password;
+        string token = self.credentialsConfig.username + ":" + self.credentialsConfig.password;
         return token.toBytes().toBase64();
     }
 }
