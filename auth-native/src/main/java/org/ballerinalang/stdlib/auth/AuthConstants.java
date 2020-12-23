@@ -18,16 +18,9 @@
 
 package org.ballerinalang.stdlib.auth;
 
-import io.ballerina.runtime.api.Module;
-
-import static io.ballerina.runtime.api.constants.RuntimeConstants.BALLERINA_BUILTIN_PKG_PREFIX;
-
 /**
  * Constants related to ballerina/auth stdlib.
  */
 public class AuthConstants {
-
-    public static final String PACKAGE_NAME = "auth";
-    public static final Module AUTH_PACKAGE_ID = new Module(BALLERINA_BUILTIN_PKG_PREFIX, PACKAGE_NAME, "1.0.4");
     public static final String AUTH_ERROR_TYPE = "AuthError";
 }

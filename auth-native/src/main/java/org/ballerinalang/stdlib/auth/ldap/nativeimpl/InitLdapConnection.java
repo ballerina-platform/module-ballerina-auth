@@ -22,7 +22,7 @@ import io.ballerina.runtime.api.creators.ValueCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
-import org.ballerinalang.stdlib.auth.AuthConstants;
+import org.ballerinalang.stdlib.auth.ModuleUtils;
 import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
 import org.ballerinalang.stdlib.auth.ldap.ConnectionContext;
 import org.ballerinalang.stdlib.auth.ldap.LdapConstants;
@@ -108,7 +108,7 @@ public class InitLdapConnection {
             DirContext dirContext = connectionSource.getContext();
 
             BMap<BString, Object> ldapConnectionRecord = ValueCreator.
-                    createRecordValue(AuthConstants.AUTH_PACKAGE_ID, LdapConstants.LDAP_CONNECTION);
+                    createRecordValue(ModuleUtils.getModule(), LdapConstants.LDAP_CONNECTION);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONFIGURATION, commonLdapConfiguration);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_SOURCE, connectionSource);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_CONTEXT, dirContext);
