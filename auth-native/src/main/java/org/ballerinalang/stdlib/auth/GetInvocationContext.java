@@ -33,7 +33,7 @@ public class GetInvocationContext {
         BMap<BString, Object> invocationContext =
                 (BMap<BString, Object>) env.getStrandLocal(Constants.AUTH_INVOCATION_CONTEXT_PROPERTY);
         if (invocationContext == null) {
-            invocationContext = ValueCreator.createRecordValue(Constants.AUTH_PACKAGE_ID,
+            invocationContext = ValueCreator.createRecordValue(ModuleUtils.getModule(),
                                                                Constants.RECORD_TYPE_INVOCATION_CONTEXT);
             env.setStrandLocal(Constants.AUTH_INVOCATION_CONTEXT_PROPERTY, invocationContext);
         }
