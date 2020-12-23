@@ -22,8 +22,6 @@ import ballerina/crypto;
 # + tableName - The table name specified in the user-store TOML configuration
 # + scopeKey - The key used for define scopes in the user-store TOML configuration
 public type FileUserStoreConfig record {|
-    // TODO: Support path
-    // string path;
     string tableName = CONFIG_USER_SECTION;
     string scopeKey = CONFIG_SCOPE_SECTION;
 |};
@@ -61,7 +59,7 @@ public class ListenerFileUserStoreBasicAuthProvider {
     # Provides authentication based on the provided configurations.
     #
     # + fileUserStoreConfig - file user store configurations
-    public isolated function init(FileUserStoreConfig fileUserStoreConfig) {
+    public isolated function init(FileUserStoreConfig fileUserStoreConfig = {}) {
         self.fileUserStoreConfig = fileUserStoreConfig;
     }
 
