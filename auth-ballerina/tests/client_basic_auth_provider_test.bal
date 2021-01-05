@@ -17,8 +17,8 @@
 import ballerina/test;
 
 @test:Config {}
-function testTokenGeneration() {
-    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
+isolated function testTokenGeneration() {
+    ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is string) {
         test:assertEquals(result, "dG9tOjEyMw==");
@@ -28,8 +28,8 @@ function testTokenGeneration() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyUsername() {
-    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
+isolated function testTokenGenerationWithEmptyUsername() {
+    ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
@@ -39,8 +39,8 @@ function testTokenGenerationWithEmptyUsername() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyPassword() {
-    OutboundBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
+isolated function testTokenGenerationWithEmptyPassword() {
+    ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
@@ -50,8 +50,8 @@ function testTokenGenerationWithEmptyPassword() {
 }
 
 @test:Config {}
-function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
-    OutboundBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
+isolated function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
+    ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
     string|Error result = basicAuthProvider.generateToken();
     if (result is Error) {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
