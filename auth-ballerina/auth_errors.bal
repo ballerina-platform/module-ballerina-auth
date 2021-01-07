@@ -27,7 +27,7 @@ public type Error AuthError;
 isolated function prepareError(string message, error? err = ()) returns Error {
     log:printError(message, err = err);
     if (err is error) {
-        return AuthError(message, err);
+        return error AuthError(message, err);
     }
-    return AuthError(message);
+    return error AuthError(message);
 }
