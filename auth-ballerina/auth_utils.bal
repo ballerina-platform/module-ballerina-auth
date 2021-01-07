@@ -32,7 +32,7 @@ public isolated function extractUsernameAndPassword(string credential) returns [
         return prepareError(base64Decoded.message(), base64Decoded);
     }
 
-    string|error base64DecodedResults = 'string:fromBytes(<byte[]>base64Decoded);
+    string|error base64DecodedResults = 'string:fromBytes(checkpanic base64Decoded);
     if (base64DecodedResults is string) {
         string[] decodedCredentials = stringutils:split(base64DecodedResults, ":");
         if (decodedCredentials.length() != 2 || decodedCredentials[0].length() == 0) {

@@ -144,7 +144,7 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         }
         UserDetails userDetails = {
             username: username,
-            scopes: <string[]>groups
+            scopes: checkpanic groups
         };
         return userDetails;
     }
