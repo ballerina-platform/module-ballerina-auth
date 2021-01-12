@@ -115,8 +115,6 @@ public class InitLdapConnection {
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_SOURCE, connectionSource);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_CONTEXT, dirContext);
             ldapConnectionRecord.addNativeData(LdapConstants.ENDPOINT_INSTANCE_ID, instanceId);
-            ldapConnectionRecord.put(StringUtils.fromString(LdapConstants.ENDPOINT_INSTANCE_ID),
-                                     StringUtils.fromString(instanceId));
             return ldapConnectionRecord;
         } catch (KeyStoreException | KeyManagementException | NoSuchAlgorithmException
                 | CertificateException | NamingException | IOException | IllegalArgumentException e) {
