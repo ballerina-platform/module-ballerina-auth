@@ -38,6 +38,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
@@ -50,9 +51,10 @@ import javax.net.ssl.SSLContext;
  */
 public class InitLdapConnection {
 
-    public static Object initLdapConnection(BMap<BString, Object> authProviderConfig, BString instanceId) {
+    public static Object initLdapConnection(BMap<BString, Object> authProviderConfig) {
         CommonLdapConfiguration commonLdapConfiguration = new CommonLdapConfiguration();
 
+        String instanceId = UUID.randomUUID().toString();
         commonLdapConfiguration.setDomainName(authProviderConfig.getStringValue(
                 StringUtils.fromString(LdapConstants.DOMAIN_NAME)).getValue());
         commonLdapConfiguration.setConnectionURL(authProviderConfig.getStringValue(
@@ -101,8 +103,8 @@ public class InitLdapConnection {
                         StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) : null;
         try {
             if (sslConfig != null) {
-                setSslConfig(sslConfig, commonLdapConfiguration, instanceId.getValue());
-                LdapUtils.setServiceName(instanceId.getValue());
+                setSslConfig(sslConfig, commonLdapConfiguration, instanceId);
+                LdapUtils.setServiceName(instanceId);
             }
             ConnectionContext connectionSource = new ConnectionContext(commonLdapConfiguration);
             DirContext dirContext = connectionSource.getContext();
@@ -112,9 +114,9 @@ public class InitLdapConnection {
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONFIGURATION, commonLdapConfiguration);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_SOURCE, connectionSource);
             ldapConnectionRecord.addNativeData(LdapConstants.LDAP_CONNECTION_CONTEXT, dirContext);
-            ldapConnectionRecord.addNativeData(LdapConstants.ENDPOINT_INSTANCE_ID, instanceId.getValue());
+            ldapConnectionRecord.addNativeData(LdapConstants.ENDPOINT_INSTANCE_ID, instanceId);
             ldapConnectionRecord.put(StringUtils.fromString(LdapConstants.ENDPOINT_INSTANCE_ID),
-                                     StringUtils.fromString(instanceId.getValue()));
+                                     StringUtils.fromString(instanceId));
             return ldapConnectionRecord;
         } catch (KeyStoreException | KeyManagementException | NoSuchAlgorithmException
                 | CertificateException | NamingException | IOException | IllegalArgumentException e) {
