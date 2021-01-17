@@ -16,7 +16,7 @@
 
 import ballerina/lang.'array;
 import ballerina/lang.'string;
-import ballerina/stringutils;
+import ballerina/regex;
 
 # Extracts the username and the password from the base64-encoded `username:password` value.
 # ```ballerina
@@ -34,7 +34,7 @@ public isolated function extractUsernameAndPassword(string credential) returns [
 
     string|error base64DecodedResults = 'string:fromBytes(checkpanic base64Decoded);
     if (base64DecodedResults is string) {
-        string[] decodedCredentials = stringutils:split(base64DecodedResults, ":");
+        string[] decodedCredentials = regex:split(base64DecodedResults, ":");
         if (decodedCredentials.length() != 2 || decodedCredentials[0].length() == 0) {
             return prepareError("Incorrect credential format. Format should be username:password");
         } else {
@@ -50,5 +50,5 @@ isolated function convertToArray(string commaSeperatedString) returns string[] {
     if (commaSeperatedString.length() == 0) {
         return [];
     }
-    return stringutils:split(commaSeperatedString, ",");
+    return regex:split(commaSeperatedString, ",");
 }
