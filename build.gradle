@@ -34,7 +34,6 @@ ext.stdlibRegexVersion = project.stdlibRegexVersion
 // Transitive dependencies
 ext.stdlibIoVersion = project.stdlibIoVersion
 ext.stdlibOsVersion = project.stdlibOsVersion
-ext.stdlibRuntimeVersion = project.stdlibRuntimeVersion
 ext.stdlibTaskVersion = project.stdlibTaskVersion
 ext.stdlibTimeVersion = project.stdlibTimeVersion
 
@@ -114,13 +113,6 @@ allprojects {
             }
         }
         maven {
-            url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-runtime'
-            credentials {
-                username System.getenv("packageUser")
-                password System.getenv("packagePAT")
-            }
-        }
-        maven {
             url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-task'
             credentials {
                 username System.getenv("packageUser")
@@ -153,7 +145,6 @@ subprojects {
         // Transitive dependencies
         ballerinaStdLibs "org.ballerinalang:io-ballerina:${stdlibIoVersion}"
         ballerinaStdLibs "org.ballerinalang:os-ballerina:${stdlibOsVersion}"
-        ballerinaStdLibs "org.ballerinalang:runtime-ballerina:${stdlibRuntimeVersion}"
         ballerinaStdLibs "org.ballerinalang:task-ballerina:${stdlibTaskVersion}"
         ballerinaStdLibs "org.ballerinalang:time-ballerina:${stdlibTimeVersion}"
     }
