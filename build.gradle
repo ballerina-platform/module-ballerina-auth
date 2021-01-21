@@ -27,13 +27,10 @@ ext.puppycrawlCheckstyleVersion = project.puppycrawlCheckstyleVersion
 ext.slf4jVersion = project.slf4jVersion
 ext.ballerinaLangVersion = project.ballerinaLangVersion
 ext.stdlibCacheVersion = project.stdlibCacheVersion
-ext.stdlibConfigVersion = project.stdlibConfigVersion
 ext.stdlibCryptoVersion = project.stdlibCryptoVersion
 ext.stdlibLogVersion = project.stdlibLogVersion
 ext.stdlibRegexVersion = project.stdlibRegexVersion
 // Transitive dependencies
-ext.stdlibIoVersion = project.stdlibIoVersion
-ext.stdlibOsVersion = project.stdlibOsVersion
 ext.stdlibTaskVersion = project.stdlibTaskVersion
 ext.stdlibTimeVersion = project.stdlibTimeVersion
 
@@ -70,13 +67,6 @@ allprojects {
             }
         }
         maven {
-            url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-config'
-            credentials {
-                username System.getenv("packageUser")
-                password System.getenv("packagePAT")
-            }
-        }
-        maven {
             url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-crypto'
             credentials {
                 username System.getenv("packageUser")
@@ -98,20 +88,6 @@ allprojects {
             }
         }
         // Transitive dependencies
-        maven {
-            url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-io'
-            credentials {
-                username System.getenv("packageUser")
-                password System.getenv("packagePAT")
-            }
-        }
-        maven {
-            url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-os'
-            credentials {
-                username System.getenv("packageUser")
-                password System.getenv("packagePAT")
-            }
-        }
         maven {
             url = 'https://maven.pkg.github.com/ballerina-platform/module-ballerina-task'
             credentials {
@@ -138,13 +114,10 @@ subprojects {
     dependencies {
         /* Standard libraries */
         ballerinaStdLibs "org.ballerinalang:cache-ballerina:${stdlibCacheVersion}"
-        ballerinaStdLibs "org.ballerinalang:config-ballerina:${stdlibConfigVersion}"
         ballerinaStdLibs "org.ballerinalang:crypto-ballerina:${stdlibCryptoVersion}"
         ballerinaStdLibs "org.ballerinalang:log-ballerina:${stdlibLogVersion}"
         ballerinaStdLibs "org.ballerinalang:regex-ballerina:${stdlibRegexVersion}"
         // Transitive dependencies
-        ballerinaStdLibs "org.ballerinalang:io-ballerina:${stdlibIoVersion}"
-        ballerinaStdLibs "org.ballerinalang:os-ballerina:${stdlibOsVersion}"
         ballerinaStdLibs "org.ballerinalang:task-ballerina:${stdlibTaskVersion}"
         ballerinaStdLibs "org.ballerinalang:time-ballerina:${stdlibTimeVersion}"
     }
