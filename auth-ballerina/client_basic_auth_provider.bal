@@ -23,8 +23,8 @@ public type CredentialsConfig record {|
     string password;
 |};
 
-# Represents the client Basic Auth provider. This uses the `auth:CredentialsConfig` configuration provided and generes the
-# token for Basic Auth authentication.
+# Represents the client Basic Auth provider. This uses the `auth:CredentialsConfig` configurations provided and generes
+# the token for Basic Auth authentication.
 # ```ballerina
 #  auth:CredentialsConfig config = {
 #      username: "tom",

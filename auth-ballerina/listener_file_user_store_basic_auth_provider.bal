@@ -22,14 +22,14 @@
 //
 //# Represents the file user store configurations.
 //#
-//# + tableName - The table name specified in the user-store TOML configuration
-//# + scopeKey - The key used for define scopes in the user-store TOML configuration
+//# + tableName - The table name specified in the user-store TOML configurationss
+//# + scopeKey - The key used for define scopes in the user-store TOML configurations
 //public type FileUserStoreConfig record {|
 //    string tableName = CONFIG_USER_SECTION;
 //    string scopeKey = CONFIG_SCOPE_SECTION;
 //|};
 //
-//# Represents the configuration file based listener Basic Auth provider, which is an implementation of the
+//# Represents the file user store based listener Basic Auth provider, which is an implementation of the
 //# `auth:ListenerBasicAuthProvider` object.
 //# ```ballerina
 //#  auth:FileUserStoreConfig config = {
@@ -37,7 +37,7 @@
 //#  };
 //#  auth:ListenerFileUserStoreBasicAuthProvider provider = new(config);
 //#  ```
-//# A user is denoted by a section in the Ballerina configuration file. The password and the scopes assigned to the user
+//# A user is denoted by a section in the Ballerina configurations file. The password and the scopes assigned to the user
 //# are denoted as keys under the relevant user section as shown below.
 //# ```
 //# [b7a.users.<username>]

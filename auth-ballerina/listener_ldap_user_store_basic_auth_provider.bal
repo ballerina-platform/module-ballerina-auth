@@ -17,7 +17,6 @@
 import ballerina/crypto;
 import ballerina/jballerina.java;
 
-// TODO: Group the configuration under connection, user, group sections
 # Represents the configurations that are required for an LDAP user store.
 #
 # + domainName - Unique name to identify the user store
