@@ -20,7 +20,7 @@ import ballerina/jballerina.java;
 # Represents the configurations that are required for an LDAP user store.
 #
 # + domainName - Unique name to identify the user store
-# + connectionURL - Connection URL of the LDAP server
+# + connectionUrl - Connection URL of the LDAP server
 # + connectionName - The username used to connect to the LDAP server
 # + connectionPassword - The password used to connect to the LDAP server
 # + userSearchBase - DN of the context or object under which the user entries are stored in the LDAP server
@@ -42,7 +42,7 @@ import ballerina/jballerina.java;
 #                  communicate through LDAPs
 public type LdapUserStoreConfig record {|
     string domainName;
-    string connectionURL;
+    string connectionUrl;
     string connectionName;
     string connectionPassword;
     string userSearchBase;
