@@ -6,11 +6,11 @@ Ballerina Auth Library
   [![Github issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-standard-library/module/auth.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-standard-library/labels/module%2Fauth)
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-The Auth library is one of the standard library modules of the<a target="_blank" href="https://ballerina.io/"> Ballerina</a> language.
+The Auth library is one of the standard library modules of the <a target="_blank" href="https://ballerina.io/">Ballerina</a> language.
 
-It provides the default authentication provider configurations, which can be extended to create new authentication providers and functions to interact with the `auth:InvocationContext`.
+It provides listener Basic authentication providers, which can be used to authenticate the provided credentials against a file user store or an LDAP user store, and a client Basic authentication provider, which can be used to authenticate against an external endpoint.
 
-For more information go to [The Auth Module](https://ballerina.io/swan-lake/learn/api-docs/ballerina/auth/index.html).
+For more information go to [The Auth Module](https://ballerina.io/swan-lake/learn/api-docs/ballerina/#/ballerina/auth/latest/auth/).
 
 For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/swan-lake/learn/by-example/).
 
@@ -31,7 +31,14 @@ This repository only contains the source code for the module.
    * [OpenJDK](https://adoptopenjdk.net)
    
         > **Note:** Set the JAVA_HOME environment variable to the path name of the directory into which you installed JDK.
-     
+
+2. Export Github Personal Access Token (PAT) with read package permissions as follows:
+
+    ```
+    export packageUser=<Username>
+    export packagePAT=<Personal Access Token>
+    ```
+
 ### Building the Source
 
 Execute the commands below to build from the source.
