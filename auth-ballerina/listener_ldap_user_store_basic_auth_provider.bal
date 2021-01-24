@@ -128,7 +128,9 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         boolean|Error authenticated = authenticateWithLdap(self.ldapConnection, username, password);
-        if (authenticated is Error) {
+        if (authenticated is boolean && !authenticated) {
+            return prepareError("Failed to authenticate LDAP user store with username: " + username);
+        } else if (authenticated is Error) {
             return prepareError("Failed to authenticate LDAP user store with username: " + username, authenticated);
         }
         string[]|Error groups = getLdapGroups(self.ldapConnection, username);

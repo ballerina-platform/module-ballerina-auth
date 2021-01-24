@@ -30,7 +30,7 @@ public class LdapConstants {
 
     public static final String DOMAIN_NAME = "domainName";
     // LDAP connection related constants
-    public static final String CONNECTION_URL = "connectionURL";
+    public static final String CONNECTION_URL = "connectionUrl";
     public static final String CONNECTION_NAME = "connectionName";
     public static final String CONNECTION_PASSWORD = "connectionPassword";
     public static final String CONNECTION_POOLING_ENABLED = "connectionPoolingEnabled";
