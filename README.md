@@ -10,9 +10,9 @@ The Auth library is one of the standard library modules of the <a target="_blank
 
 It provides listener Basic authentication providers, which can be used to authenticate the provided credentials against a file user store or an LDAP user store, and a client Basic authentication provider, which can be used to authenticate against an external endpoint.
 
-For more information go to [The Auth Module](https://ballerina.io/swan-lake/learn/api-docs/ballerina/#/ballerina/auth/latest/auth/).
+For more information go to [The Auth Module](https://ballerina.io/learn/api-docs/ballerina/#/ballerina/auth/latest/auth/).
 
-For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/swan-lake/learn/by-example/).
+For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).
 
 ## Issues and Projects
 
