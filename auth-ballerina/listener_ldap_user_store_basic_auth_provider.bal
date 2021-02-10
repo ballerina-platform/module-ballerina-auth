@@ -127,10 +127,8 @@ public class ListenerLdapUserStoreBasicAuthProvider {
             return prepareError("Credential cannot be empty.");
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
-        boolean|Error authenticated = authenticateWithLdap(self.ldapConnection, username, password);
-        if (authenticated is boolean && !authenticated) {
-            return prepareError("Failed to authenticate LDAP user store with username: " + username);
-        } else if (authenticated is Error) {
+        Error? authenticated = authenticateWithLdap(self.ldapConnection, username, password);
+        if (authenticated is Error) {
             return prepareError("Failed to authenticate LDAP user store with username: " + username, authenticated);
         }
         string[]|Error groups = getLdapGroups(self.ldapConnection, username);
@@ -153,7 +151,7 @@ isolated function getLdapGroups(LdapConnection ldapConnection, string username) 
 
 // Authenticates with the provided username and password.
 isolated function authenticateWithLdap(LdapConnection ldapConnection, string username, string password)
-                                       returns boolean|Error = @java:Method {
+                                       returns Error? = @java:Method {
     name: "authenticate",
     'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.Authenticate"
 } external;

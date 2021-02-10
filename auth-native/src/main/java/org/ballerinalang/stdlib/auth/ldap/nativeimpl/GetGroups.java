@@ -112,7 +112,7 @@ public class GetGroups {
         searchControls.setReturningAttributes(returnedAttributes);
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Reading roles with the membershipProperty Property: " + membershipProperty);
+            LOG.debug("Reading roles with the membershipProperty {}", membershipProperty);
         }
 
         List<String> list = getListOfNames(searchBase, searchFilter, searchControls, roleNameProperty,
@@ -124,8 +124,8 @@ public class GetGroups {
                                                SearchControls searchControls, String property,
                                                DirContext ldapConnectionContext) throws NamingException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Result for searchBase: " + searchBases + " searchFilter: " + searchFilter +
-                    " property:" + property + " appendDN: false");
+            LOG.debug("Result for searchBase: {}, searchFilter: {}, property: {}, appendDN: false",
+                      searchBases, searchFilter, property);
         }
 
         List<String> names = new ArrayList<>();
@@ -147,15 +147,9 @@ public class GetGroups {
                     for (Enumeration vals = attr.getAll(); vals.hasMoreElements(); ) {
                         String name = (String) vals.nextElement();
                         if (LOG.isDebugEnabled()) {
-                            LOG.debug("Found user: " + name);
+                            LOG.debug("Found user {}", name);
                         }
                         names.add(name);
-                    }
-                }
-
-                if (LOG.isDebugEnabled()) {
-                    for (String name : names) {
-                        LOG.debug("Result  :  " + name);
                     }
                 }
             }
@@ -192,8 +186,9 @@ public class GetGroups {
             return null;
         }
 
+        // escaping the rdns separately and re-constructing the DN
         StringBuilder escapedDN = new StringBuilder();
-        for (int i = ldn.size() - 1; i > -1; i--) { //escaping the rdns separately and re-constructing the DN
+        for (int i = ldn.size() - 1; i > -1; i--) {
             escapedDN = escapedDN.append(escapeSpecialCharactersForFilterWithStarAsRegex(ldn.get(i)));
             if (i != 0) {
                 escapedDN = escapedDN.append(",");

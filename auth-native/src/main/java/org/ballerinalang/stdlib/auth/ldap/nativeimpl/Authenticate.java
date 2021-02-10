@@ -41,7 +41,6 @@ import javax.naming.ldap.LdapContext;
 public class Authenticate {
 
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
-    private static ConnectionContext connectionSource;
 
     public static Object authenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
@@ -49,7 +48,8 @@ public class Authenticate {
         }
 
         byte[] credential = password.getValue().getBytes(StandardCharsets.UTF_8);
-        connectionSource = (ConnectionContext) ldapConnection.getNativeData(LdapConstants.LDAP_CONNECTION_SOURCE);
+        ConnectionContext connectionSource =
+                (ConnectionContext) ldapConnection.getNativeData(LdapConstants.LDAP_CONNECTION_SOURCE);
         DirContext ldapConnectionContext = (DirContext) ldapConnection.getNativeData(
                 LdapConstants.LDAP_CONNECTION_CONTEXT);
         CommonLdapConfiguration ldapConfiguration = (CommonLdapConfiguration) ldapConnection.getNativeData(
@@ -58,36 +58,24 @@ public class Authenticate {
 
         try {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Authenticating user " + userName);
+                LOG.debug("Authenticating user {}", userName);
             }
             String name = LdapUtils.getNameInSpaceForUsernameFromLDAP(userName.getValue().trim(), ldapConfiguration,
-                    ldapConnectionContext);
-            if (name != null) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Authenticating with " + name);
-                }
-                return bindAsUser(name, credential);
+                                                                      ldapConnectionContext);
+            if (name == null || name.isEmpty()) {
+                return LdapUtils.createError("Username cannot be found in the directory.");
             }
-            return false;
+            LdapContext cxt = connectionSource.getContextWithCredentials(name, credential);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("User {} is authenticated", name);
+            }
+            LdapUtils.closeContext(cxt);
         } catch (NamingException e) {
-            LOG.error("Cannot bind user: " + userName, e);
+            LOG.error("Failed to bind user {}", userName, e);
             return LdapUtils.createError(e.getMessage());
         } finally {
             LdapUtils.removeServiceName();
         }
-    }
-
-    private static boolean bindAsUser(String dn, byte[] credentials) throws NamingException {
-        LdapContext cxt = null;
-        try {
-            cxt = connectionSource.getContextWithCredentials(dn, credentials);
-        } finally {
-            LdapUtils.closeContext(cxt);
-        }
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("User: " + dn + " is authenticated");
-        }
-        return true;
+        return null;
     }
 }
