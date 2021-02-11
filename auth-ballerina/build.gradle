@@ -262,11 +262,71 @@ publishing {
     }
 }
 
+task startLdapServer() {
+    doLast {
+        if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+            def stdOut = new ByteArrayOutputStream()
+            exec {
+                commandLine 'sh', '-c', "docker ps --filter name=openldap-server"
+                standardOutput = stdOut
+            }
+            if (!stdOut.toString().contains("openldap-server")) {
+                println "Starting LDAP server."
+                copy {
+                    from file("$project.projectDir/tests/resources/openldap")
+                    into file("/tmp")
+                }
+                exec {
+                    commandLine 'sh', '-c', "docker run --rm -d -p 389:389 --name openldap-server " +
+                            "--env LDAP_ORGANISATION=\"AVIX\" " +
+                            "--env LDAP_DOMAIN=\"avix.lk\" " +
+                            "--env LDAP_ADMIN_PASSWORD=\"avix123\" " +
+                            "--env LDAP_BASE_DN=\"dc=avix,dc=lk\" " +
+                            "--volume /tmp/bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap.ldif osixia/openldap:1.3.0 " +
+                            "--copy-service"
+                    standardOutput = stdOut
+                }
+                println stdOut.toString()
+                println "Waiting 15s until the LDAP server get initiated."
+                sleep(15 * 1000)
+            } else {
+                println "LDAP server is already started."
+            }
+        }
+    }
+}
+
+task stopLdapServer() {
+    doLast {
+        if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+            def stdOut = new ByteArrayOutputStream()
+            exec {
+                commandLine 'sh', '-c', "docker ps --filter name=openldap-server"
+                standardOutput = stdOut
+            }
+            if (stdOut.toString().contains("openldap-server")) {
+                println "Stopping LDAP server."
+                exec {
+                    commandLine 'sh', '-c', "docker stop openldap-server"
+                    standardOutput = stdOut
+                }
+                println stdOut.toString()
+                println "Waiting 5s until the LDAP server get stopped."
+                sleep(5 * 1000)
+            } else {
+                println "LDAP server is not started."
+            }
+        }
+    }
+}
+
 unpackStdLibs.dependsOn unpackJballerinaTools
 copyStdlibs.dependsOn unpackStdLibs
 updateTomlVersions.dependsOn copyStdlibs
 
 ballerinaTest.finalizedBy revertTomlFile
+ballerinaTest.finalizedBy stopLdapServer
+ballerinaTest.dependsOn startLdapServer
 ballerinaTest.dependsOn initializeVariables
 ballerinaTest.dependsOn updateTomlVersions
 ballerinaTest.dependsOn ":auth-native:build"
@@ -274,6 +334,8 @@ test.dependsOn ballerinaTest
 
 ballerinaBuild.dependsOn test
 ballerinaBuild.finalizedBy revertTomlFile
+ballerinaBuild.finalizedBy stopLdapServer
+ballerinaBuild.dependsOn startLdapServer
 ballerinaBuild.dependsOn initializeVariables
 ballerinaBuild.dependsOn updateTomlVersions
 ballerinaBuild.dependsOn ":auth-native:build"
