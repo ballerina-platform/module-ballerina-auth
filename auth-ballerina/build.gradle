@@ -147,10 +147,10 @@ task initializeVariables {
 
 task ballerinaTest {
     // Copy secret file to a separate directory since it is automatically deleted once read.
-    copy {
-        from file("$project.projectDir/tests/resources/datafiles/secret.txt")
-        into file("$project.projectDir/tests/resources")
-    }
+//    copy {
+//        from file("$project.projectDir/tests/resources/datafiles/secret.txt")
+//        into file("$project.projectDir/tests/resources")
+//    }
 
     // Define config parameters used for Basic Auth authentication test cases.
 //    def configParams = "--b7a.config.file=$project.projectDir/tests/resources/datafiles/ballerina.toml";
