@@ -80,7 +80,7 @@
 //            };
 //            return userDetails;
 //        }
-//        return prepareError("Failed authentication file user store with username: " + username);
+//        return prepareError("Failed to authenticate file user store with username: " + username);
 //    }
 //}
 //

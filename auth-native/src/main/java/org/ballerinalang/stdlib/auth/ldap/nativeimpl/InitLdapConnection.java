@@ -146,7 +146,7 @@ public class InitLdapConnection {
                     StringUtils.fromString(LdapConstants.PASSWORD)).getValue();
             File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
             if (!trustStoreFile.exists()) {
-                throw new IllegalArgumentException("trustStore File " + trustStoreFilePath + " not found");
+                throw new IllegalArgumentException("TrustStore File " + trustStoreFilePath + " not found");
             }
             commonLdapConfiguration.setTrustStoreFile(trustStoreFile);
             commonLdapConfiguration.setTrustStorePass(trustStorePassword);
