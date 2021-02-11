@@ -16,7 +16,9 @@
 
 import ballerina/test;
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationEmptyCredential() {
     string usernameAndPassword = "";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -27,7 +29,9 @@ isolated function testAuthenticationEmptyCredential() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -38,7 +42,9 @@ isolated function testAuthenticationOfNonExistingUser() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:invalid";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -49,7 +55,9 @@ isolated function testAuthenticationOfInvalidPassword() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationSuccessForUser() {
     string usernameAndPassword = "alice:alice123";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -61,7 +69,9 @@ isolated function testAuthenticationSuccessForUser() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationSuccessForSuperUser() {
     string usernameAndPassword = "ldclakmal:ldclakmal123";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -73,7 +83,9 @@ isolated function testAuthenticationSuccessForSuperUser() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -84,7 +96,9 @@ isolated function testAuthenticationWithEmptyUsername() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationWithEmptyPassword() {
     string usernameAndPassword = "alice:";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -95,7 +109,9 @@ isolated function testAuthenticationWithEmptyPassword() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
     string usernameAndPassword = "invalid:";
     UserDetails|Error result = authenticate(usernameAndPassword);
@@ -106,7 +122,9 @@ isolated function testAuthenticationWithEmptyPasswordAndInvalidUsername() {
     }
 }
 
-@test:Config {}
+@test:Config {
+    groups: ["ldap"]
+}
 isolated function testAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
     UserDetails|Error result = authenticate(usernameAndPassword);
