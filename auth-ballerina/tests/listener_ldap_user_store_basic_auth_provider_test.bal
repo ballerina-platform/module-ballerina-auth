@@ -63,7 +63,7 @@ isolated function testAuthenticationSuccessForUser() {
     UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "alice");
-        test:assertEquals(result.scopes, ["Developer"]);
+        test:assertEquals(result?.scopes, ["Developer"]);
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -77,7 +77,7 @@ isolated function testAuthenticationSuccessForSuperUser() {
     UserDetails|Error result = authenticate(usernameAndPassword);
     if (result is UserDetails) {
         test:assertEquals(result.username, "ldclakmal");
-        test:assertEquals(result.scopes, ["Admin", "Developer"]);
+        test:assertEquals(result?.scopes, ["Admin", "Developer"]);
     } else {
         test:assertFail(msg = "Test Failed!");
     }
