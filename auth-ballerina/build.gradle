@@ -138,6 +138,8 @@ task initializeVariables {
     if (project.hasProperty("balJavaDebug")) {
         balJavaDebugParam = "BAL_JAVA_DEBUG=${project.findProperty("balJavaDebug")}"
     }
+    // This check is added to disable the 'ldap' group tests in Windows OS since the Docker image does not support
+    // for Windows OS.
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         if (disableGroups == "") {
             disableGroups = "--disable-groups"
@@ -281,6 +283,8 @@ publishing {
 
 task startLdapServer() {
     doLast {
+        // This check is added to prevent starting the server in Windows OS, since the Docker image does not support
+        // for Windows OS.
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
             def stdOut = new ByteArrayOutputStream()
             exec {
@@ -315,6 +319,8 @@ task startLdapServer() {
 
 task stopLdapServer() {
     doLast {
+        // This check is added to prevent trying to stop the server in Windows OS, since the Docker image not started
+        // in Windows OS.
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
             def stdOut = new ByteArrayOutputStream()
             exec {
