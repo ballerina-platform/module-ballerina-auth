@@ -79,7 +79,7 @@ isolated function checkPasswordEquality(string passwordFromConfig, string passwo
     // This check is added to avoid having to go through multiple condition evaluations, when value is plain text.
     if (passwordFromConfig.startsWith(CONFIG_PREFIX)) {
         if (passwordFromConfig.startsWith(CONFIG_PREFIX_ENCRYPTED)) {
-            return config:decryptString(passwordFromConfig).equalsIgnoreCaseAscii(crypto:hashSha256(passwordFromToken.toBytes()).toBase16());
+            return config:decryptString(passwordFromConfig).equalsIgnoreCaseAscii(passwordFromToken);
         } else if (passwordFromConfig.startsWith(CONFIG_PREFIX_SHA256)) {
             return extractHash(passwordFromConfig).equalsIgnoreCaseAscii(crypto:hashSha256(passwordFromToken.toBytes()).toBase16());
         } else if (passwordFromConfig.startsWith(CONFIG_PREFIX_SHA384)) {
