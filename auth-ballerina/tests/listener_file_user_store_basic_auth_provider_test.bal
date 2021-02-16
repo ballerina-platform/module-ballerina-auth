@@ -33,7 +33,7 @@ isolated function testFileAuthenticationPlainWithPlainTextCredentialsNegative() 
     string usernameAndPassword = "peter:plain-password ";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: peter");
+        test:assertEquals(result.message(), "Failed to authenticate username: peter from file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -55,7 +55,7 @@ isolated function testFileAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: dave");
+        test:assertEquals(result.message(), "Username: dave does not exists in file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -66,7 +66,7 @@ isolated function testFileAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:xxy";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: alice");
+        test:assertEquals(result.message(), "Failed to authenticate username: alice from file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -145,7 +145,7 @@ isolated function testFileAuthenticationSha256Negative() {
     string usernameAndPassword = "hashedSha256:invalid";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: hashedSha256");
+        test:assertEquals(result.message(), "Failed to authenticate username: hashedSha256 from file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -168,7 +168,7 @@ isolated function testFileAuthenticationSha384Negative() {
     string usernameAndPassword = "hashedSha384:invalid";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: hashedSha384");
+        test:assertEquals(result.message(), "Failed to authenticate username: hashedSha384 from file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -191,7 +191,7 @@ isolated function testFileAuthenticationSha512Negative() {
     string usernameAndPassword = "hashedSha512:invalid";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate file user store with username: hashedSha512");
+        test:assertEquals(result.message(), "Failed to authenticate username: hashedSha512 from file user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }

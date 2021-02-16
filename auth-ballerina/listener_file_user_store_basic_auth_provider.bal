@@ -69,8 +69,9 @@ public class ListenerFileUserStoreBasicAuthProvider {
                 }
                 return userDetails;
             }
+            return prepareError("Failed to authenticate username: " + username + " from file user store.");
         }
-        return prepareError("Failed to authenticate file user store with username: " + username);
+        return prepareError("Username: " + username + " does not exists in file user store.");
     }
 }
 
