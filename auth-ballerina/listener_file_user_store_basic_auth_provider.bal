@@ -25,6 +25,11 @@ type AuthInfo record {
 
 final configurable table<AuthInfo> key(username) & readonly users = ?;
 
+# Represents the file user store configurations.
+public type FileUserStoreConfig record {|
+    // This is intentionally kept blank.
+|};
+
 # Represents the file user store based listener Basic Auth provider, which is an implementation of the
 # `auth:ListenerBasicAuthProvider` object.
 # ```ballerina
@@ -42,6 +47,12 @@ final configurable table<AuthInfo> key(username) & readonly users = ?;
 public class ListenerFileUserStoreBasicAuthProvider {
 
     *ListenerBasicAuthProvider;
+
+    # Provides authentication based on the provided configurations.
+    #
+    # + fileUserStoreConfig - file user store configurations
+    public isolated function init(FileUserStoreConfig fileUserStoreConfig = {}) {
+    }
 
     # Authenticate the base64-encoded `username:password` credentials.
     # ```ballerina
