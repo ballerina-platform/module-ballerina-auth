@@ -129,7 +129,7 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         Error? authenticated = authenticateWithLdap(self.ldapConnection, username, password);
         if (authenticated is Error) {
-            return prepareError("Failed to authenticate username: " + username + " with LDAP user store.", authenticated);
+            return prepareError("Failed to authenticate username: '" + username + "' with LDAP user store.", authenticated);
         }
         UserDetails userDetails = {
             username: username
@@ -138,7 +138,7 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         if (groups is string[]) {
             userDetails.scopes = groups;
         } else if (groups is Error) {
-            return prepareError("Failed to get groups for the username: " + username + " from LDAP user store.", groups);
+            return prepareError("Failed to get groups for the username: '" + username + "' from LDAP user store.", groups);
         }
         return userDetails;
     }

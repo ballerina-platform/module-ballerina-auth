@@ -20,7 +20,7 @@ public const string DEFAULT_CHARSET = "UTF-8";
 # Prefix used to denote special configuration values.
 public const string CONFIG_PREFIX = "@";
 
-# Prefix used to denote that the config value is a encrypted.
+# Prefix used to denote that the config value is encrypted.
 public const string CONFIG_PREFIX_ENCRYPTED = "@encrypted:";
 
 # Prefix used to denote that the config value is a SHA-256 hash.
