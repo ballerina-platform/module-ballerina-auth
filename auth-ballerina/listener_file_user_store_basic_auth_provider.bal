@@ -52,6 +52,7 @@ public class ListenerFileUserStoreBasicAuthProvider {
     #
     # + fileUserStoreConfig - file user store configurations
     public isolated function init(FileUserStoreConfig fileUserStoreConfig = {}) {
+        // This is intentionally kept blank.
     }
 
     # Authenticate the base64-encoded `username:password` credentials.
@@ -80,9 +81,9 @@ public class ListenerFileUserStoreBasicAuthProvider {
                 }
                 return userDetails;
             }
-            return prepareError("Failed to authenticate username: '" + username + "' from file user store.");
+            return prepareError("Failed to authenticate username '" + username + "' from file user store.");
         }
-        return prepareError("Username: " + username + " does not exists in file user store.");
+        return prepareError("Username '" + username + "' does not exists in file user store.");
     }
 }
 

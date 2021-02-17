@@ -36,7 +36,7 @@ isolated function testLdapAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
     UserDetails|Error result = authenticateLdap(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate username: dave with LDAP user store.");
+        test:assertEquals(result.message(), "Failed to authenticate username 'dave' with LDAP user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -49,7 +49,7 @@ isolated function testLdapAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:invalid";
     UserDetails|Error result = authenticateLdap(usernameAndPassword);
     if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate username: alice with LDAP user store.");
+        test:assertEquals(result.message(), "Failed to authenticate username 'alice' with LDAP user store.");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
