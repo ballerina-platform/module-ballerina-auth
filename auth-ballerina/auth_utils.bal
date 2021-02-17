@@ -44,11 +44,3 @@ public isolated function extractUsernameAndPassword(string credential) returns [
         return prepareError(base64DecodedResults.message(), base64DecodedResults);
     }
 }
-
-// Constructs an array of groups from the given comma-separated string of groups.
-isolated function convertToArray(string commaSeperatedString) returns string[] {
-    if (commaSeperatedString.length() == 0) {
-        return [];
-    }
-    return regex:split(commaSeperatedString, ",");
-}
