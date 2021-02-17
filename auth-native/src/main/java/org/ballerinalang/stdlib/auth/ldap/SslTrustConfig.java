@@ -46,7 +46,7 @@ class SslTrustConfig {
 
     public void setTrustStoreFile(File trustStore) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Using trust store {}", trustStore);
+            LOG.debug("Using trust store '{}'", trustStore);
         }
         this.trustStore = trustStore;
     }
@@ -61,7 +61,7 @@ class SslTrustConfig {
 
     public void setSSLProtocol(String sslProtocol) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Set SSLProtocol {}", sslProtocol);
+            LOG.debug("Set SSL protocol '{}'", sslProtocol);
         }
         this.sslProtocol = sslProtocol;
     }

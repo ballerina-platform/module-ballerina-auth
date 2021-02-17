@@ -114,7 +114,7 @@ public class GetGroups {
         searchControls.setReturningAttributes(returnedAttributes);
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Reading roles with the membershipProperty {}", membershipProperty);
+            LOG.debug("Reading roles with the membershipProperty '{}'", membershipProperty);
         }
 
         List<String> list = getListOfNames(searchBase, searchFilter, searchControls, roleNameProperty,
@@ -126,7 +126,7 @@ public class GetGroups {
                                                SearchControls searchControls, String property,
                                                DirContext ldapConnectionContext) throws NamingException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Result for searchBase: {}, searchFilter: {}, property: {}, appendDN: false",
+            LOG.debug("Result for searchBase: '{}', searchFilter: '{}', property: '{}', appendDN: 'false'",
                       searchBases, searchFilter, property);
         }
 
@@ -149,7 +149,7 @@ public class GetGroups {
                     for (NamingEnumeration<?> values = attr.getAll(); values.hasMoreElements(); ) {
                         String name = (String) values.nextElement();
                         if (LOG.isDebugEnabled()) {
-                            LOG.debug("Found user {}", name);
+                            LOG.debug("Found the user '{}'", name);
                         }
                         names.add(name);
                     }
@@ -183,7 +183,7 @@ public class GetGroups {
     private static String escapeLdapNameForFilter(LdapName ldn) {
         if (ldn == null) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Received null value to escape special characters. Returning null");
+                LOG.debug("Received null value to escape special characters. Returning null.");
             }
             return null;
         }
@@ -197,7 +197,7 @@ public class GetGroups {
             }
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Escaped DN value for filter : " + escapedDN.toString());
+            LOG.debug("Escaped DN value for filter '{}'", escapedDN.toString());
         }
         return escapedDN.toString();
     }
