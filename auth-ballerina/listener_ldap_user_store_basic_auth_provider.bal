@@ -129,23 +129,22 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         Error? authenticated = authenticateWithLdap(self.ldapConnection, username, password);
         if (authenticated is Error) {
-            return prepareError("Failed to authenticate username '" + username + "' with LDAP user store.", authenticated);
+            return prepareError("Failed to authenticate LDAP user store with username: " + username, authenticated);
+        }
+        string[]|Error groups = getLdapGroups(self.ldapConnection, username);
+        if (groups is Error) {
+            return prepareError("Failed to get groups from LDAP user store with the username: " + username, groups);
         }
         UserDetails userDetails = {
-            username: username
+            username: username,
+            scopes: checkpanic groups
         };
-        string[]|Error? groups = getLdapGroups(self.ldapConnection, username);
-        if (groups is string[]) {
-            userDetails.scopes = groups;
-        } else if (groups is Error) {
-            return prepareError("Failed to get groups for the username '" + username + "' from LDAP user store.", groups);
-        }
         return userDetails;
     }
 }
 
 // Retrieves the group(s) of the user related to the provided username.
-isolated function getLdapGroups(LdapConnection ldapConnection, string username) returns string[]|Error? = @java:Method {
+isolated function getLdapGroups(LdapConnection ldapConnection, string username) returns string[]|Error = @java:Method {
     name: "getGroups",
     'class: "org.ballerinalang.stdlib.auth.ldap.nativeimpl.GetGroups"
 } external;
