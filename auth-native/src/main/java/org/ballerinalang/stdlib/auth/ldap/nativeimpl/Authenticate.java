@@ -58,7 +58,7 @@ public class Authenticate {
 
         try {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Authenticating user {}", userName);
+                LOG.debug("Authenticating user '{}'", userName);
             }
             String name = LdapUtils.getNameInSpaceForUsernameFromLDAP(userName.getValue().trim(), ldapConfiguration,
                                                                       ldapConnectionContext);
@@ -67,11 +67,11 @@ public class Authenticate {
             }
             LdapContext cxt = connectionSource.getContextWithCredentials(name, credential);
             if (LOG.isDebugEnabled()) {
-                LOG.debug("User {} is authenticated", name);
+                LOG.debug("User '{}' is authenticated", name);
             }
             LdapUtils.closeContext(cxt);
         } catch (NamingException e) {
-            LOG.error("Failed to bind user {}", userName, e);
+            LOG.error("Failed to bind user '{}'", userName, e);
             return LdapUtils.createError(e.getMessage());
         } finally {
             LdapUtils.removeServiceName();
