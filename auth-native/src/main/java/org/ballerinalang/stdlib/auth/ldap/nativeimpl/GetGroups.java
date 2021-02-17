@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.naming.NamingEnumeration;
@@ -58,9 +59,6 @@ public class GetGroups {
                     LdapConstants.LDAP_CONFIGURATION);
             String[] externalRoles = doGetGroupsListOfUser(userName.getValue(), ldapConfiguration,
                                                            ldapConnectionContext);
-            if (externalRoles.length == 0) {
-                return null;
-            }
             return StringUtils.fromStringArray(externalRoles);
         } catch (NamingException | BError e) {
             return LdapUtils.createError(e.getMessage());
@@ -100,8 +98,8 @@ public class GetGroups {
             LdapName ldn = new LdapName(nameInSpace);
             if (LdapConstants.MEMBER_UID.equals(ldapAuthConfig.getMembershipAttribute())) {
                 // membership value of posixGroup is not DN of the user
-                List<Rdn> rdns = ldn.getRdns();
-                membershipValue = (rdns.get(rdns.size() - 1)).getValue().toString();
+                List rdns = ldn.getRdns();
+                membershipValue = ((Rdn) rdns.get(rdns.size() - 1)).getValue().toString();
             } else {
                 membershipValue = escapeLdapNameForFilter(ldn);
             }
@@ -119,7 +117,7 @@ public class GetGroups {
 
         List<String> list = getListOfNames(searchBase, searchFilter, searchControls, roleNameProperty,
                 ldapConnectionContext);
-        return list.toArray(new String[0]);
+        return list.toArray(new String[list.size()]);
     }
 
     private static List<String> getListOfNames(List<String> searchBases, String searchFilter,
@@ -146,8 +144,8 @@ public class GetGroups {
                     if (attr == null) {
                         continue;
                     }
-                    for (NamingEnumeration<?> values = attr.getAll(); values.hasMoreElements(); ) {
-                        String name = (String) values.nextElement();
+                    for (Enumeration vals = attr.getAll(); vals.hasMoreElements(); ) {
+                        String name = (String) vals.nextElement();
                         if (LOG.isDebugEnabled()) {
                             LOG.debug("Found the user '{}'", name);
                         }
@@ -191,9 +189,9 @@ public class GetGroups {
         // escaping the rdns separately and re-constructing the DN
         StringBuilder escapedDN = new StringBuilder();
         for (int i = ldn.size() - 1; i > -1; i--) {
-            escapedDN.append(escapeSpecialCharactersForFilterWithStarAsRegex(ldn.get(i)));
+            escapedDN = escapedDN.append(escapeSpecialCharactersForFilterWithStarAsRegex(ldn.get(i)));
             if (i != 0) {
-                escapedDN.append(",");
+                escapedDN = escapedDN.append(",");
             }
         }
         if (LOG.isDebugEnabled()) {

@@ -20,5 +20,5 @@
 # + scopes - The scopes of the authenticated user
 public type UserDetails record {|
     string username;
-    string[] scopes?;
+    string[] scopes;
 |};
