@@ -44,8 +44,8 @@ public class CommonLdapConfiguration extends SslTrustConfig {
     private String membershipAttribute;
     private boolean userRolesCacheEnabled;
     private boolean connectionPoolingEnabled;
-    private int ldapConnectionTimeout;
-    private int readTimeoutInMillis;
+    private double connectionTimeout;
+    private double readTimeout;
 
     public String getDomainName() {
         return domainName;
@@ -183,19 +183,19 @@ public class CommonLdapConfiguration extends SslTrustConfig {
         this.connectionPoolingEnabled = connectionPoolingEnabled;
     }
 
-    public int getLdapConnectionTimeout() {
-        return ldapConnectionTimeout;
+    public double getConnectionTimeout() {
+        return connectionTimeout;
     }
 
-    public void setLdapConnectionTimeout(int ldapConnectionTimeout) {
-        this.ldapConnectionTimeout = ldapConnectionTimeout;
+    public void setConnectionTimeout(double connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
     }
 
-    public int getReadTimeoutInMillis() {
-        return readTimeoutInMillis;
+    public double getReadTimeout() {
+        return readTimeout;
     }
 
-    public void setReadTimeoutInMillis(int readTimeoutInMillis) {
-        this.readTimeoutInMillis = readTimeoutInMillis;
+    public void setReadTimeout(double readTimeout) {
+        this.readTimeout = readTimeout;
     }
 }
