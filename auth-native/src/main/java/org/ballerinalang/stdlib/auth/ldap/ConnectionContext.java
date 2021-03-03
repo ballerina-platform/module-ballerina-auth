@@ -62,10 +62,10 @@ public class ConnectionContext {
             environment.put("java.naming.ldap.factory.socket", SslSocketFactory.class.getName());
         }
 
-        String connectTimeoutInMillis = String.valueOf(ldapConfiguration.getLdapConnectionTimeout());
-        String readTimeoutInMillis = String.valueOf(ldapConfiguration.getReadTimeoutInMillis());
-        environment.put("com.sun.jndi.ldap.connect.timeout", connectTimeoutInMillis);
-        environment.put("com.sun.jndi.ldap.read.timeout", readTimeoutInMillis);
+        String connectTimeout = String.valueOf((int) ldapConfiguration.getConnectionTimeout() * 1000);
+        String readTimeout = String.valueOf((int) ldapConfiguration.getReadTimeout() * 1000);
+        environment.put("com.sun.jndi.ldap.connect.timeout", connectTimeout);
+        environment.put("com.sun.jndi.ldap.read.timeout", readTimeout);
     }
 
     /**

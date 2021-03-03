@@ -20,6 +20,7 @@ package org.ballerinalang.stdlib.auth.ldap.nativeimpl;
 
 import io.ballerina.runtime.api.creators.ValueCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.values.BDecimal;
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
 import org.ballerinalang.stdlib.auth.ModuleUtils;
@@ -92,10 +93,10 @@ public class InitLdapConnection {
                 StringUtils.fromString(LdapConstants.USER_ROLE_CACHE_ENABLE)));
         commonLdapConfiguration.setConnectionPoolingEnabled(authProviderConfig.getBooleanValue(
                 StringUtils.fromString(LdapConstants.CONNECTION_POOLING_ENABLED)));
-        commonLdapConfiguration.setLdapConnectionTimeout(authProviderConfig.getIntValue(
-                StringUtils.fromString(LdapConstants.CONNECTION_TIME_OUT_IN_MILLIS)).intValue());
-        commonLdapConfiguration.setReadTimeoutInMillis(authProviderConfig.getIntValue(
-                StringUtils.fromString(LdapConstants.READ_TIME_OUT_IN_MILLIS)).intValue());
+        commonLdapConfiguration.setConnectionTimeout(((BDecimal) authProviderConfig.get(
+                StringUtils.fromString(LdapConstants.CONNECTION_TIME_OUT))).floatValue());
+        commonLdapConfiguration.setReadTimeout(((BDecimal) authProviderConfig.get(
+                StringUtils.fromString(LdapConstants.READ_TIME_OUT))).floatValue());
 
         BMap<BString, Object> sslConfig = authProviderConfig.containsKey(
                 StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) ?
