@@ -22,5 +22,5 @@ package org.ballerinalang.stdlib.auth;
  * Constants related to ballerina/auth stdlib.
  */
 public class AuthConstants {
-    public static final String AUTH_ERROR_TYPE = "AuthError";
+    public static final String AUTH_ERROR_TYPE = "Error";
 }
