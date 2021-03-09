@@ -154,8 +154,8 @@ isolated function authenticateLdap(string usernameAndPassword) returns UserDetai
         membershipAttribute: "member",
         userRolesCacheEnabled: true,
         connectionPoolingEnabled: false,
-        connectionTimeoutInMillis: 5000,
-        readTimeoutInMillis: 60000
+        connectionTimeout: 5,
+        readTimeout: 60
     };
     ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(ldapUserStoreConfig);
     string credential = usernameAndPassword.toBytes().toBase64();
