@@ -38,8 +38,7 @@ import ballerina/jballerina.java;
 # + connectionPoolingEnabled - Define whether LDAP connection pooling is enabled
 # + connectionTimeout - Connection timeout (in seconds) in making the initial LDAP connection
 # + readTimeout - Reading timeout (in seconds) for LDAP operations
-# + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to
-#                  communicate through LDAPs
+# + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to communicate through LDAPs
 public type LdapUserStoreConfig record {|
     string domainName;
     string connectionUrl;
@@ -65,11 +64,9 @@ public type LdapUserStoreConfig record {|
 
 # Configures the SSL/TLS options to be used for LDAP communication.
 #
-# + trustStore - Configures the trust store to be used
-# + trustedCertFile - A file containing the certificate(s), which the client trusts
+# + cert - Configurations associated with `crypto:TrustStore` or single certificate file that the client trusts
 public type SecureSocket record {|
-    crypto:TrustStore trustStore?;
-    string trustedCertFile?;
+    crypto:TrustStore|string cert;
 |};
 
 // Represents the LDAP connection.

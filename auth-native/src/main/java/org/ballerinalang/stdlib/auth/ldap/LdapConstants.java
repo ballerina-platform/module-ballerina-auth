@@ -59,12 +59,11 @@ public class LdapConstants {
     public static final String LDAP_CONNECTION_SOURCE = "connectionSource";
     public static final String LDAP_CONNECTION_CONTEXT = "connectionContext";
     public static final String ENDPOINT_INSTANCE_ID = "instanceId";
-    public static final String SECURE_AUTH_STORE_CONFIG = "secureSocket";
 
-    public static final String AUTH_STORE_CONFIG_TRUST_STORE = "trustStore";
+    public static final String SECURESOCKET_CONFIG = "secureSocket";
+    public static final String SECURESOCKET_CERT_CONFIG = "cert";
     public static final String FILE_PATH = "path";
     public static final String PASSWORD = "password";
-    public static final String AUTH_STORE_CONFIG_TRUST_CERTIFICATES = "trustedCertFile";
     public static final String TLS = "TLS";
     public static final String SSL = "ssl";
     public static final String PKCS_STORE_TYPE = "PKCS12";
