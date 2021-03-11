@@ -99,9 +99,9 @@ public class InitLdapConnection {
                 StringUtils.fromString(LdapConstants.READ_TIME_OUT))).floatValue());
 
         BMap<BString, Object> sslConfig = authProviderConfig.containsKey(
-                StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) ?
+                StringUtils.fromString(LdapConstants.SECURESOCKET_CONFIG)) ?
                 (BMap<BString, Object>) authProviderConfig.getMapValue(
-                        StringUtils.fromString(LdapConstants.SECURE_AUTH_STORE_CONFIG)) : null;
+                        StringUtils.fromString(LdapConstants.SECURESOCKET_CONFIG)) : null;
         try {
             if (sslConfig != null) {
                 setSslConfig(sslConfig, commonLdapConfiguration, instanceId);
@@ -134,28 +134,25 @@ public class InitLdapConnection {
                                      CommonLdapConfiguration commonLdapConfiguration, String instanceId)
             throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
             CertificateException {
-        BMap<BString, BString> trustStore = (BMap<BString, BString>) sslConfig.getMapValue(
-                StringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_STORE));
-        String trustCerts = sslConfig.containsKey(LdapConstants.AUTH_STORE_CONFIG_TRUST_CERTIFICATES) ?
-                sslConfig.getStringValue(
-                        StringUtils.fromString(LdapConstants.AUTH_STORE_CONFIG_TRUST_CERTIFICATES)).getValue() : null;
-
-        if (trustStore != null) {
+        Object cert = sslConfig.get(LdapConstants.SECURESOCKET_CERT_CONFIG);
+        if (cert instanceof BMap) {
+            BMap<BString, BString> trustStore = (BMap<BString, BString>) cert;
             String trustStoreFilePath = trustStore.getStringValue(
                     StringUtils.fromString(LdapConstants.FILE_PATH)).getValue();
             String trustStorePassword = trustStore.getStringValue(
                     StringUtils.fromString(LdapConstants.PASSWORD)).getValue();
             File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
             if (!trustStoreFile.exists()) {
-                throw new IllegalArgumentException("TrustStore file '" + trustStoreFilePath + "' not found");
+                throw new IllegalArgumentException("TrustStore file '" + trustStoreFilePath + "' not found.");
             }
             commonLdapConfiguration.setTrustStoreFile(trustStoreFile);
             commonLdapConfiguration.setTrustStorePass(trustStorePassword);
             SSLContext sslContext = SslUtils.createClientSslContext(trustStoreFilePath, trustStorePassword);
             SslContextTrustManager.getInstance().addSSLContext(instanceId, sslContext);
-        } else if (trustCerts != null) {
-            commonLdapConfiguration.setClientTrustCertificates(trustCerts);
-            SSLContext sslContext = SslUtils.getSslContextForCertificateFile(trustCerts);
+        } else {
+            String trustedCertFile = ((BString) cert).getValue();
+            commonLdapConfiguration.setClientTrustCertificates(trustedCertFile);
+            SSLContext sslContext = SslUtils.getSslContextForCertificateFile(trustedCertFile);
             SslContextTrustManager.getInstance().addSSLContext(instanceId, sslContext);
         }
     }
