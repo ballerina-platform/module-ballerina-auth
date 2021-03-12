@@ -66,11 +66,11 @@ public class SslUtils {
     }
 
     /**
-     * Creates an SSLContext based on provided trust store file path and the password.
+     * Creates an SSLContext based on provided truststore file path and the password.
      *
-     * @param trustStoreFilePath Path to the trust store file.
+     * @param trustStoreFilePath Path to the truststore file.
      * @param trustStorePassword Trust store password.
-     * @return SSLContext created from the given trust store and password.
+     * @return SSLContext created from the given truststore and password.
      * @throws NoSuchAlgorithmException When the particular cryptographic algorithm is not available in the environment.
      * @throws KeyStoreException        When an exception occurs during the keystore creation process.
      * @throws KeyManagementException   When an exception occurs dealing with key management.

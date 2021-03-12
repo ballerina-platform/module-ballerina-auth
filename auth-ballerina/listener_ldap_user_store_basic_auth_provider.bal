@@ -36,7 +36,7 @@ import ballerina/jballerina.java;
 # + membershipAttribute - Define the attribute, which contains the distinguished names (DN) of user objects that are there in a group
 # + userRolesCacheEnabled -  To indicate whether to cache the role list of a user
 # + connectionPoolingEnabled - Define whether LDAP connection pooling is enabled
-# + connectionTimeout - Connection timeout (in seconds) in making the initial LDAP connection
+# + connectionTimeout - Connection timeout (in seconds) when making the initial LDAP connection
 # + readTimeout - Reading timeout (in seconds) for LDAP operations
 # + secureSocket - The SSL configurations for the LDAP client socket. This needs to be configured in order to communicate through LDAPs
 public type LdapUserStoreConfig record {|
@@ -64,7 +64,7 @@ public type LdapUserStoreConfig record {|
 
 # Configures the SSL/TLS options to be used for LDAP communication.
 #
-# + cert - Configurations associated with `crypto:TrustStore` or single certificate file that the client trusts
+# + cert - Configurations associated with the `crypto:TrustStore` or single certificate file that the client trusts
 public type SecureSocket record {|
     crypto:TrustStore|string cert;
 |};
