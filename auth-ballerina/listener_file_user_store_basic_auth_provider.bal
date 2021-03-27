@@ -14,9 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/crypto;
-import ballerina/'lang.config;
-
 type AuthInfo record {
   readonly string username;
   string password;
@@ -89,22 +86,5 @@ public class ListenerFileUserStoreBasicAuthProvider {
 
 // Check the password equality of token password and configuration password
 isolated function checkPasswordEquality(string passwordFromConfig, string passwordFromToken) returns boolean {
-    // This check is added to avoid having to go through multiple condition evaluations, when value is plain text.
-    if (passwordFromConfig.startsWith(CONFIG_PREFIX)) {
-        if (passwordFromConfig.startsWith(CONFIG_PREFIX_ENCRYPTED)) {
-            return config:decryptString(passwordFromConfig).equalsIgnoreCaseAscii(passwordFromToken);
-        } else if (passwordFromConfig.startsWith(CONFIG_PREFIX_SHA256)) {
-            return extractHash(passwordFromConfig).equalsIgnoreCaseAscii(crypto:hashSha256(passwordFromToken.toBytes()).toBase16());
-        } else if (passwordFromConfig.startsWith(CONFIG_PREFIX_SHA384)) {
-            return extractHash(passwordFromConfig).equalsIgnoreCaseAscii(crypto:hashSha384(passwordFromToken.toBytes()).toBase16());
-        } else if (passwordFromConfig.startsWith(CONFIG_PREFIX_SHA512)) {
-            return extractHash(passwordFromConfig).equalsIgnoreCaseAscii(crypto:hashSha512(passwordFromToken.toBytes()).toBase16());
-        }
-    }
     return passwordFromConfig == passwordFromToken;
-}
-
-// Extracts the password hash from the configuration file.
-isolated function extractHash(string configValue) returns string {
-    return configValue.substring(<int>configValue.indexOf("{") + 1, <int>configValue.lastIndexOf("}"));
 }
