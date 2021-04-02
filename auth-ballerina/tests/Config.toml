@@ -1,0 +1,4 @@
+[[auth.users]]
+username="alice"
+password="xxx"
+scopes=["read", "write"]
