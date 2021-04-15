@@ -95,27 +95,27 @@ public class CommonLdapConfiguration extends SslTrustConfig {
         this.userEntryObjectClass = userEntryObjectClass;
     }
 
-    public String getUserNameAttribute() {
+    public String getUsernameAttribute() {
         return userNameAttribute;
     }
 
-    public void setUserNameAttribute(String userNameAttribute) {
+    public void setUsernameAttribute(String userNameAttribute) {
         this.userNameAttribute = userNameAttribute;
     }
 
-    public String getUserNameSearchFilter() {
+    public String getUsernameSearchFilter() {
         return userNameSearchFilter;
     }
 
-    public void setUserNameSearchFilter(String userNameSearchFilter) {
+    public void setUsernameSearchFilter(String userNameSearchFilter) {
         this.userNameSearchFilter = userNameSearchFilter;
     }
 
-    public String getUserNameListFilter() {
+    public String getUsernameListFilter() {
         return userNameListFilter;
     }
 
-    public void setUserNameListFilter(String userNameListFilter) {
+    public void setUsernameListFilter(String userNameListFilter) {
         this.userNameListFilter = userNameListFilter;
     }
 

@@ -61,10 +61,10 @@ public class LdapUtils {
      */
     public static String getNameInSpaceForUsernameFromLDAP(String username, CommonLdapConfiguration ldapConfiguration,
                                                            DirContext dirContext) throws NamingException {
-        String userSearchFilter = ldapConfiguration.getUserNameSearchFilter();
+        String userSearchFilter = ldapConfiguration.getUsernameSearchFilter();
         userSearchFilter = userSearchFilter.replace("?", LdapUtils.escapeSpecialCharactersForFilter(username));
         String searchBase = ldapConfiguration.getUserSearchBase();
-        return LdapUtils.getNameInSpaceForUserName(username, searchBase, userSearchFilter, dirContext);
+        return LdapUtils.getNameInSpaceForUsername(username, searchBase, userSearchFilter, dirContext);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LdapUtils {
      * @return Associated name for the given username
      * @throws NamingException if there is any exception occurs during the process
      */
-    private static String getNameInSpaceForUserName(String username, String searchBase,
+    private static String getNameInSpaceForUsername(String username, String searchBase,
                                                     String searchFilter, DirContext dirContext) throws NamingException {
         if (username == null) {
             throw createError("Username value is null.");

@@ -69,11 +69,11 @@ public class InitLdapConnection {
                 StringUtils.fromString(LdapConstants.USER_SEARCH_BASE)).getValue());
         commonLdapConfiguration.setUserEntryObjectClass(authProviderConfig.getStringValue(
                 StringUtils.fromString(LdapConstants.USER_ENTRY_OBJECT_CLASS)).getValue());
-        commonLdapConfiguration.setUserNameAttribute(authProviderConfig.getStringValue(
+        commonLdapConfiguration.setUsernameAttribute(authProviderConfig.getStringValue(
                 StringUtils.fromString(LdapConstants.USER_NAME_ATTRIBUTE)).getValue());
-        commonLdapConfiguration.setUserNameSearchFilter(authProviderConfig.getStringValue(
+        commonLdapConfiguration.setUsernameSearchFilter(authProviderConfig.getStringValue(
                 StringUtils.fromString(LdapConstants.USER_NAME_SEARCH_FILTER)).getValue());
-        commonLdapConfiguration.setUserNameListFilter(authProviderConfig.getStringValue(
+        commonLdapConfiguration.setUsernameListFilter(authProviderConfig.getStringValue(
                 StringUtils.fromString(LdapConstants.USER_NAME_LIST_FILTER)).getValue());
 
         commonLdapConfiguration.setGroupSearchBase(getAsStringList(authProviderConfig.getArrayValue(
