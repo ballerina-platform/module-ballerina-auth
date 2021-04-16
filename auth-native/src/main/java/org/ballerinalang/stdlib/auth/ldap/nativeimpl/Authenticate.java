@@ -44,7 +44,7 @@ public class Authenticate {
 
     public static Object authenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
-            return LdapUtils.createError("Username is null or empty.");
+            return LdapUtils.createError("Username cannot be null or empty.");
         }
 
         byte[] credential = password.getValue().getBytes(StandardCharsets.UTF_8);

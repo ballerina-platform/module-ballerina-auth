@@ -79,8 +79,8 @@ public class GetGroups {
     private static String[] getLDAPGroupsListOfUser(String userName, List<String> searchBase,
                                                     CommonLdapConfiguration ldapAuthConfig,
                                                     DirContext ldapConnectionContext) throws NamingException {
-        if (userName == null) {
-            throw LdapUtils.createError("UserName value is null.");
+        if (userName == null || userName.isEmpty()) {
+            throw LdapUtils.createError("Username cannot be null or empty.");
         }
 
         SearchControls searchControls = new SearchControls();
@@ -89,10 +89,10 @@ public class GetGroups {
         String searchFilter = ldapAuthConfig.getGroupNameListFilter();
         String roleNameProperty = ldapAuthConfig.getGroupNameAttribute();
         String membershipProperty = ldapAuthConfig.getMembershipAttribute();
-        String nameInSpace = getNameInSpaceForUserName(userName, ldapAuthConfig, ldapConnectionContext);
+        String nameInSpace = getNameInSpaceForUsername(userName, ldapAuthConfig, ldapConnectionContext);
 
         if (membershipProperty == null || membershipProperty.length() < 1) {
-            throw LdapUtils.createError("MembershipAttribute not set in configuration.");
+            throw LdapUtils.createError("Membership attribute is not set in configurations.");
         }
 
         String membershipValue;
@@ -114,7 +114,7 @@ public class GetGroups {
         searchControls.setReturningAttributes(returnedAttributes);
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Reading roles with the membershipProperty '{}'", membershipProperty);
+            LOG.debug("Reading roles with the membership property '{}'", membershipProperty);
         }
 
         List<String> list = getListOfNames(searchBase, searchFilter, searchControls, roleNameProperty,
@@ -126,7 +126,7 @@ public class GetGroups {
                                                SearchControls searchControls, String property,
                                                DirContext ldapConnectionContext) throws NamingException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Result for searchBase: '{}', searchFilter: '{}', property: '{}', appendDN: 'false'",
+            LOG.debug("Result for search-base: '{}', search-filter: '{}', property: '{}', appendDN: 'false'",
                       searchBases, searchFilter, property);
         }
 
@@ -169,7 +169,7 @@ public class GetGroups {
      * @param ldapConnectionContext connection context
      * @return Associated name for the given username
      */
-    private static String getNameInSpaceForUserName(String userName, CommonLdapConfiguration ldapConfiguration,
+    private static String getNameInSpaceForUsername(String userName, CommonLdapConfiguration ldapConfiguration,
                                                     DirContext ldapConnectionContext) throws NamingException {
         return LdapUtils.getNameInSpaceForUsernameFromLDAP(userName, ldapConfiguration, ldapConnectionContext);
     }
