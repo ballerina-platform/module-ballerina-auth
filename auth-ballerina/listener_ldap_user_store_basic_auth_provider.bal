@@ -77,13 +77,13 @@ type LdapConnection record {|
 # retrieves the necessary user information, and performs authentication and authorization. This is an implementation
 # of the `auth:ListenerBasicAuthProvider` object.
 # ```ballerina
-#  auth:LdapUserStoreConfig config = {
-#      domainName: "ballerina.io",
-#      connectionURL: "ldap://localhost:389",
-#      connectionName: "cn=admin,dc=avix,dc=lk"
-#  };
-#  auth:ListenerLdapUserStoreBasicAuthProvider provider = new(config);
-#  ```
+# auth:LdapUserStoreConfig config = {
+#     domainName: "ballerina.io",
+#     connectionURL: "ldap://localhost:389",
+#     connectionName: "cn=admin,dc=avix,dc=lk"
+# };
+# auth:ListenerLdapUserStoreBasicAuthProvider provider = new(config);
+# ```
 # A user is denoted by a section in the Ballerina configuration file. The password and the scopes assigned to the user
 # are denoted as keys under the relevant user section as shown below.
 # ```
