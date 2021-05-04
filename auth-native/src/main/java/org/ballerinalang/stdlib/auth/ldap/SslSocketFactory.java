@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -41,10 +40,6 @@ public class SslSocketFactory extends SSLSocketFactory {
         SSLContext sslContext = SslContextTrustManager.getInstance().getSSLContext(LdapUtils
                 .getInstanceIdFromThreadLocal());
         socketFactory = sslContext.getSocketFactory();
-    }
-
-    public static SocketFactory getDefault() {
-        return new SslSocketFactory();
     }
 
     @Override

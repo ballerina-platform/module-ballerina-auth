@@ -136,7 +136,7 @@ public class InitLdapConnection {
                                      CommonLdapConfiguration commonLdapConfiguration, String instanceId)
             throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
             CertificateException {
-        Object cert = sslConfig.get(LdapConstants.SECURESOCKET_CERT_CONFIG);
+        Object cert = sslConfig.get(StringUtils.fromString(LdapConstants.SECURESOCKET_CERT_CONFIG));
         if (cert instanceof BMap) {
             BMap<BString, BString> trustStore = (BMap<BString, BString>) cert;
             String trustStoreFilePath = trustStore.getStringValue(
