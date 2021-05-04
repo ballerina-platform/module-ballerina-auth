@@ -321,7 +321,7 @@ task startLdapServer() {
                     into file("/tmp")
                 }
                 exec {
-                    commandLine 'sh', '-c', "docker run --rm -d -p 389:389 --name openldap-server " +
+                    commandLine 'sh', '-c', "docker run --rm -d -p 389:389 -p 636:636 --name openldap-server " +
                             "--env LDAP_ORGANISATION=\"AVIX\" " +
                             "--env LDAP_DOMAIN=\"avix.lk\" " +
                             "--env LDAP_ADMIN_PASSWORD=\"avix123\" " +

@@ -41,6 +41,65 @@ isolated function getLdapUserStoreConfig() returns LdapUserStoreConfig {
     return ldapUserStoreConfig;
 }
 
+isolated function getLdapsUserStoreConfig1() returns LdapUserStoreConfig {
+    LdapUserStoreConfig ldapsUserStoreConfig = {
+        domainName: "avix.lk",
+        connectionUrl: "ldaps://localhost:636",
+        connectionName: "cn=admin,dc=avix,dc=lk",
+        connectionPassword: "avix123",
+        userSearchBase: "ou=Users,dc=avix,dc=lk",
+        userEntryObjectClass: "inetOrgPerson",
+        userNameAttribute: "uid",
+        userNameSearchFilter: "(&(objectClass=inetOrgPerson)(uid=?))",
+        userNameListFilter: "(objectClass=inetOrgPerson)",
+        groupSearchBase: ["ou=Groups,dc=avix,dc=lk"],
+        groupEntryObjectClass: "groupOfNames",
+        groupNameAttribute: "cn",
+        groupNameSearchFilter: "(&(objectClass=groupOfNames)(cn=?))",
+        groupNameListFilter: "(objectClass=groupOfNames)",
+        membershipAttribute: "member",
+        userRolesCacheEnabled: true,
+        connectionPoolingEnabled: false,
+        connectionTimeout: 5,
+        readTimeout: 60,
+        secureSocket: {
+            cert: PUBLIC_CERT_PATH
+        }
+    };
+    return ldapsUserStoreConfig;
+}
+
+isolated function getLdapsUserStoreConfig2() returns LdapUserStoreConfig {
+    LdapUserStoreConfig ldapsUserStoreConfig = {
+        domainName: "avix.lk",
+        connectionUrl: "ldaps://localhost:636",
+        connectionName: "cn=admin,dc=avix,dc=lk",
+        connectionPassword: "avix123",
+        userSearchBase: "ou=Users,dc=avix,dc=lk",
+        userEntryObjectClass: "inetOrgPerson",
+        userNameAttribute: "uid",
+        userNameSearchFilter: "(&(objectClass=inetOrgPerson)(uid=?))",
+        userNameListFilter: "(objectClass=inetOrgPerson)",
+        groupSearchBase: ["ou=Groups,dc=avix,dc=lk"],
+        groupEntryObjectClass: "groupOfNames",
+        groupNameAttribute: "cn",
+        groupNameSearchFilter: "(&(objectClass=groupOfNames)(cn=?))",
+        groupNameListFilter: "(objectClass=groupOfNames)",
+        membershipAttribute: "member",
+        userRolesCacheEnabled: true,
+        connectionPoolingEnabled: false,
+        connectionTimeout: 5,
+        readTimeout: 60,
+        secureSocket: {
+            cert: {
+                path: TRUSTSTORE_PATH,
+                password: "ballerina"
+            }
+        }
+    };
+    return ldapsUserStoreConfig;
+}
+
 @test:Config {
     groups: ["ldap"]
 }
@@ -173,6 +232,30 @@ isolated function testLdapAuthenticationWithEmptyUsernameAndEmptyPassword() {
     UserDetails|Error result = basicAuthProvider.authenticate(credential);
     if (result is Error) {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationFailureWithLdaps1() {
+    ListenerLdapUserStoreBasicAuthProvider|error basicAuthProvider = trap new(getLdapsUserStoreConfig1());
+    if (basicAuthProvider is error) {
+        assertContains(basicAuthProvider, "PKIX path building failed");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationFailureWithLdaps2() {
+    ListenerLdapUserStoreBasicAuthProvider|error basicAuthProvider = trap new(getLdapsUserStoreConfig2());
+    if (basicAuthProvider is error) {
+        assertContains(basicAuthProvider, "PKIX path building failed");
     } else {
         test:assertFail(msg = "Test Failed!");
     }
