@@ -50,6 +50,8 @@ public class LdapUtils {
     private static final Pattern systemVariableIdentifierPattern = Pattern.compile("\\$\\{([^}]*)}");
     private static final ThreadLocal<String> socketFactoryName = new ThreadLocal<>();
 
+    private LdapUtils() {}
+
     /**
      * This is to search user and retrieve ldap name directly from ldap.
      *

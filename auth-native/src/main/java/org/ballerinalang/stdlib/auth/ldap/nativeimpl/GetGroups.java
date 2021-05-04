@@ -49,6 +49,8 @@ public class GetGroups {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGroups.class);
 
+    private GetGroups() {}
+
     public static Object getGroups(BMap<BString, Object> ldapConnection, BString userName) {
         try {
             LdapUtils.setServiceName((String) ldapConnection.getNativeData(LdapConstants.ENDPOINT_INSTANCE_ID));

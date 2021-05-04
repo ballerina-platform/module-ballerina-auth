@@ -43,6 +43,8 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public class SslUtils {
 
+    private SslUtils() {}
+
     /**
      * Creates an SSLContext based on provided trust certificate chain file path.
      *

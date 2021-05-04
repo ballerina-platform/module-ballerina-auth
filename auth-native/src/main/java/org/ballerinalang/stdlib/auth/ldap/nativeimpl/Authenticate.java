@@ -42,6 +42,8 @@ public class Authenticate {
 
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
 
+    private Authenticate() {}
+
     public static Object authenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
             return LdapUtils.createError("Username cannot be null or empty.");

@@ -52,6 +52,8 @@ import javax.net.ssl.SSLContext;
  */
 public class InitLdapConnection {
 
+    private InitLdapConnection() {}
+
     public static Object initLdapConnection(BMap<BString, Object> authProviderConfig) {
         CommonLdapConfiguration commonLdapConfiguration = new CommonLdapConfiguration();
 

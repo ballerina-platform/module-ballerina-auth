@@ -25,6 +25,8 @@ package org.ballerinalang.stdlib.auth.ldap;
  */
 public class LdapConstants {
 
+    private LdapConstants() {}
+
     // Record used to reference to a LDAP connection.
     public static final String LDAP_CONNECTION = "LdapConnection";
 
