@@ -27,9 +27,6 @@ import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.naming.CompositeName;
 import javax.naming.InvalidNameException;
 import javax.naming.Name;
@@ -47,7 +44,6 @@ import javax.naming.directory.SearchResult;
 public class LdapUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(LdapUtils.class);
-    private static final Pattern systemVariableIdentifierPattern = Pattern.compile("\\$\\{([^}]*)}");
     private static final ThreadLocal<String> socketFactoryName = new ThreadLocal<>();
 
     private LdapUtils() {}
@@ -81,9 +77,6 @@ public class LdapUtils {
      */
     private static String getNameInSpaceForUsername(String username, String searchBase,
                                                     String searchFilter, DirContext dirContext) throws NamingException {
-        if (username == null) {
-            throw createError("Username value is null.");
-        }
         String userDN = null;
         NamingEnumeration<SearchResult> answer = null;
         try {
@@ -191,52 +184,6 @@ public class LdapUtils {
     }
 
     /**
-     * Replace system property holders in the property values.
-     * e.g. Replace ${ballerina.home} with value of the ballerina.home system property.
-     *
-     * @param value string value to substitute
-     * @return String substituted string
-     */
-    public static String substituteVariables(String value) {
-        Matcher matcher = systemVariableIdentifierPattern.matcher(value);
-        boolean found = matcher.find();
-        if (!found) {
-            return value;
-        }
-        StringBuffer sb = new StringBuffer();
-        do {
-            String sysPropKey = matcher.group(1);
-            String sysPropValue = getSystemVariableValue(sysPropKey);
-            if (sysPropValue == null || sysPropValue.length() == 0) {
-                throw new RuntimeException("System property " + sysPropKey + " is not specified");
-            }
-            // Due to reported bug under CARBON-14746
-            sysPropValue = sysPropValue.replace("\\", "\\\\");
-            matcher.appendReplacement(sb, sysPropValue);
-        } while (matcher.find());
-        matcher.appendTail(sb);
-        return sb.toString();
-    }
-
-    /**
-     * A utility which allows reading variables from the environment or System properties.
-     * If the variable in available in the environment as well as a System property, the System property takes
-     * precedence.
-     *
-     * @param variableName System/environment variable name
-     * @return value of the system/environment variable
-     */
-    private static String getSystemVariableValue(String variableName) {
-        if (System.getProperty(variableName) != null) {
-            return System.getProperty(variableName);
-        }
-        if (System.getenv(variableName) != null) {
-            return System.getenv(variableName);
-        }
-        return null;
-    }
-
-    /**
      * Takes instance id of the service from the thread local.
      *
      * @return service instance id.
@@ -244,7 +191,7 @@ public class LdapUtils {
     public static String getInstanceIdFromThreadLocal() {
         String result = socketFactoryName.get();
         if (result == null) {
-            throw createError("Cannot infer the ssl context related to the service");
+            throw createError("Cannot infer the SSL context related to the service.");
         }
         return result;
     }

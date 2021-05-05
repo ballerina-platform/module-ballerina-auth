@@ -18,6 +18,7 @@
 
 package org.ballerinalang.stdlib.auth.ldap;
 
+import org.ballerinalang.stdlib.auth.ldap.utils.ExcludeCoverageFromGeneratedReport;
 import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 
 import java.io.IOException;
@@ -32,13 +33,14 @@ import javax.net.ssl.SSLSocketFactory;
  *
  * @since 0.983.0
  */
+@ExcludeCoverageFromGeneratedReport
 public class SslSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory socketFactory;
 
     public SslSocketFactory() {
-        SSLContext sslContext = SslContextTrustManager.getInstance().getSSLContext(LdapUtils
-                .getInstanceIdFromThreadLocal());
+        SSLContext sslContext = SslContextTrustManager.getInstance()
+                .getSSLContext(LdapUtils.getInstanceIdFromThreadLocal());
         socketFactory = sslContext.getSocketFactory();
     }
 

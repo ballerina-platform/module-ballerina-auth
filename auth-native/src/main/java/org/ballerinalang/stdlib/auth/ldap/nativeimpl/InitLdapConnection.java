@@ -143,7 +143,7 @@ public class InitLdapConnection {
                     StringUtils.fromString(LdapConstants.FILE_PATH)).getValue();
             String trustStorePassword = trustStore.getStringValue(
                     StringUtils.fromString(LdapConstants.PASSWORD)).getValue();
-            File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
+            File trustStoreFile = new File(trustStoreFilePath);
             if (!trustStoreFile.exists()) {
                 throw new IllegalArgumentException("TrustStore file '" + trustStoreFilePath + "' not found.");
             }
@@ -160,13 +160,10 @@ public class InitLdapConnection {
     }
 
     private static List<String> getAsStringList(Object[] values) {
-        if (values == null) {
-            return null;
-        }
         List<String> valuesList = new ArrayList<>();
         for (Object val : values) {
             valuesList.add(val.toString().trim());
         }
-        return !valuesList.isEmpty() ? valuesList : null;
+        return valuesList;
     }
 }

@@ -19,7 +19,6 @@
 
 package org.ballerinalang.stdlib.auth.ldap;
 
-import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +82,6 @@ class SslTrustConfig {
     }
 
     public void setClientTrustCertificates(String clientTrustCertificates) {
-        setClientTrustCertificates(new File(LdapUtils.substituteVariables(clientTrustCertificates)));
+        setClientTrustCertificates(new File(clientTrustCertificates));
     }
 }

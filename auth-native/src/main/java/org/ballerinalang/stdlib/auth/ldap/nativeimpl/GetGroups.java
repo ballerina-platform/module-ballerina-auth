@@ -81,10 +81,6 @@ public class GetGroups {
     private static String[] getLDAPGroupsListOfUser(String userName, List<String> searchBase,
                                                     CommonLdapConfiguration ldapAuthConfig,
                                                     DirContext ldapConnectionContext) throws NamingException {
-        if (userName == null || userName.isEmpty()) {
-            throw LdapUtils.createError("Username cannot be null or empty.");
-        }
-
         SearchControls searchControls = new SearchControls();
         searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
         // Load normal roles with the user
