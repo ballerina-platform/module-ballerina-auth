@@ -114,11 +114,7 @@ public class GetGroups {
         searchFilter = "(&" + searchFilter + "(" + membershipProperty + "=" + membershipValue + "))";
         String[] returnedAttributes = {roleNameProperty};
         searchControls.setReturningAttributes(returnedAttributes);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Reading roles with the membership property '{}'", membershipProperty);
-        }
-
+        LOG.debug("Reading roles with the membership property '{}'", membershipProperty);
         List<String> list = getListOfNames(searchBase, searchFilter, searchControls, roleNameProperty,
                 ldapConnectionContext);
         return list.toArray(new String[0]);
@@ -127,11 +123,8 @@ public class GetGroups {
     private static List<String> getListOfNames(List<String> searchBases, String searchFilter,
                                                SearchControls searchControls, String property,
                                                DirContext ldapConnectionContext) throws NamingException {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Result for search-base: '{}', search-filter: '{}', property: '{}', appendDN: 'false'",
-                      searchBases, searchFilter, property);
-        }
-
+        LOG.debug("Result for search-base: '{}', search-filter: '{}', property: '{}', appendDN: 'false'",
+                  searchBases, searchFilter, property);
         List<String> names = new ArrayList<>();
         NamingEnumeration<SearchResult> answer = null;
         try {
@@ -150,10 +143,8 @@ public class GetGroups {
                     }
                     for (NamingEnumeration<?> values = attr.getAll(); values.hasMoreElements(); ) {
                         String name = (String) values.nextElement();
-                        if (LOG.isDebugEnabled()) {
-                            LOG.debug("Found the user '{}'", name);
-                        }
                         names.add(name);
+                        LOG.debug("Found the user '{}'", name);
                     }
                 }
             }
@@ -184,9 +175,7 @@ public class GetGroups {
      */
     private static String escapeLdapNameForFilter(LdapName ldn) {
         if (ldn == null) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Received null value to escape special characters. Returning null.");
-            }
+            LOG.debug("Received null value to escape special characters. Returning null.");
             return null;
         }
 
@@ -198,9 +187,7 @@ public class GetGroups {
                 escapedDN.append(",");
             }
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Escaped DN value for filter '{}'", escapedDN.toString());
-        }
+        LOG.debug("Escaped DN value for filter '{}'", escapedDN.toString());
         return escapedDN.toString();
     }
 

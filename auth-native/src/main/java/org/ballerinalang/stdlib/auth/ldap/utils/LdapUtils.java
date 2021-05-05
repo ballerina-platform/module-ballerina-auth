@@ -103,9 +103,7 @@ public class LdapUtils {
                     break;
                 }
             }
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Name in space for user '{}' is '{}'", username, userDN);
-            }
+            LOG.debug("Name in space for user '{}' is '{}'", username, userDN);
         } finally {
             LdapUtils.closeNamingEnumeration(answer);
         }
