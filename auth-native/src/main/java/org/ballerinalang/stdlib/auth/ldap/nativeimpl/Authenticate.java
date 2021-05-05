@@ -42,6 +42,8 @@ public class Authenticate {
 
     private static final Logger LOG = LoggerFactory.getLogger(Authenticate.class);
 
+    private Authenticate() {}
+
     public static Object authenticate(BMap<BString, Object> ldapConnection, BString userName, BString password) {
         if (userName == null || userName.getValue().isEmpty()) {
             return LdapUtils.createError("Username cannot be null or empty.");
@@ -57,18 +59,14 @@ public class Authenticate {
         LdapUtils.setServiceName((String) ldapConnection.getNativeData(LdapConstants.ENDPOINT_INSTANCE_ID));
 
         try {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Authenticating user '{}'", userName);
-            }
+            LOG.debug("Authenticating user '{}'", userName);
             String name = LdapUtils.getNameInSpaceForUsernameFromLDAP(userName.getValue().trim(), ldapConfiguration,
                                                                       ldapConnectionContext);
             if (name == null || name.isEmpty()) {
                 return LdapUtils.createError("Username cannot be found in the directory.");
             }
             LdapContext cxt = connectionSource.getContextWithCredentials(name, credential);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("User '{}' is authenticated", name);
-            }
+            LOG.debug("User '{}' is authenticated", name);
             LdapUtils.closeContext(cxt);
         } catch (NamingException e) {
             LOG.error("Failed to bind user '{}'", userName, e);

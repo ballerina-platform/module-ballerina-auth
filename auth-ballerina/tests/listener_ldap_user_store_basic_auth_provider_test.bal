@@ -16,126 +16,7 @@
 
 import ballerina/test;
 
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationEmptyCredential() {
-    string usernameAndPassword = "";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Credential cannot be empty.");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationOfNonExistingUser() {
-    string usernameAndPassword = "dave:123";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate username 'dave' with LDAP user store.");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationOfInvalidPassword() {
-    string usernameAndPassword = "alice:invalid";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Failed to authenticate username 'alice' with LDAP user store.");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationSuccessForUser() {
-    string usernameAndPassword = "alice:alice123";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is UserDetails) {
-        test:assertEquals(result.username, "alice");
-        test:assertEquals(result?.scopes, ["Developer"]);
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationSuccessForSuperUser() {
-    string usernameAndPassword = "ldclakmal:ldclakmal123";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is UserDetails) {
-        test:assertEquals(result.username, "ldclakmal");
-        test:assertEquals(result?.scopes, ["Admin", "Developer"]);
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationWithEmptyUsername() {
-    string usernameAndPassword = ":xxx";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationWithEmptyPassword() {
-    string usernameAndPassword = "alice:";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationWithEmptyPasswordAndInvalidUsername() {
-    string usernameAndPassword = "invalid:";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-@test:Config {
-    groups: ["ldap"]
-}
-isolated function testLdapAuthenticationWithEmptyUsernameAndEmptyPassword() {
-    string usernameAndPassword = ":";
-    UserDetails|Error result = authenticateLdap(usernameAndPassword);
-    if (result is Error) {
-        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
-}
-
-isolated function authenticateLdap(string usernameAndPassword) returns UserDetails|Error {
+isolated function getLdapUserStoreConfig() returns LdapUserStoreConfig {
     LdapUserStoreConfig ldapUserStoreConfig = {
         domainName: "avix.lk",
         connectionUrl: "ldap://localhost:389",
@@ -157,7 +38,225 @@ isolated function authenticateLdap(string usernameAndPassword) returns UserDetai
         connectionTimeout: 5,
         readTimeout: 60
     };
-    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(ldapUserStoreConfig);
+    return ldapUserStoreConfig;
+}
+
+isolated function getLdapsUserStoreConfig1() returns LdapUserStoreConfig {
+    LdapUserStoreConfig ldapsUserStoreConfig = {
+        domainName: "avix.lk",
+        connectionUrl: "ldaps://localhost:636",
+        connectionName: "cn=admin,dc=avix,dc=lk",
+        connectionPassword: "avix123",
+        userSearchBase: "ou=Users,dc=avix,dc=lk",
+        userEntryObjectClass: "inetOrgPerson",
+        userNameAttribute: "uid",
+        userNameSearchFilter: "(&(objectClass=inetOrgPerson)(uid=?))",
+        userNameListFilter: "(objectClass=inetOrgPerson)",
+        groupSearchBase: ["ou=Groups,dc=avix,dc=lk"],
+        groupEntryObjectClass: "groupOfNames",
+        groupNameAttribute: "cn",
+        groupNameSearchFilter: "(&(objectClass=groupOfNames)(cn=?))",
+        groupNameListFilter: "(objectClass=groupOfNames)",
+        membershipAttribute: "member",
+        userRolesCacheEnabled: true,
+        connectionPoolingEnabled: false,
+        connectionTimeout: 5,
+        readTimeout: 60,
+        secureSocket: {
+            cert: PUBLIC_CERT_PATH
+        }
+    };
+    return ldapsUserStoreConfig;
+}
+
+isolated function getLdapsUserStoreConfig2() returns LdapUserStoreConfig {
+    LdapUserStoreConfig ldapsUserStoreConfig = {
+        domainName: "avix.lk",
+        connectionUrl: "ldaps://localhost:636",
+        connectionName: "cn=admin,dc=avix,dc=lk",
+        connectionPassword: "avix123",
+        userSearchBase: "ou=Users,dc=avix,dc=lk",
+        userEntryObjectClass: "inetOrgPerson",
+        userNameAttribute: "uid",
+        userNameSearchFilter: "(&(objectClass=inetOrgPerson)(uid=?))",
+        userNameListFilter: "(objectClass=inetOrgPerson)",
+        groupSearchBase: ["ou=Groups,dc=avix,dc=lk"],
+        groupEntryObjectClass: "groupOfNames",
+        groupNameAttribute: "cn",
+        groupNameSearchFilter: "(&(objectClass=groupOfNames)(cn=?))",
+        groupNameListFilter: "(objectClass=groupOfNames)",
+        membershipAttribute: "member",
+        userRolesCacheEnabled: true,
+        connectionPoolingEnabled: false,
+        connectionTimeout: 5,
+        readTimeout: 60,
+        secureSocket: {
+            cert: {
+                path: TRUSTSTORE_PATH,
+                password: "ballerina"
+            }
+        }
+    };
+    return ldapsUserStoreConfig;
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationEmptyCredential() {
+    string usernameAndPassword = "";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
     string credential = usernameAndPassword.toBytes().toBase64();
-    return basicAuthProvider.authenticate(credential);
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Credential cannot be empty.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationOfNonExistingUser() {
+    string usernameAndPassword = "dave:123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed to authenticate username 'dave' with LDAP user store.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationOfInvalidPassword() {
+    string usernameAndPassword = "alice:invalid";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Failed to authenticate username 'alice' with LDAP user store.");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationSuccessForUser() {
+    string usernameAndPassword = "alice:alice123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "alice");
+        test:assertEquals(result?.scopes, ["Developer"]);
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationSuccessForSuperUser() {
+    string usernameAndPassword = "ldclakmal:ldclakmal123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is UserDetails) {
+        test:assertEquals(result.username, "ldclakmal");
+        test:assertEquals(result?.scopes, ["Admin", "Developer"]);
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationWithEmptyUsername() {
+    string usernameAndPassword = ":xxx";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationWithEmptyPassword() {
+    string usernameAndPassword = "alice:";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationWithEmptyPasswordAndInvalidUsername() {
+    string usernameAndPassword = "invalid:";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationWithEmptyUsernameAndEmptyPassword() {
+    string usernameAndPassword = ":";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails|Error result = basicAuthProvider.authenticate(credential);
+    if (result is Error) {
+        test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationFailureWithLdaps1() {
+    ListenerLdapUserStoreBasicAuthProvider|error basicAuthProvider = trap new(getLdapsUserStoreConfig1());
+    if (basicAuthProvider is error) {
+        assertContains(basicAuthProvider, "PKIX path building failed");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapAuthenticationFailureWithLdaps2() {
+    ListenerLdapUserStoreBasicAuthProvider|error basicAuthProvider = trap new(getLdapsUserStoreConfig2());
+    if (basicAuthProvider is error) {
+        assertContains(basicAuthProvider, "PKIX path building failed");
+    } else {
+        test:assertFail(msg = "Test Failed!");
+    }
 }

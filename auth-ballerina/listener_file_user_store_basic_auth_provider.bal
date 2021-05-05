@@ -30,8 +30,8 @@ public type FileUserStoreConfig record {|
 # Represents the file user store based listener Basic Auth provider, which is an implementation of the
 # `auth:ListenerBasicAuthProvider` object.
 # ```ballerina
-#  auth:ListenerFileUserStoreBasicAuthProvider provider = new;
-#  ```
+# auth:ListenerFileUserStoreBasicAuthProvider provider = new;
+# ```
 # The users are denoted by a section in the Ballerina configurations file. The username, password and the scopes
 # of a particular user are denoted as keys under the users section as shown below. For multiple users, the complete
 # section has to be duplicated.

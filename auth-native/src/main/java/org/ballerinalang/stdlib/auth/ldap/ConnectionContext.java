@@ -29,6 +29,7 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
 import static javax.naming.Context.INITIAL_CONTEXT_FACTORY;
+import static javax.naming.Context.PROVIDER_URL;
 import static javax.naming.Context.SECURITY_AUTHENTICATION;
 import static javax.naming.Context.SECURITY_CREDENTIALS;
 import static javax.naming.Context.SECURITY_PRINCIPAL;
@@ -52,13 +53,13 @@ public class ConnectionContext {
         environment.put(SECURITY_AUTHENTICATION, "simple");
         environment.put(SECURITY_PRINCIPAL, connectionName);
         environment.put(SECURITY_CREDENTIALS, connectionPassword);
-        environment.put(javax.naming.Context.PROVIDER_URL, connectionURL);
+        environment.put(PROVIDER_URL, connectionURL);
 
         boolean isLdapConnectionPoolingEnabled = ldapConfiguration.isConnectionPoolingEnabled();
         environment.put("com.sun.jndi.ldap.connect.pool", isLdapConnectionPoolingEnabled ? "true" : "false");
 
         if (LdapUtils.isLdapsUrl(connectionURL)) {
-            environment.put(SECURITY_PROTOCOL, LdapConstants.SSL);
+            environment.put(SECURITY_PROTOCOL, LdapConstants.TLS);
             environment.put("java.naming.ldap.factory.socket", SslSocketFactory.class.getName());
         }
 

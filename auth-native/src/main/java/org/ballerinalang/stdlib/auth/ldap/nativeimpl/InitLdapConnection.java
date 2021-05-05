@@ -52,6 +52,8 @@ import javax.net.ssl.SSLContext;
  */
 public class InitLdapConnection {
 
+    private InitLdapConnection() {}
+
     public static Object initLdapConnection(BMap<BString, Object> authProviderConfig) {
         CommonLdapConfiguration commonLdapConfiguration = new CommonLdapConfiguration();
 
@@ -134,14 +136,14 @@ public class InitLdapConnection {
                                      CommonLdapConfiguration commonLdapConfiguration, String instanceId)
             throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
             CertificateException {
-        Object cert = sslConfig.get(LdapConstants.SECURESOCKET_CERT_CONFIG);
+        Object cert = sslConfig.get(StringUtils.fromString(LdapConstants.SECURESOCKET_CERT_CONFIG));
         if (cert instanceof BMap) {
             BMap<BString, BString> trustStore = (BMap<BString, BString>) cert;
             String trustStoreFilePath = trustStore.getStringValue(
                     StringUtils.fromString(LdapConstants.FILE_PATH)).getValue();
             String trustStorePassword = trustStore.getStringValue(
                     StringUtils.fromString(LdapConstants.PASSWORD)).getValue();
-            File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
+            File trustStoreFile = new File(trustStoreFilePath);
             if (!trustStoreFile.exists()) {
                 throw new IllegalArgumentException("TrustStore file '" + trustStoreFilePath + "' not found.");
             }
@@ -158,13 +160,10 @@ public class InitLdapConnection {
     }
 
     private static List<String> getAsStringList(Object[] values) {
-        if (values == null) {
-            return null;
-        }
         List<String> valuesList = new ArrayList<>();
         for (Object val : values) {
             valuesList.add(val.toString().trim());
         }
-        return !valuesList.isEmpty() ? valuesList : null;
+        return valuesList;
     }
 }

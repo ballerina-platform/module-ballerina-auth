@@ -26,12 +26,12 @@ public type CredentialsConfig record {|
 # Represents the client Basic Auth provider. This uses the `auth:CredentialsConfig` configurations provided and generes
 # the token for Basic Auth authentication.
 # ```ballerina
-#  auth:CredentialsConfig config = {
-#      username: "tom",
-#      password: "123"
-#  }
-#  auth:ClientBasicAuthProvider provider = new(config);
-#  ```
+# auth:CredentialsConfig config = {
+#     username: "tom",
+#     password: "123"
+# }
+# auth:ClientBasicAuthProvider provider = new(config);
+# ```
 public class ClientBasicAuthProvider {
 
     CredentialsConfig credentialsConfig;

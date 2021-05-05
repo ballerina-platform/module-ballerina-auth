@@ -43,6 +43,8 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public class SslUtils {
 
+    private SslUtils() {}
+
     /**
      * Creates an SSLContext based on provided trust certificate chain file path.
      *
@@ -79,7 +81,7 @@ public class SslUtils {
     public static SSLContext createClientSslContext(String trustStoreFilePath, String trustStorePassword) throws
             NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         TrustManager[] trustManagers;
-        File trustStoreFile = new File(LdapUtils.substituteVariables(trustStoreFilePath));
+        File trustStoreFile = new File(trustStoreFilePath);
         KeyStore tks = getKeyStore(trustStoreFile, trustStorePassword);
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         tmf.init(tks);
@@ -93,7 +95,7 @@ public class SslUtils {
     private static KeyStore getKeyStore(String fileName) throws IOException, CertificateException,
             KeyStoreException, NoSuchAlgorithmException {
         KeyStore keyStore;
-        try (InputStream inputStream = new FileInputStream(LdapUtils.substituteVariables(fileName))) {
+        try (InputStream inputStream = new FileInputStream(fileName)) {
             CertificateFactory cf = CertificateFactory.getInstance(LdapConstants.X_509);
             Certificate ca = cf.generateCertificate(inputStream);
             keyStore = KeyStore.getInstance(LdapConstants.PKCS_STORE_TYPE);
