@@ -17,7 +17,7 @@ sn: Lakmal
 uid: ldclakmal
 displayName: Chanaka Lakmal
 mail: ldclakmal@gmail.com
-userpassword: ldclakmal123
+userpassword: ldclakmal@123
 
 dn: uid=alice,ou=Users,dc=avix,dc=lk
 changetype: add
@@ -28,17 +28,17 @@ sn: Parker
 uid: alice
 displayName: Alice Parker
 mail: alice@gmail.com
-userpassword: alice123
+userpassword: alice@123
 
-dn: cn=Admin,ou=Groups,dc=avix,dc=lk
+dn: cn=admin,ou=Groups,dc=avix,dc=lk
 changetype: add
-cn: Admin
+cn: admin
 objectClass: groupOfNames
 member: uid=ldclakmal,ou=Users,dc=avix,dc=lk
 
-dn: cn=Developer,ou=Groups,dc=avix,dc=lk
+dn: cn=developer,ou=Groups,dc=avix,dc=lk
 changetype: add
-cn: Developer
+cn: developer
 objectClass: groupOfNames
 member: uid=ldclakmal,ou=Users,dc=avix,dc=lk
 member: uid=alice,ou=Users,dc=avix,dc=lk

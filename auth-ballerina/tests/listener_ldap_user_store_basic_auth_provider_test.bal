@@ -149,13 +149,13 @@ isolated function testLdapAuthenticationOfInvalidPassword() {
     groups: ["ldap"]
 }
 isolated function testLdapAuthenticationSuccessForUser() {
-    string usernameAndPassword = "alice:alice123";
+    string usernameAndPassword = "alice:alice@123";
     ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
     string credential = usernameAndPassword.toBytes().toBase64();
     UserDetails|Error result = basicAuthProvider.authenticate(credential);
     if (result is UserDetails) {
         test:assertEquals(result.username, "alice");
-        test:assertEquals(result?.scopes, ["Developer"]);
+        test:assertEquals(result?.scopes, ["developer"]);
     } else {
         test:assertFail(msg = "Test Failed!");
     }
@@ -165,13 +165,13 @@ isolated function testLdapAuthenticationSuccessForUser() {
     groups: ["ldap"]
 }
 isolated function testLdapAuthenticationSuccessForSuperUser() {
-    string usernameAndPassword = "ldclakmal:ldclakmal123";
+    string usernameAndPassword = "ldclakmal:ldclakmal@123";
     ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
     string credential = usernameAndPassword.toBytes().toBase64();
     UserDetails|Error result = basicAuthProvider.authenticate(credential);
     if (result is UserDetails) {
         test:assertEquals(result.username, "ldclakmal");
-        test:assertEquals(result?.scopes, ["Admin", "Developer"]);
+        test:assertEquals(result?.scopes, ["admin", "developer"]);
     } else {
         test:assertFail(msg = "Test Failed!");
     }
