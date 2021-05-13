@@ -1,4 +1,4 @@
-## Module Overview
+## Overview
 
 This module provides a framework for authentication/authorization with Basic authentication scheme as specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
 
