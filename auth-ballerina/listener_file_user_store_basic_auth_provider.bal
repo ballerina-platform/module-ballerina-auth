@@ -27,16 +27,16 @@ public type FileUserStoreConfig record {|
     // This is intentionally kept blank.
 |};
 
-# Represents the file user store based listener Basic Auth provider, which is an implementation of the
-# `auth:ListenerBasicAuthProvider` object.
+# Represents the file user store based listener Basic Auth provider, which is used to authenticate the provided
+# credentials against the provided file user store configurations.
 # ```ballerina
 # auth:ListenerFileUserStoreBasicAuthProvider provider = new;
 # ```
-# The users are denoted by a section in the Ballerina configurations file. The username, password and the scopes
-# of a particular user are denoted as keys under the users section as shown below. For multiple users, the complete
-# section has to be duplicated.
+# The users are denoted by a section in the `Config.toml` file. The username, password and the scopes of a particular
+# user are denoted as keys under the users section as shown below. For multiple users, the complete section has to be
+# duplicated.
 # ```
-# [[auth.users]]
+# [[ballerina.auth.users]]
 # username = "alice"
 # password = "password1"
 # scopes = ["scope1", "scope2"]
@@ -52,14 +52,13 @@ public class ListenerFileUserStoreBasicAuthProvider {
         // This is intentionally kept blank.
     }
 
-    # Authenticate the base64-encoded `username:password` credentials.
+    # Authenticate the Base64 encoded `username:password` credentials.
     # ```ballerina
-    # auth:UserDetails|auth:Error result = provider.authenticate("<credential>");
+    # auth:UserDetails result = check provider.authenticate("<credential>");
     # ```
     #
-    # + credential - Base64-encoded `username:password` value
-    # + return - `auth:UserDetails` if the authentication is successful, `auth:Error` in case of an error of
-    #            authentication failure
+    # + credential - Base64 encoded `username:password` value
+    # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {
             return prepareError("Credential cannot be empty.");

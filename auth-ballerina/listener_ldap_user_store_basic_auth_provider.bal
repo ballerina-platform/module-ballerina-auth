@@ -73,9 +73,9 @@ public type SecureSocket record {|
 type LdapConnection record {|
 |};
 
-# Represents the LDAP based listener Basic Auth provider. This connects to an active directory or an LDAP,
-# retrieves the necessary user information, and performs authentication and authorization. This is an implementation
-# of the `auth:ListenerBasicAuthProvider` object.
+# Represents the LDAP based listener Basic Auth provider, which is used to authenticate the provided credentials
+# against the provided LDAP user store configurations. This connects to an active directory or an LDAP, retrieves
+# the necessary user information, and performs authentication and authorization.
 # ```ballerina
 # auth:LdapUserStoreConfig config = {
 #     domainName: "ballerina.io",
@@ -83,13 +83,6 @@ type LdapConnection record {|
 #     connectionName: "cn=admin,dc=avix,dc=lk"
 # };
 # auth:ListenerLdapUserStoreBasicAuthProvider provider = new(config);
-# ```
-# A user is denoted by a section in the Ballerina configuration file. The password and the scopes assigned to the user
-# are denoted as keys under the relevant user section as shown below.
-# ```
-# [b7a.users.<username>]
-# password="<password>"
-# scopes="<comma_separated_scopes>"
 # ```
 public class ListenerLdapUserStoreBasicAuthProvider {
 
@@ -100,7 +93,7 @@ public class ListenerLdapUserStoreBasicAuthProvider {
 
     # Creates an LDAP auth store with the provided configurations.
     #
-    # + ldapUserStoreConfig - The `auth:LdapUserStoreConfig` instance
+    # + ldapUserStoreConfig - The LDAP user store configurations
     public isolated function init(LdapUserStoreConfig ldapUserStoreConfig) {
         self.ldapUserStoreConfig = ldapUserStoreConfig;
         LdapConnection|Error ldapConnection = initLdapConnection(self.ldapUserStoreConfig);
@@ -111,14 +104,13 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         }
     }
 
-    # Attempts to authenticate the base64-encoded `username:password` credentials.
+    # Attempts to authenticate the Base64 encoded `username:password` credentials.
     # ```ballerina
-    # auth:UserDetails|auth:Error result = provider.authenticate("<credential>");
+    # auth:UserDetails result = check provider.authenticate("<credential>");
     # ```
     #
-    # + credential - Base64-encoded `username:password` value
-    # + return - `auth:UserDetails` if the authentication is successful, `auth:Error` in case of an error of
-    #            authentication failure
+    # + credential - Base64 encoded `username:password` value
+    # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {
             return prepareError("Credential cannot be empty.");

@@ -23,8 +23,8 @@ public type CredentialsConfig record {|
     string password;
 |};
 
-# Represents the client Basic Auth provider. This uses the `auth:CredentialsConfig` configurations provided and generes
-# the token for Basic Auth authentication.
+# Represents the client Basic Auth provider, which is used to authenticate with an external endpoint by generating a
+# Basic Auth token against the provided `auth:CredentialsConfig` configurations.
 # ```ballerina
 # auth:CredentialsConfig config = {
 #     username: "tom",
@@ -38,17 +38,17 @@ public class ClientBasicAuthProvider {
 
     # Provides authentication based on the provided Basic Auth configurations.
     #
-    # + credentialsConfig - Credential configurations
+    # + credentialsConfig - Credentials configuration
     public isolated function init(CredentialsConfig credentialsConfig) {
         self.credentialsConfig = credentialsConfig;
     }
 
-    # Generates a token for Basic Auth authentication.
+    # Generates a Base6e encoded token for Basic Auth authentication.
     # ```ballerina
-    # string|auth:Error token = provider.generateToken();
+    # string token = check provider.generateToken();
     # ```
     #
-    # + return - The generated token or else an `auth:Error` occurred during the validation
+    # + return - The generated token or else an `auth:Error` if an error occurred
     public isolated function generateToken() returns string|Error {
         if (self.credentialsConfig.username == "" || self.credentialsConfig.password == "") {
             return prepareError("Username or password cannot be empty.");
