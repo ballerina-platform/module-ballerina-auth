@@ -8,8 +8,6 @@ The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits c
 
 The Ballerina Auth module facilitates auth providers that is to be used by the clients and listeners of different protocol connectors.
 
-For more information go to [The Auth Module](https://docs.central.ballerina.io/ballerina/auth/latest).
-
 ### Report Issues
 
 To report bugs, request new features, start new discussions, view project boards, etc. please visit Ballerina
