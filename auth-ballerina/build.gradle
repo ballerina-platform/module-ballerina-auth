@@ -164,14 +164,6 @@ task initializeVariables {
         needPublishToCentral = true
     }
 
-    // This check is added to disable the 'ldap' group tests in Windows OS since the Docker image does not support
-    // for Windows OS.
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        if (disableGroups == "") {
-            disableGroups = "--disable-groups"
-        }
-        disableGroups += " ldap"
-    }
     gradle.taskGraph.whenReady { graph ->
         if (graph.hasTask(":${packageName}-ballerina:build") || graph.hasTask(":${packageName}-ballerina:publish") ||
                 graph.hasTask(":${packageName}-ballerina:publishToMavenLocal")) {
