@@ -6,12 +6,11 @@ This module provides a framework for authentication/authorization with Basic aut
 
 The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits credentials as user-id/password pairs, encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS, as the user-id and password are passed over the network as cleartext.
 
-The Ballerina Auth module facilitates auth providers that is to be used by the clients and listeners of different protocol connectors.
+The Ballerina Auth module facilitates auth providers that are to be used by the clients and listeners of different protocol connectors.
 
 ### Report Issues
 
-To report bugs, request new features, start new discussions, view project boards, etc. please visit the Ballerina
-[Standard Library parent repository](https://github.com/ballerina-platform/ballerina-standard-library).
+To report bugs, request new features, start new discussions, view project boards, etc. please visit the Ballerina [Standard Library parent repository](https://github.com/ballerina-platform/ballerina-standard-library).
 
 ### Useful Links
 - Discuss code changes of the Ballerina project in [ballerina-dev@googlegroups.com](mailto:ballerina-dev@googlegroups.com).

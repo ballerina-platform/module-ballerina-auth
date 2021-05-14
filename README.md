@@ -11,9 +11,9 @@ The Auth library is one of the standard library modules of the [Ballerina](https
 
 This module provides a framework for authentication/authorization with Basic authentication scheme as specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
 
-The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits credentials as user-id/password pairs, encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS , as the user-id and password are passed over the network as cleartext.
+The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits credentials as user-id/password pairs, encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS, as the user-id and password are passed over the network as cleartext.
 
-The Ballerina Auth module facilitates auth providers that is to be used by the clients and listeners of different protocol connectors.
+The Ballerina Auth module facilitates auth providers that are to be used by the clients and listeners of different protocol connectors.
 
 For more information go to [The Auth Module](https://docs.central.ballerina.io/ballerina/auth/latest).
 
@@ -21,7 +21,7 @@ For example demonstrations of the usage, go to [Ballerina By Examples](https://b
 
 ## Issues and Projects
 
-Issues and Projects tabs are disabled for this repository as this is part of the Ballerina Standard Library. To report bugs, request new features, start new discussions, view project boards, etc. please visit Ballerina Standard Library [parent repository](https://github.com/ballerina-platform/ballerina-standard-library).
+Issues and Projects tabs are disabled for this repository as this is part of the Ballerina Standard Library. To report bugs, request new features, start new discussions, view project boards, etc. please visit the Ballerina Standard Library [parent repository](https://github.com/ballerina-platform/ballerina-standard-library).
 
 This repository only contains the source code for the module.
 
@@ -37,7 +37,7 @@ This repository only contains the source code for the module.
    
         > **Note:** Set the JAVA_HOME environment variable to the path name of the directory into which you installed JDK.
 
-2. Export GitHub Personal Access Token (PAT) with read package permissions as follows:
+2. Export GitHub Personal Access Token (PAT) with 'read package' permission as follows:
 
     ```
     export packageUser=<Username>
