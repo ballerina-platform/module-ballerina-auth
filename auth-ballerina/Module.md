@@ -2,13 +2,13 @@
 
 This module provides a framework for authentication/authorization with Basic authentication scheme as specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
 
-The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits credentials as user-id/password pairs, encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS , as the user-id and password are passed over the network as cleartext.
+The "Basic" Hypertext Transfer Protocol (HTTP) authentication scheme transmits credentials as user-id/password pairs, encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS, as the user-id and password are passed over the network as cleartext.
 
 The Ballerina Auth module facilitates auth providers that is to be used by the clients and listeners of different protocol connectors.
 
 ### Listener File User Store Basic Auth Provider
 
-Represents the file user store based listener Basic Auth provider, which is used to authenticate the provided credentials against the provided file user store configurations. The users are denoted by a section in the `Config.toml` file. The username, password and the scopes of a particular user are denoted as keys under the users section as shown below. For multiple users, the complete section has to be duplicated.
+Represents the file user store-based listener Basic Auth provider, which is used to authenticate the provided credentials against the provided file user store configurations. The users are denoted by a section in the `Config.toml` file. The username, password, and the scopes of a particular user are denoted as keys under the `users` section as shown below. For multiple users, the complete section has to be duplicated.
 
 ```toml
 [[ballerina.auth.users]]
