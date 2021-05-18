@@ -7,7 +7,7 @@ Ballerina Auth Library
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
   [![codecov](https://codecov.io/gh/ballerina-platform/module-ballerina-auth/branch/master/graph/badge.svg)](https://codecov.io/gh/ballerina-platform/module-ballerina-auth) 
 
-The Auth library is one of the standard library modules of the [Ballerina](https://ballerina.io/) language.
+The `auth` library is one of the standard library modules of the [Ballerina](https://ballerina.io/) language.
 
 This module provides a framework for authentication/authorization with Basic authentication scheme as specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
 

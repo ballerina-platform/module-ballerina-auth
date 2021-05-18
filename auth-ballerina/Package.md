@@ -1,6 +1,6 @@
 ## Package Overview
 
-The Auth library is one of the standard library modules of the [Ballerina](https://ballerina.io/) language.
+The `auth` library is one of the standard library modules of the [Ballerina](https://ballerina.io/) language.
 
 This module provides a framework for authentication/authorization with Basic authentication scheme as specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
 
