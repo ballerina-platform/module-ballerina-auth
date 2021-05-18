@@ -73,7 +73,7 @@ public type SecureSocket record {|
 type LdapConnection record {|
 |};
 
-# Represents the LDAP based listener Basic Auth provider, which is used to authenticate the provided credentials
+# Represents the LDAP-based listener Basic Auth provider, which is used to authenticate the provided credentials
 # against the provided LDAP user store configurations. This connects to an active directory or an LDAP, retrieves
 # the necessary user information, and performs authentication and authorization.
 # ```ballerina
@@ -104,12 +104,12 @@ public class ListenerLdapUserStoreBasicAuthProvider {
         }
     }
 
-    # Attempts to authenticate the Base64 encoded `username:password` credentials.
+    # Attempts to authenticate the Base64-encoded `username:password` credentials.
     # ```ballerina
     # auth:UserDetails result = check provider.authenticate("<credential>");
     # ```
     #
-    # + credential - Base64 encoded `username:password` value
+    # + credential - The Base64-encoded `username:password` value
     # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {

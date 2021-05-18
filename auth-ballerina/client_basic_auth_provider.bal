@@ -43,7 +43,7 @@ public class ClientBasicAuthProvider {
         self.credentialsConfig = credentialsConfig;
     }
 
-    # Generates a Base6e encoded token for Basic Auth authentication.
+    # Generates a Base64-encoded token for Basic Auth authentication.
     # ```ballerina
     # string token = check provider.generateToken();
     # ```

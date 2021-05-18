@@ -32,7 +32,7 @@ public type FileUserStoreConfig record {|
 # ```ballerina
 # auth:ListenerFileUserStoreBasicAuthProvider provider = new;
 # ```
-# The users are denoted by a section in the `Config.toml` file. The username, password and the scopes of a particular
+# The users are denoted by a section in the `Config.toml` file. The username, password, and the scopes of a particular
 # user are denoted as keys under the users section as shown below. For multiple users, the complete section has to be
 # duplicated.
 # ```
@@ -52,12 +52,12 @@ public class ListenerFileUserStoreBasicAuthProvider {
         // This is intentionally kept blank.
     }
 
-    # Authenticate the Base64 encoded `username:password` credentials.
+    # Authenticate the Base64-encoded `username:password` credentials.
     # ```ballerina
     # auth:UserDetails result = check provider.authenticate("<credential>");
     # ```
     #
-    # + credential - Base64 encoded `username:password` value
+    # + credential - The Base64-encoded `username:password` value
     # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
         if (credential == "") {
