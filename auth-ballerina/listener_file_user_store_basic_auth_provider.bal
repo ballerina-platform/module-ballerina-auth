@@ -20,7 +20,7 @@ type AuthInfo record {
   string[] scopes?;
 };
 
-final configurable table<AuthInfo> key(username) & readonly users = table [{ username: "", password: "" }];
+configurable table<AuthInfo> key(username) & readonly users = table [{ username: "", password: "" }];
 
 # Represents the file user store configurations.
 public type FileUserStoreConfig record {|
