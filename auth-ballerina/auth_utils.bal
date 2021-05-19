@@ -18,14 +18,13 @@ import ballerina/lang.'array;
 import ballerina/lang.'string;
 import ballerina/regex;
 
-# Extracts the username and the password from the base64-encoded `username:password` value.
+# Extracts the username and the password from the Base64-encoded `username:password` value.
 # ```ballerina
-# [string, string]|auth:Error [username, password] = auth:extractUsernameAndPassword("<credential>");
+# [string, string] [username, password] = check auth:extractUsernameAndPassword("<credential>");
 # ```
 #
-# + credential - Base64-encoded `username:password` value
-# + return - A `string` tuple with the extracted username and password or else an `auth:Error` occurred while
-#            extracting credentials
+# + credential - The Base64-encoded `username:password` value
+# + return - A `string` tuple with the extracted username and password or else an `auth:Error` if an error occurred
 public isolated function extractUsernameAndPassword(string credential) returns [string, string]|Error {
     byte[]|error base64Decoded = 'array:fromBase64(credential);
     if (base64Decoded is byte[]) {

@@ -16,8 +16,9 @@
 
 import ballerina/log;
 
-# Represents the Auth error. This will be returned if an error occurred while any of the listener Basic Auth providers
-# try to authenticate the received credentials and client Basic Auth provider try to generate the token.
+# Represents the error type of the module. This will be returned if an error occurred while any of the listener
+# Basic Auth providers try to authenticate the received credentials and client Basic Auth providers try to generate
+# the token.
 public type Error distinct error;
 
 // Logs and prepares the `error` as an `auth:Error`.

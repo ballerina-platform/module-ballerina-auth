@@ -23,7 +23,6 @@ public type ListenerBasicAuthProvider object {
     # Authenticates the user based on the user credentials (i.e., the username/password).
     #
     # + credential - The `string` credential value
-    # + return - `auth:UserDetails` if the authentication is successful, `auth:Error` in case of an error of
-    #            authentication failure
+    # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error;
 };
