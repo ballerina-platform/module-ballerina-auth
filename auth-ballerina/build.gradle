@@ -161,11 +161,13 @@ task stopLdapServer() {
 
 updateTomlFiles.dependsOn copyStdlibs
 
-build.finalizedBy stopLdapServer
+test.finalizedBy stopLdapServer
 test.dependsOn startLdapServer
-
-build.dependsOn ":${packageName}-native:build"
 test.dependsOn ":${packageName}-native:build"
+
+build.finalizedBy stopLdapServer
+build.dependsOn startLdapServer
+build.dependsOn ":${packageName}-native:build"
 
 publishToMavenLocal.dependsOn build
 publish.dependsOn build
