@@ -24,7 +24,7 @@ public type CredentialsConfig record {|
 |};
 
 # Represents the client Basic Auth provider, which is used to authenticate with an external endpoint by generating a
-# Basic Auth token against the provided `auth:CredentialsConfig` configurations.
+# Basic Auth token against the provided credential configurations.
 # ```ballerina
 # auth:CredentialsConfig config = {
 #     username: "tom",
