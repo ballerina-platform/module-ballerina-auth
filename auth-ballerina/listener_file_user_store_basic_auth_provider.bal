@@ -41,7 +41,7 @@ public type FileUserStoreConfig record {|
 # password = "password1"
 # scopes = ["scope1", "scope2"]
 # ```
-public class ListenerFileUserStoreBasicAuthProvider {
+public isolated class ListenerFileUserStoreBasicAuthProvider {
 
     *ListenerBasicAuthProvider;
 

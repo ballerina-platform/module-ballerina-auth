@@ -32,15 +32,15 @@ public type CredentialsConfig record {|
 # }
 # auth:ClientBasicAuthProvider provider = new(config);
 # ```
-public class ClientBasicAuthProvider {
+public isolated class ClientBasicAuthProvider {
 
-    CredentialsConfig credentialsConfig;
+    private final CredentialsConfig & readonly credentialsConfig;
 
     # Provides authentication based on the provided Basic Auth configurations.
     #
     # + credentialsConfig - Credentials configuration
     public isolated function init(CredentialsConfig credentialsConfig) {
-        self.credentialsConfig = credentialsConfig;
+        self.credentialsConfig = credentialsConfig.cloneReadOnly();
     }
 
     # Generates a Base64-encoded token for Basic Auth authentication.

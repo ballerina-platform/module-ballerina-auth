@@ -84,18 +84,18 @@ type LdapConnection record {|
 # };
 # auth:ListenerLdapUserStoreBasicAuthProvider provider = new(config);
 # ```
-public class ListenerLdapUserStoreBasicAuthProvider {
+public isolated class ListenerLdapUserStoreBasicAuthProvider {
 
     *ListenerBasicAuthProvider;
 
-    LdapConnection ldapConnection;
-    LdapUserStoreConfig ldapUserStoreConfig;
+    private final LdapConnection & readonly ldapConnection;
+    private final LdapUserStoreConfig & readonly ldapUserStoreConfig;
 
     # Creates an LDAP auth store with the provided configurations.
     #
     # + ldapUserStoreConfig - The LDAP user store configurations
     public isolated function init(LdapUserStoreConfig ldapUserStoreConfig) {
-        self.ldapUserStoreConfig = ldapUserStoreConfig;
+        self.ldapUserStoreConfig = ldapUserStoreConfig.cloneReadOnly();
         LdapConnection|Error ldapConnection = initLdapConnection(self.ldapUserStoreConfig);
         if (ldapConnection is LdapConnection) {
             self.ldapConnection = ldapConnection;
