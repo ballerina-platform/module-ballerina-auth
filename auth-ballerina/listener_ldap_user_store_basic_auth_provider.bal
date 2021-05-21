@@ -17,7 +17,7 @@
 import ballerina/crypto;
 import ballerina/jballerina.java;
 
-# Represents the configurations that are required for an LDAP user store.
+# Represents the LDAP user store configurations.
 #
 # + domainName - Unique name to identify the user store
 # + connectionUrl - Connection URL of the LDAP server
@@ -62,7 +62,7 @@ public type LdapUserStoreConfig record {|
     SecureSocket secureSocket?;
 |};
 
-# Configures the SSL/TLS options to be used for LDAP communication.
+# Represents the SSL/TLS configurations.
 #
 # + cert - Configurations associated with the `crypto:TrustStore` or single certificate file that the client trusts
 public type SecureSocket record {|
