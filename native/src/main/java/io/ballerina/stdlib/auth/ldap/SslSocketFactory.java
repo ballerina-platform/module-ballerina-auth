@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.auth.ldap;
+package io.ballerina.stdlib.auth.ldap;
 
-import org.ballerinalang.stdlib.auth.ldap.utils.ExcludeCoverageFromGeneratedReport;
-import org.ballerinalang.stdlib.auth.ldap.utils.LdapUtils;
+import io.ballerina.stdlib.auth.ldap.utils.ExcludeCoverageFromGeneratedReport;
+import io.ballerina.stdlib.auth.ldap.utils.LdapUtils;
 
 import java.io.IOException;
 import java.net.InetAddress;

@@ -1,0 +1,7 @@
+[package]
+org = "ballerina"
+name = "auth"
+version = "@toml.version@"
+
+[[platform.java11.dependency]]
+path = "../native/build/libs/auth-native-@project.version@.jar"

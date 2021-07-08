@@ -12,8 +12,14 @@ plugins {
 }
 
 rootProject.name = 'auth'
-include(':build-config:checkstyle')
-include ':auth-native', ':auth-ballerina'
+
+include ':checkstyle'
+include ':auth-native'
+include ':auth-ballerina'
+
+project(':checkstyle').projectDir = file("build-config${File.separator}checkstyle")
+project(':auth-native').projectDir = file('native')
+project(':auth-ballerina').projectDir = file('ballerina')
 
 gradleEnterprise {
     buildScan {

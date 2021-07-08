@@ -16,14 +16,14 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.auth.ldap.utils;
+package io.ballerina.stdlib.auth.ldap.utils;
 
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
-import org.ballerinalang.stdlib.auth.AuthConstants;
-import org.ballerinalang.stdlib.auth.ModuleUtils;
-import org.ballerinalang.stdlib.auth.ldap.CommonLdapConfiguration;
+import io.ballerina.stdlib.auth.AuthConstants;
+import io.ballerina.stdlib.auth.ModuleUtils;
+import io.ballerina.stdlib.auth.ldap.CommonLdapConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
