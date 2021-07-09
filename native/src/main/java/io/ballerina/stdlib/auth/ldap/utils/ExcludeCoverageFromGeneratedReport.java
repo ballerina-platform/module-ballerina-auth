@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.auth.ldap.utils;
+package io.ballerina.stdlib.auth.ldap.utils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

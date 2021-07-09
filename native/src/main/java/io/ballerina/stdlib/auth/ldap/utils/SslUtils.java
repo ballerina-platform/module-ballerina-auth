@@ -16,9 +16,9 @@
  * under the License.
  */
 
-package org.ballerinalang.stdlib.auth.ldap.utils;
+package io.ballerina.stdlib.auth.ldap.utils;
 
-import org.ballerinalang.stdlib.auth.ldap.LdapConstants;
+import io.ballerina.stdlib.auth.ldap.LdapConstants;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -17,7 +17,7 @@
  *
  */
 
-package org.ballerinalang.stdlib.auth.ldap;
+package io.ballerina.stdlib.auth.ldap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,6 +17,6 @@
   -->
 <FindBugsFilter>
 	<Match>
-		<Class name="org.ballerinalang.stdlib.auth.ldap.SslContextTrustManager"/>
+		<Class name="io.ballerina.stdlib.auth.ldap.SslContextTrustManager"/>
 	</Match>
 </FindBugsFilter>
