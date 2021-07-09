@@ -136,19 +136,19 @@ public isolated class ListenerLdapUserStoreBasicAuthProvider {
 // Retrieves the group(s) of the user related to the provided username.
 isolated function getLdapGroups(LdapConnection ldapConnection, string username) returns string[]|Error? = @java:Method {
     name: "getGroups",
-    'class: "io.ballerina.stdlib.auth.GetGroups"
+    'class: "io.ballerina.stdlib.auth.ldap.nativeimpl.GetGroups"
 } external;
 
 // Authenticates with the provided username and password.
 isolated function authenticateWithLdap(LdapConnection ldapConnection, string username, string password)
                                        returns Error? = @java:Method {
     name: "authenticate",
-    'class: "io.ballerina.stdlib.auth.Authenticate"
+    'class: "io.ballerina.stdlib.auth.ldap.nativeimpl.Authenticate"
 } external;
 
 // Initializes the LDAP connection.
 isolated function initLdapConnection(LdapUserStoreConfig ldapUserStoreConfig)
                                      returns LdapConnection|Error = @java:Method {
     name: "initLdapConnection",
-    'class: "io.ballerina.stdlib.auth.InitLdapConnection"
+    'class: "io.ballerina.stdlib.auth.ldap.nativeimpl.InitLdapConnection"
 } external;
