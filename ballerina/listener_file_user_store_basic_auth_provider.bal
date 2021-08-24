@@ -63,6 +63,9 @@ public isolated class ListenerFileUserStoreBasicAuthProvider {
         if (credential == "") {
             return prepareError("Credential cannot be empty.");
         }
+        if (users.length() == 1 && users.keys() == [""]) {
+            return prepareError("File user store values are not provided or not properly configured.");
+        }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         if (users.hasKey(username)) {
             AuthInfo authInfo = users.get(username);
