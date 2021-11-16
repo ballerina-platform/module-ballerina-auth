@@ -2,7 +2,7 @@
 
 The `auth` library is one of the standard library modules of the <a target="_blank" href="https://ballerina.io/">Ballerina</a> language.
 
-This module provides a framework for authentication/authorization with the Basic Authentication scheme as specified in <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc7617">RFC 7617</a>.
+This module provides a framework for authentication/authorization based on the Basic Authentication scheme specified in <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc7617">RFC 7617</a>.
 
 The Basic Authentication scheme transmits credentials as user-id/password pairs encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS as the user ID and password are passed over the network as cleartext.
 
