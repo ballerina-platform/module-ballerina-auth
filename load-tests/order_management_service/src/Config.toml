@@ -1,0 +1,4 @@
+[[ballerina.auth.users]]
+username="alice"
+password="123"
+scopes=["add_order", "update_order"]
