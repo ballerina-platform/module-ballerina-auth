@@ -38,3 +38,7 @@ target
 velocity.log*
 *Ballerina.lock
 auth-ballerina/tests/resources/secret.txt
+
+# Auto generated Dependencies.toml files
+examples/**/Dependencies.toml
+load-tests/**/Dependencies.toml
