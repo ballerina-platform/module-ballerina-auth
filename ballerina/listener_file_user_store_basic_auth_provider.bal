@@ -60,22 +60,22 @@ public isolated class ListenerFileUserStoreBasicAuthProvider {
     # + credential - The Base64-encoded `username:password` value
     # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
-        if (credential == "") {
+        if credential == "" {
             return prepareError("Credential cannot be empty.");
         }
-        if (users.length() == 1 && users.keys() == [""]) {
+        if users.length() == 1 && users.keys() == [""] {
             return prepareError("File user store values are not provided or not properly configured.");
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
-        if (users.hasKey(username)) {
+        if users.hasKey(username) {
             AuthInfo authInfo = users.get(username);
             boolean authenticated = checkPasswordEquality(authInfo.password, password);
-            if (authenticated) {
+            if authenticated {
                 UserDetails userDetails = {
                     username: username
                 };
                 string[]? scopes = authInfo?.scopes;
-                if (scopes is string[]) {
+                if scopes is string[] {
                     userDetails.scopes = scopes;
                 }
                 return userDetails;

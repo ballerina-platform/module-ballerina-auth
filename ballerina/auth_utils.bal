@@ -27,11 +27,11 @@ import ballerina/regex;
 # + return - A `string` tuple with the extracted username and password or else an `auth:Error` if an error occurred
 public isolated function extractUsernameAndPassword(string credential) returns [string, string]|Error {
     byte[]|error base64Decoded = 'array:fromBase64(credential);
-    if (base64Decoded is byte[]) {
+    if base64Decoded is byte[] {
         string|error base64DecodedResults = 'string:fromBytes(base64Decoded);
-        if (base64DecodedResults is string) {
+        if base64DecodedResults is string {
             string[] decodedCredentials = regex:split(base64DecodedResults, ":");
-            if (decodedCredentials.length() != 2 || decodedCredentials[0].length() == 0) {
+            if decodedCredentials.length() != 2 || decodedCredentials[0].length() == 0 {
                 return prepareError("Incorrect credential format. Format should be username:password");
             } else {
                 return [decodedCredentials[0], decodedCredentials[1]];

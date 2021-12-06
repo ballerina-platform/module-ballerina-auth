@@ -33,8 +33,7 @@ public class SslContextTrustManager {
     private static SslContextTrustManager sslContextTrustManager;
     private Map<String, SSLContext> sslContextMap = new ConcurrentHashMap<>();
 
-    private SslContextTrustManager() {
-    }
+    private SslContextTrustManager() {}
 
     public static SslContextTrustManager getInstance() {
         if (sslContextTrustManager != null) {
