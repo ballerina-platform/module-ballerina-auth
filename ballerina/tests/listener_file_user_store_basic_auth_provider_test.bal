@@ -17,25 +17,21 @@
 import ballerina/test;
 
 @test:Config {}
-isolated function testFileAuthenticationSuccess() {
+isolated function testFileAuthenticationSuccess() returns Error? {
     string usernameAndPassword = "alice:xxx";
-    UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is UserDetails) {
-        test:assertEquals(result.username, "alice");
-        test:assertEquals(result?.scopes, ["read", "write"]);
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
+    UserDetails result = check authenticateFile(usernameAndPassword);
+    test:assertEquals(result.username, "alice");
+    test:assertEquals(result?.scopes, ["read", "write"]);
 }
 
 @test:Config {}
 isolated function testFileAuthenticationEmptyCredential() {
     string usernameAndPassword = "";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Credential cannot be empty.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -43,10 +39,10 @@ isolated function testFileAuthenticationEmptyCredential() {
 isolated function testFileAuthenticationOfNonExistingUser() {
     string usernameAndPassword = "dave:123";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Username 'dave' does not exists in file user store.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -54,10 +50,10 @@ isolated function testFileAuthenticationOfNonExistingUser() {
 isolated function testFileAuthenticationOfInvalidPassword() {
     string usernameAndPassword = "alice:xxy";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Failed to authenticate username 'alice' from file user store.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -65,10 +61,10 @@ isolated function testFileAuthenticationOfInvalidPassword() {
 isolated function testFileAuthenticationWithEmptyUsername() {
     string usernameAndPassword = ":xxx";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -76,10 +72,10 @@ isolated function testFileAuthenticationWithEmptyUsername() {
 isolated function testFileAuthenticationWithEmptyPassword() {
     string usernameAndPassword = "alice:";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -87,10 +83,10 @@ isolated function testFileAuthenticationWithEmptyPassword() {
 isolated function testFileAuthenticationWithEmptyPasswordAndInvalidUsername() {
     string usernameAndPassword = "invalid:";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -98,10 +94,10 @@ isolated function testFileAuthenticationWithEmptyPasswordAndInvalidUsername() {
 isolated function testFileAuthenticationWithEmptyUsernameAndEmptyPassword() {
     string usernameAndPassword = ":";
     UserDetails|Error result = authenticateFile(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Incorrect credential format. Format should be username:password");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 

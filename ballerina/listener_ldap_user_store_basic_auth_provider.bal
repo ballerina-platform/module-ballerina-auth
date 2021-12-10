@@ -97,7 +97,7 @@ public isolated class ListenerLdapUserStoreBasicAuthProvider {
     public isolated function init(LdapUserStoreConfig ldapUserStoreConfig) {
         self.ldapUserStoreConfig = ldapUserStoreConfig.cloneReadOnly();
         LdapConnection|Error ldapConnection = initLdapConnection(self.ldapUserStoreConfig);
-        if (ldapConnection is LdapConnection) {
+        if ldapConnection is LdapConnection {
             self.ldapConnection = ldapConnection;
         } else {
             panic ldapConnection;
@@ -112,21 +112,21 @@ public isolated class ListenerLdapUserStoreBasicAuthProvider {
     # + credential - The Base64-encoded `username:password` value
     # + return - `auth:UserDetails` if the authentication is successful or else an `auth:Error` if an error occurred
     public isolated function authenticate(string credential) returns UserDetails|Error {
-        if (credential == "") {
+        if credential == "" {
             return prepareError("Credential cannot be empty.");
         }
         [string, string] [username, password] = check extractUsernameAndPassword(credential);
         Error? authenticated = authenticateWithLdap(self.ldapConnection, username, password);
-        if (authenticated is Error) {
+        if authenticated is Error {
             return prepareError("Failed to authenticate username '" + username + "' with LDAP user store.", authenticated);
         }
         UserDetails userDetails = {
             username: username
         };
         string[]|Error? groups = getLdapGroups(self.ldapConnection, username);
-        if (groups is string[]) {
+        if groups is string[] {
             userDetails.scopes = groups;
-        } else if (groups is Error) {
+        } else if groups is Error {
             return prepareError("Failed to get groups for the username '" + username + "' from LDAP user store.", groups);
         }
         return userDetails;

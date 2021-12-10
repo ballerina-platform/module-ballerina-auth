@@ -23,7 +23,7 @@ const string TRUSTSTORE_PATH = "tests/resources/keystore/ballerinaTruststore.p12
 isolated function assertContains(error err, string text) {
     string message = err.message();
     error? cause = err.cause();
-    while (cause is error) {
+    while cause is error {
         message += " " + cause.message();
         cause = cause.cause();
     }

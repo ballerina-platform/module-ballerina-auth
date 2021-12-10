@@ -17,25 +17,20 @@
 import ballerina/test;
 
 @test:Config {}
-isolated function testExtractUsernameAndPasswordSuccess() {
+isolated function testExtractUsernameAndPasswordSuccess() returns Error? {
     string usernameAndPassword = "YWxpY2U6MTIz";
-    [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
-    if (result is [string, string]) {
-        [string, string] [username, password] = result;
-        test:assertEquals(username, "alice");
-        test:assertEquals(password, "123");
-    } else {
-        test:assertFail(msg = "Test Failed!");
-    }
+    [string, string] [username, password] = check extractUsernameAndPassword(usernameAndPassword);
+    test:assertEquals(username, "alice");
+    test:assertEquals(password, "123");
 }
 
 @test:Config {}
 isolated function testExtractUsernameAndPasswordFailure() {
     string usernameAndPassword = "!nval!d-b@$e64-encoded-va!ue";
     [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
-    if (result is Error) {
+    if result is Error {
         assertContains(result, "Failed to convert string credential to byte[].");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }

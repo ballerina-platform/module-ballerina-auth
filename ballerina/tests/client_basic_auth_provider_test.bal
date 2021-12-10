@@ -17,24 +17,20 @@
 import ballerina/test;
 
 @test:Config {}
-isolated function testTokenGeneration() {
+isolated function testTokenGeneration() returns Error? {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: "123"});
-    string|Error result = basicAuthProvider.generateToken();
-    if (result is string) {
-        test:assertEquals(result, "dG9tOjEyMw==");
-    } else {
-        test:assertFail(msg = "Test Failed! " + <string>result.message());
-    }
+    string result = check basicAuthProvider.generateToken();
+    test:assertEquals(result, "dG9tOjEyMw==");
 }
 
 @test:Config {}
 isolated function testTokenGenerationWithEmptyUsername() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: "123"});
     string|Error result = basicAuthProvider.generateToken();
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -42,10 +38,10 @@ isolated function testTokenGenerationWithEmptyUsername() {
 isolated function testTokenGenerationWithEmptyPassword() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "tom", password: ""});
     string|Error result = basicAuthProvider.generateToken();
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }
 
@@ -53,9 +49,9 @@ isolated function testTokenGenerationWithEmptyPassword() {
 isolated function testTokenGenerationWithEmptyUsernameAndEmptyPassword() {
     ClientBasicAuthProvider basicAuthProvider = new({ username: "", password: ""});
     string|Error result = basicAuthProvider.generateToken();
-    if (result is Error) {
+    if result is Error {
         test:assertEquals(result.message(), "Username or password cannot be empty.");
     } else {
-        test:assertFail(msg = "Test Failed!");
+        test:assertFail("Expected error not found.");
     }
 }

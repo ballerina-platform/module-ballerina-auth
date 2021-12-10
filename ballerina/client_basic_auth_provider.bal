@@ -50,7 +50,7 @@ public isolated class ClientBasicAuthProvider {
     #
     # + return - The generated token or else an `auth:Error` if an error occurred
     public isolated function generateToken() returns string|Error {
-        if (self.credentialsConfig.username == "" || self.credentialsConfig.password == "") {
+        if self.credentialsConfig.username == "" || self.credentialsConfig.password == "" {
             return prepareError("Username or password cannot be empty.");
         }
         string token = self.credentialsConfig.username + ":" + self.credentialsConfig.password;
