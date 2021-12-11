@@ -26,7 +26,7 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '/github/workspace/ballerina'
-          skip-dirs: 'build'
+          skip-dirs: '/github/workspace/ballerina/build'
           format: 'table'
           timeout: '10m0s'
           exit-code: '1'
