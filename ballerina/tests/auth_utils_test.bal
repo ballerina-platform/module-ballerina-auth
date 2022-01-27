@@ -25,11 +25,44 @@ isolated function testExtractUsernameAndPasswordSuccess() returns Error? {
 }
 
 @test:Config {}
-isolated function testExtractUsernameAndPasswordFailure() {
+isolated function testExtractUsernameAndPasswordForInvalidBase64Value() {
     string usernameAndPassword = "!nval!d-b@$e64-encoded-va!ue";
     [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
     if result is Error {
         assertContains(result, "Failed to convert string credential to byte[].");
+    } else {
+        test:assertFail("Expected error not found.");
+    }
+}
+
+@test:Config {}
+isolated function testExtractUsernameAndPasswordForWithoutColon() {
+    string usernameAndPassword = "YWxpY2UxMjM=";
+    [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
+    if result is Error {
+        assertContains(result, "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail("Expected error not found.");
+    }
+}
+
+@test:Config {}
+isolated function testExtractUsernameAndPasswordForEmptyPassword() returns Error? {
+    string usernameAndPassword = "YWxpY2U6";
+    [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
+    if result is Error {
+        assertContains(result, "Incorrect credential format. Format should be username:password");
+    } else {
+        test:assertFail("Expected error not found.");
+    }
+}
+
+@test:Config {}
+isolated function testExtractUsernameAndPasswordForEmptyUsername() returns Error? {
+    string usernameAndPassword = "OjEyMw==";
+    [string, string]|Error result = extractUsernameAndPassword(usernameAndPassword);
+    if result is Error {
+        assertContains(result, "Incorrect credential format. Format should be username:password");
     } else {
         test:assertFail("Expected error not found.");
     }

@@ -2,3 +2,7 @@
 username="alice"
 password="xxx"
 scopes=["read", "write"]
+
+[[auth.users]]
+username="bob"
+password="yyy"
