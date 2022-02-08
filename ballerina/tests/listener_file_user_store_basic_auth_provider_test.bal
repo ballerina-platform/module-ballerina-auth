@@ -17,11 +17,19 @@
 import ballerina/test;
 
 @test:Config {}
-isolated function testFileAuthenticationSuccess() returns Error? {
+isolated function testFileAuthenticationSuccessWithScopes() returns Error? {
     string usernameAndPassword = "alice:xxx";
     UserDetails result = check authenticateFile(usernameAndPassword);
     test:assertEquals(result.username, "alice");
     test:assertEquals(result?.scopes, ["read", "write"]);
+}
+
+@test:Config {}
+isolated function testFileAuthenticationSuccessWithoutScopes() returns Error? {
+    string usernameAndPassword = "bob:yyy";
+    UserDetails result = check authenticateFile(usernameAndPassword);
+    test:assertEquals(result.username, "bob");
+    test:assertTrue(result?.scopes is ());
 }
 
 @test:Config {}
