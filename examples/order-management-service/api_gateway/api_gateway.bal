@@ -54,7 +54,7 @@ listener http:Listener apiGateway = new (9090,
     ]
 }
 service /'order on apiGateway {
-    resource function get [string orderId]() returns json|error {
+    resource function get [string orderId]() returns json {
         // We need to call the 'Order Service' via mTLS. For this guide, since we are not interested of the security of
         // rest of the components, we will be returning a success mock response.
         return {
