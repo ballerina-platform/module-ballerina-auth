@@ -96,8 +96,8 @@ scopes=<String Array>
 ```
 
 The File User Store Basic Auth Provider has an API to authenticate the Basic Auth credential using the File User Store 
-defined in [TOML language][TOML language](https://toml.io/en/) and return the `UserDetails` which consists of the 
-username and scopes as an array if available.
+defined in [TOML language](https://toml.io/en/) and return the `UserDetails` which consists of the username and scopes
+as an array if available.
 
 ```ballerina
 public type FileUserStoreConfig record {|
