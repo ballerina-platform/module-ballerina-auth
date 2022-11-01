@@ -7,7 +7,10 @@ keywords = ["security", "authentication", "basic auth"]
 repository = "https://github.com/ballerina-platform/module-ballerina-auth"
 icon = "icon.png"
 license = ["Apache-2.0"]
-distribution = "2201.2.0"
+distribution = "2201.3.0"
 
 [[platform.java11.dependency]]
+groupId = "io.ballerina.stdlib"
+artifactId = "auth-native"
+version = "@toml.version@"
 path = "../native/build/libs/auth-native-@project.version@.jar"

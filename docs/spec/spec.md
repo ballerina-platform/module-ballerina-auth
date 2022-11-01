@@ -11,7 +11,7 @@ This is the specification for the Auth standard library of [Ballerina language](
 
 The Auth library specification has evolved and may continue to evolve in the future. The released versions of the specification can be found under the relevant GitHub tag.
 
-If you have any feedback or suggestions about the library, start a discussion via a [GitHub issue](https://github.com/ballerina-platform/ballerina-standard-library/issues) or in the [Slack channel](https://ballerina.io/community/). Based on the outcome of the discussion, the specification and implementation can be updated. Community feedback is always welcome. Any accepted proposal, which affects the specification is stored under `/docs/proposals`. Proposals under discussion can be found with the label `type/proposal` in GitHub.
+If you have any feedback or suggestions about the library, start a discussion via a [GitHub issue](https://github.com/ballerina-platform/ballerina-standard-library/issues) or in the [Discord server](https://discord.gg/ballerinalang). Based on the outcome of the discussion, the specification and implementation can be updated. Community feedback is always welcome. Any accepted proposal, which affects the specification is stored under `/docs/proposals`. Proposals under discussion can be found with the label `type/proposal` in GitHub.
 
 The conforming implementation of the specification is released and included in the distribution. Any deviation from the specification is considered a bug.
 
@@ -96,8 +96,8 @@ scopes=<String Array>
 ```
 
 The File User Store Basic Auth Provider has an API to authenticate the Basic Auth credential using the File User Store 
-defined in [TOML language][TOML language](https://toml.io/en/) and return the `UserDetails` which consists of the 
-username and scopes as an array if available.
+defined in [TOML language](https://toml.io/en/) and return the `UserDetails` which consists of the username and scopes
+as an array if available.
 
 ```ballerina
 public type FileUserStoreConfig record {|
@@ -212,7 +212,7 @@ public class ListenerFileUserStoreBasicAuthHandler {
     public function authenticate(Request|Headers|string data) returns auth:UserDetails|Unauthorized {
         // extract the credential from data
         auth:UserDetails|auth:Error details = self.provider.authenticate(credential);
-        if (details is auth:Error) {
+        if details is auth:Error {
             // return `Unauthorized`
         }
         return <auth:UserDetails>details;
@@ -253,7 +253,7 @@ public client class ListenerLdapUserStoreBasicAuthHandler {
     remote function authenticate(Request|Headers|string data) returns auth:UserDetails|Unauthorized {
         // extract the credential from data
         auth:UserDetails|auth:Error details = self.provider.authenticate(credential);
-        if (details is auth:Error) {
+        if details is auth:Error {
             // return `Unauthorized`
         }
         return <auth:UserDetails>details;
@@ -437,11 +437,11 @@ http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 service /foo on new http:Listener(9090) {
     resource function post bar(@http:Header string Authorization) returns string|http:Unauthorized|http:Forbidden {
         auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
-        if (authn is http:Unauthorized) {
+        if authn is http:Unauthorized {
             return authn;
         }
         http:Forbidden? authz = handler.authorize(<auth:UserDetails>authn, "admin");
-        if (authz is http:Forbidden) {
+        if authz is http:Forbidden {
             return authz;
         }
         // business logic
@@ -481,11 +481,11 @@ http:ListenerLdapUserStoreBasicAuthHandler handler = new (config);
 service /foo on new http:Listener(9090) {
     resource function post bar(@http:Header string Authorization) returns string|http:Unauthorized|http:Forbidden {
         auth:UserDetails|http:Unauthorized authn = handler->authenticate(Authorization);
-        if (authn is http:Unauthorized) {
+        if authn is http:Unauthorized {
             return authn;
         }
         http:Forbidden? authz = handler->authorize(<auth:UserDetails>authn, "admin");
-        if (authz is http:Forbidden) {
+        if authz is http:Forbidden {
             return authz;
         }
         // business logic
@@ -508,7 +508,8 @@ http:Client c = check new ("https://localhost:9090",
 );
 
 public function main() returns error? {
-    json response = check c->get("/foo/bar");
+    http:Request req = new;
+    json response = check c->post("/foo/bar", req);
     // evaluate response
 }
 ```
@@ -529,7 +530,7 @@ http:Client c = check new ("https://localhost:9090");
 public function main() returns error? {
     http:Request req = new;
     req = check handler.enrich(req);
-    json response = check c->get("/foo/bar");
+    json response = check c->post("/foo/bar", req);
     // evaluate response
 }
 ```

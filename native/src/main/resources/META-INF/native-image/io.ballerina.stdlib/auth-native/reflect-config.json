@@ -1,0 +1,11 @@
+[
+  {
+    "name": "com.sun.jndi.ldap.LdapCtxFactory",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  }
+]
