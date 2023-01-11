@@ -7,5 +7,17 @@
         "parameterTypes": []
       }
     ]
+  },
+  {
+    "name": "io.ballerina.stdlib.auth.ldap.SslSocketFactory"
+  },
+  {
+    "name": "javax.net.ssl.SSLSocketFactory",
+    "methods": [
+      {
+        "name": "getDefault",
+        "parameterTypes": []
+      }
+    ]
   }
 ]
