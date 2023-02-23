@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.6.0] - 2023-02-20
+
+- This version maintains compatibility with Lang Update 4 without any external changes.
+
+## [2.5.0] - 2022-11-29
+
 ### Changed
 - [API Docs Updated](https://github.com/ballerina-platform/ballerina-standard-library/issues/3463)
 
