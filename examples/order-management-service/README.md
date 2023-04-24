@@ -1,5 +1,12 @@
 # Secured Order Management Service with Basic Auth
 
+[![Star on Github](https://img.shields.io/badge/-Star%20on%20Github-blue?style=social&logo=github)](https://github.com/ballerina-platform/module-ballerina-auth)
+
+_Authors_: @ldclakmal  
+_Reviewers_: @shafreenAnfar  
+_Created_: 2022/03/10  
+_Updated_: 2022/03/10
+
 ## Overview
 
 This guide explains how to secure an 'Order Management Service' (RESTful service) with Basic Auth using Ballerina. 
