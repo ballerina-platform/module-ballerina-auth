@@ -19,4 +19,14 @@
 	<Match>
 		<Class name="io.ballerina.stdlib.auth.ldap.SslContextTrustManager"/>
 	</Match>
+	<Match>
+		<Class name="io.ballerina.stdlib.auth.ldap.CommonLdapConfiguration"/>
+		<Method name="getGroupSearchBase"/>
+		<Bug pattern="EI_EXPOSE_REP"/>
+	</Match>
+	<Match>
+		<Class name="io.ballerina.stdlib.auth.ldap.CommonLdapConfiguration"/>
+		<Method name="setGroupSearchBase"/>
+		<Bug pattern="EI_EXPOSE_REP2"/>
+	</Match>
 </FindBugsFilter>
