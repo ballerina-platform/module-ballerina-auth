@@ -162,8 +162,10 @@ test.dependsOn startLdapServer
 test.dependsOn ":${packageName}-native:build"
 
 build.dependsOn "generatePomFileForMavenPublication"
-build.finalizedBy stopLdapServer
-build.dependsOn startLdapServer
+if (!project.gradle.startParameter.excludedTaskNames.contains('test')) {
+    build.finalizedBy stopLdapServer
+    build.dependsOn startLdapServer
+}
 build.dependsOn ":${packageName}-native:build"
 
 publishToMavenLocal.dependsOn build
