@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.10.0] - 2023-09-15
+- This version maintains compatibility with dependencies without any external changes.
+
 ## [2.9.0] - 2023-06-30
 
 - This version maintains compatibility with dependencies without any external changes.
