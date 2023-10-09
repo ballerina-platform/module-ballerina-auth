@@ -1,0 +1,9 @@
+[[ballerina.auth.users]]
+username="user1"
+password="abcdef1"
+scopes=["read-account", "fund-transfer"]
+
+[[ballerina.auth.users]]
+username="user2"
+password="abcdef2"
+scopes=["read-account"]
