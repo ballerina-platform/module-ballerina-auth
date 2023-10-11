@@ -32,15 +32,15 @@ service /'account on apiGateway {
         // we will be returning a success mock response.
         return {
             id: "abcdef1234",
-            type: "Savings Account",
+            "type": "Savings Account",
             balances: [
                 {
-                    type: "debit",
+                    "type": "debit",
                     amount: 200,
                     currency: "INR"
                 },
                 {
-                    type: "credit",
+                    "type": "credit",
                     amount: 978,
                     currency: "INR"
                 }
