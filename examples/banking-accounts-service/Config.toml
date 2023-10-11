@@ -1,9 +1,9 @@
 [[ballerina.auth.users]]
-username="user1"
-password="abcdef1"
+username="alice"
+password="alice@123"
 scopes=["read-account", "fund-transfer"]
 
 [[ballerina.auth.users]]
-username="user2"
-password="abcdef2"
+username="bob"
+password="bob@123"
 scopes=["read-account"]
