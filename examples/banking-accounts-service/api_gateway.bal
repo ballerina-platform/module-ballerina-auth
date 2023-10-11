@@ -16,10 +16,7 @@
 
 import ballerina/http;
 
-listener http:Listener apiGateway = new (9090,
-    secureSocket = {
-    }
-);
+listener http:Listener apiGateway = new (9090);
 
 @http:ServiceConfig {
     auth: [
