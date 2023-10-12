@@ -23,7 +23,7 @@ listener http:Listener apiGateway = new (9090);
         {
             fileUserStoreConfig: {
             },
-            scopes: ["read-account", "fund-transfer"]
+            scopes: ["read-account"]
         }
     ]
 }
@@ -46,5 +46,11 @@ service /'account on apiGateway {
                 }
             ]
         };
+    }
+}
+
+service /foo on apiGateway {
+    resource function get bar() returns string {
+        return "Hello, World!";
     }
 }
