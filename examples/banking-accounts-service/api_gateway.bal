@@ -27,8 +27,8 @@ listener http:Listener apiGateway = new (9090);
         }
     ]
 }
-service /'account on apiGateway {
-    resource function get [string accountId]() returns json {
+service /accounts on apiGateway {
+    resource function get account() returns json {
         // we will be returning a success mock response.
         return {
             id: "abcdef1234",
