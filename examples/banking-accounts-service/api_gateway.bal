@@ -28,24 +28,9 @@ listener http:Listener apiGateway = new (9090);
     ]
 }
 service /accounts on apiGateway {
-    resource function get account() returns json {
+    resource function get account() returns string {
         // we will be returning a success mock response.
-        return {
-            id: "abcdef1234",
-            "type": "Savings Account",
-            balances: [
-                {
-                    "type": "debit",
-                    amount: 200,
-                    currency: "INR"
-                },
-                {
-                    "type": "credit",
-                    amount: 978,
-                    currency: "INR"
-                }
-            ]
-        };
+        return "Hello, Getting account";
     }
 }
 
