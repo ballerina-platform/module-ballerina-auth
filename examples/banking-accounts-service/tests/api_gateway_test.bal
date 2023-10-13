@@ -1,14 +1,7 @@
 import ballerina/test;
 import ballerina/http;
 
-endpoint http:Client testClient {
-    url: "http://localhost:9090",
-    auth: {
-        scheme: http:BASIC_AUTH,
-        username: "alice",
-        password: "alice@123"
-    }
-}
+http:Client testClient = check new ("http://localhost:9090");
 
 @test:Config {}
 public function testGet() returns error? {
