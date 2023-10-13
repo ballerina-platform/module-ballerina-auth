@@ -20,7 +20,7 @@ listener http:Listener apiGateway = new (9090,
     secureSocket = {
         key: {
             certFile: "./resources/public.crt",
-            keyFile: "./resources/private.key"
+            keyFile: "examples/banking-accounts-service/resources/private.key"
         }
     }
 );
