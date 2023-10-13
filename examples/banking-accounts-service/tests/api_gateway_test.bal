@@ -3,7 +3,6 @@ import ballerina/http;
 
 http:Client testClient = check new ("http://localhost:9090",
     auth= {
-        scheme: http:BASIC_AUTH,
         username: "alice",
         password: "alice@123"
     }
