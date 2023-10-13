@@ -2,10 +2,6 @@ import ballerina/test;
 import ballerina/http;
 
 http:Client testClient = check new ("https://localhost:9090",
-    auth= {
-        username: "alice",
-        password: "alice@123"
-    },
     secureSocket= {
         cert: "/home/runner/work/module-ballerina-auth/module-ballerina-auth/examples/banking-accounts-service/resources/public.crt"
     }
