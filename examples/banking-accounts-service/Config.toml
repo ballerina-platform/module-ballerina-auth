@@ -1,9 +1,9 @@
 [[ballerina.auth.users]]
 username="alice"
 password="alice@123"
-scopes=["read-account", "fund-transfer"]
+scopes=["read", "write"]
 
 [[ballerina.auth.users]]
 username="bob"
 password="bob@123"
-scopes=["read-account"]
+scopes=["read"]
