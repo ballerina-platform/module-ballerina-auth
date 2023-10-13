@@ -28,15 +28,15 @@ listener http:Listener apiGateway = new (9090
         }
     ]
 }
-service /accounts on apiGateway {
-    resource function get account() returns string {
+service /foo on apiGateway {
+    resource function get bar() returns string {
         // we will be returning a success mock response.
         return "Hello, Getting account";
     }
 }
 
-service /foo on apiGateway {
-    resource function get bar() returns string {
+service /accounts on apiGateway {
+    resource function get account() returns string {
         return "Hello, World!";
     }
 }
