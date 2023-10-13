@@ -2,7 +2,7 @@ import ballerina/test;
 import ballerina/http;
 
 http:Client testClient = check new ("http://localhost:9090",
-    auth: {
+    auth= {
         username: "alice",
         password: "alice@123"
     }
