@@ -10,11 +10,14 @@ http:Client testClient = check new ("http://localhost:9090",
 
 @test:Config {}
 public function testGet() returns error? {
-    http:Response response = check testClient->get("/accounts/account");
+    map<string|string[]> headers = {
+        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
+    };
+    http:Response response = check testClient->get("/accounts/account", headers);
     test:assertEquals(response.statusCode, http:STATUS_OK);
     test:assertEquals(response.getTextPayload(), "Hello, World!");
 
-    response = check testClient->get("/accounts/account");
+    response = check testClient->get("/accounts/account", headers);
     test:assertEquals(response.statusCode, http:STATUS_OK);
     test:assertEquals(response.getTextPayload(), "Hello, World!");
 }
