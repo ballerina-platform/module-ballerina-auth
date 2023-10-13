@@ -7,3 +7,6 @@ scopes=["read", "write"]
 username="bob"
 password="bob@123"
 scopes=["read"]
+
+[ballerina.log]
+level = "DEBUG"
