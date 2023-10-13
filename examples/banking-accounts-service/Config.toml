@@ -3,10 +3,5 @@ username="alice"
 password="alice@123"
 scopes=["read", "write"]
 
-[[ballerina.auth.users]]
-username="bob"
-password="bob@123"
-scopes=["read"]
-
 [ballerina.log]
 level = "DEBUG"
