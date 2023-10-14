@@ -26,7 +26,7 @@ public function testGet() returns error? {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     Account[] accountsAlice = check testClient->get("/accounts/account", headers);
-    test:assertEquals(accounts, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
 
     //Request with correct authorization header
     //User has Authorization for scope read-balance
