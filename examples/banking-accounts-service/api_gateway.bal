@@ -29,7 +29,7 @@ listener http:Listener apiGateway = new (9090,
     auth: [
         {
             fileUserStoreConfig: {},
-            scopes: ["read"]
+            scopes: ["read-account"]
         }
     ]
 }
