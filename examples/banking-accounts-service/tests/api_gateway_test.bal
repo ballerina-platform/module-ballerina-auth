@@ -48,3 +48,20 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(paymentResponse.status, "Success");
 }
+
+@test:Config {}
+public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns error? {
+    //Request with correct authorization header
+    map<string|string[]> headers = {
+        "Authorization": "Basic Ym9iOmJvYkAxMjM="
+    };
+    //User has Authorization for scope read-account
+    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
+    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    //User has Authorization for scope read-balance
+    AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
+    test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    //User does not have Authorization for scope funds-transfer
+    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+}
