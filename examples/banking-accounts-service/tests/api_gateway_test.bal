@@ -17,12 +17,12 @@ public function testGet() returns error? {
     map<string|string[]> headers = {
         "Authorization": "Basic random"
     };
-    http:Response response = check testClient->get("/accounts/account");
+    response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     
     //Request with correct authorization header
     //User has Authorization for scope get-account
-    map<string|string[]> headers = {
+    headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     response = check testClient->get("/accounts/account", headers);
