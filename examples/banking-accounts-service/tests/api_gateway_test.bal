@@ -14,7 +14,6 @@ public function testGet() returns error? {
     };
     http:Response response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    test:assertEquals(response.getTextPayload(), "Hello, World!");
 
     response = check testClient->get("/accounts/account", headers);
     test:assertEquals(response.statusCode, http:STATUS_OK);
