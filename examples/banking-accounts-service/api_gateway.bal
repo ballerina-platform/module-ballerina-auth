@@ -108,9 +108,9 @@ service /accounts on apiGateway {
 }
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
-        AccountWithBalances[] accountBalances = check accountBalances.filter(acc => acc.customerId == "alice").toArray();
-        io:println(accountBalances);
-        io:println(accountBalances[0]);
+        AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == "alice").toArray();
+        io:println(accountBalance);
+        io:println(accountBalance[0]);
         return {
            id: "jduridhhddhhd",
            status: "Success"
