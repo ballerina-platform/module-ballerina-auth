@@ -63,5 +63,5 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
     //User does not have Authorization for scope funds-transfer
     http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
-    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
