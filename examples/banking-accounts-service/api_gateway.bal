@@ -41,6 +41,17 @@ type AccountWithBalances readonly & record {|
     Balance[] balances;
 |};
 
+type PaymentRequest readonly & record {|
+    string amount;
+    string currency;
+    string creditor;
+|};
+
+type PaymentResponse readonly & record {|
+    string id;
+    string status;
+|};
+
 table<AccountWithBalances> key(customerId) accountBalances = table [
     {id: "vgshdkrokjhbbb", accountNumber: "1234 1234 1234", customerId: "alice", customerName: "Alice Alice", productType: "Savings Account", status: "Active", balances: [ { name: "Available", amount: "1000", currency: "INR" } ] },
 
@@ -66,7 +77,6 @@ listener http:Listener apiGateway = new (9090,
         }
     ]
 }
-
 service /accounts on apiGateway {
     resource function get account() returns AccountWithBalances[] {
         return accountBalances
@@ -84,5 +94,23 @@ service /accounts on apiGateway {
     }
     resource function get balances() returns AccountWithBalances[] {
         return accountBalances.filter(acc => acc.customerId == "alice").toArray();
+    }
+}
+
+@http:ServiceConfig {
+    auth: [
+        {
+            fileUserStoreConfig: {},
+            scopes: ["funds-transfer"]
+        }
+    ]
+}
+service /payments on apiGateway {
+    resource function post transfer(@http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
+        accountBalances.filter(acc => acc.customerId == "alice");
+        return {
+           id: "jduridhhddhhd",
+           status: "Success"
+        }
     }
 }
