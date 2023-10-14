@@ -80,7 +80,7 @@ service /accounts on apiGateway {
             }
         ]
     }
-    resource function get balance() returns string {
-        return "Hello, World!";
+    resource function get balances() returns AccountWithBalances[] {
+        return accountBalances.filter(acc => acc.customerId == "alice").toArray();
     }
 }
