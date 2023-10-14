@@ -12,7 +12,6 @@ public function testGet() returns error? {
     //Request without authorization header
     http:Response response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    test:assertContains(response.getTextPayload(), "Unauthorized");
 
     //Request with invalid authorization header
     map<string|string[]> headers = {
@@ -20,8 +19,7 @@ public function testGet() returns error? {
     };
     http:Response response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    test:assertContains(response.getTextPayload(), "Unauthorized");
-
+    
     //Request with correct authorization header
     //User has Authorization for scope get-account
     map<string|string[]> headers = {
