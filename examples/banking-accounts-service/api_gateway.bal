@@ -107,10 +107,10 @@ service /accounts on apiGateway {
 }
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
-        accountBalances.filter(acc => acc.customerId == "alice");
+        AccountWithBalances[] balances = check accountBalances.filter(acc => acc.customerId == "alice");
         return {
            id: "jduridhhddhhd",
            status: "Success"
-        }
+        };
     }
 }
