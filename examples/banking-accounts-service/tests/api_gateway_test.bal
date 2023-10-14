@@ -26,13 +26,13 @@ public function testGet() returns error? {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     Account[] accountsAlice = check testClient->get("/accounts/account", headers);
-    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    test:assertEquals(accounts, accountBalances.filter(acc => acc.customerId == "alice").toArray());
 
     //Request with correct authorization header
     //User has Authorization for scope read-balance
     headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
-    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/balances", headers);
-    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
+    test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
 }
