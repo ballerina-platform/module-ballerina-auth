@@ -68,8 +68,8 @@ listener http:Listener apiGateway = new (9090,
 }
 
 service /accounts on apiGateway {
-    resource function get account() returns AccountBalances[] {
-        return accountBalances.filter(acc => acc.customerId.equalsIgnoreCase("alice"));
+    resource function get account() returns AccountWithBalances[] {
+        return accountBalances.filter(acc => acc.customerId == "alice");
     }
 
     @http:ResourceConfig {
