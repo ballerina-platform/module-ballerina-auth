@@ -35,4 +35,12 @@ public function testGet() returns error? {
     };
     AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
     test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+
+    //Request with correct authorization header
+    //User has Authorization for scope funds-transfer
+    headers = {
+        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
+    };
+    PaymentResponse paymentResponse = check testClient->post("/payments/transfer", headers);
+    test:assertEquals(paymentResponse.status, "Success");
 }
