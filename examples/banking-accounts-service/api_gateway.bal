@@ -71,9 +71,6 @@ service /accounts on apiGateway {
     resource function get account() returns Account[] {
         return accountBalances
             .filter(acc => acc.customerId == "alice")
-            .map(acc1 => {
-                id: acc1.id
-            })
             .toArray();
     }
 
