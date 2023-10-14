@@ -25,6 +25,12 @@ type Account readonly & record {|
     string status;
 |};
 
+type Balance readonly & record {|
+    string name;
+    string amount;
+    string currency;
+|};
+
 type AccountWithBalances readonly & record {|
     string id;
     string accountNumber;
