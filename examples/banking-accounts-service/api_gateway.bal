@@ -16,6 +16,25 @@
 
 import ballerina/http;
 
+type Account readonly & record {|
+    string id;
+    string accountNumber;
+    string customerId;
+    string customerName;
+    string productType;
+    string status;
+|};
+
+type AccountWithBalances readonly & record {|
+    string id;
+    string accountNumber;
+    string customerId;
+    string customerName;
+    string productType;
+    string status;
+    Balance[] balances;
+|};
+
 listener http:Listener apiGateway = new (9090,
     secureSocket = {
         key: {
