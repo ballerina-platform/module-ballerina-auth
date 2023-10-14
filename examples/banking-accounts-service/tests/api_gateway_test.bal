@@ -27,5 +27,5 @@ public function testGet() returns error? {
     };
     response = check testClient->get("/accounts/account", headers);
     test:assertEquals(response.statusCode, http:STATUS_OK);
-    test:assertEquals(response.getTextPayload(), "Hello, World!");
+    test:assertEquals(response.getTextPayload(), '[{"id":"vgshdkrokjhbbb", "accountNumber":"1234 1234 1234", "customerId":"alice", "customerName":"Alice Alice", "productType":"Savings Account", "status":"Active", "balances":[{"name":"Available", "amount":"1000", "currency":"INR"}]}]');
 }
