@@ -38,4 +38,16 @@ service /accounts on apiGateway {
     resource function get account() returns string {
         return "Hello, World!";
     }
+
+    @http:ResourceConfig {
+        auth: [
+            {
+                fileUserStoreConfig: {},
+                scopes: ["read-balance"]
+            }
+        ]
+    }
+    resource function get balance() returns string {
+        return "Hello, World!";
+    }
 }
