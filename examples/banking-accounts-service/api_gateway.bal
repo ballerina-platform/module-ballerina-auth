@@ -15,7 +15,7 @@
 // under the License.
 
 import ballerina/http;
-imort ballerina/io;
+import ballerina/io;
 
 type Account readonly & record {|
     string id;
