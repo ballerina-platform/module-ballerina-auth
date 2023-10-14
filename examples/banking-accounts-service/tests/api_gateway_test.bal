@@ -12,6 +12,10 @@ public function testGet() returns error? {
     //Request without authorization header
     http:Response response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    http:Response response = check testClient->get("/accounts/balances");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" });
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 
     //Request with invalid authorization header
     map<string|string[]> headers = {
@@ -19,28 +23,22 @@ public function testGet() returns error? {
     };
     response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    response = check testClient->get("/accounts/balances");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" });
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     
     //Request with correct authorization header
-    //User has Authorization for scope read-account
     headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
+    //User has Authorization for scope read-account
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
     test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
-
-    //Request with correct authorization header
     //User has Authorization for scope read-balance
-    headers = {
-        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
-    };
     AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
     test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
-
-    //Request with correct authorization header
     //User has Authorization for scope funds-transfer
-    headers = {
-        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
-    };
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(paymentResponse.status, "Success");
 }
