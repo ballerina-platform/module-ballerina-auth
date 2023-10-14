@@ -9,12 +9,24 @@ http:Client testClient = check new ("https://localhost:9090",
 
 @test:Config {}
 public function testGet() returns error? {
+    //Request without authorization header
+    http:Response response = check testClient->get("/accounts/account");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    test:assertContains(response.getTextPayload(), "Unauthorized");
+
+    //Request with invalid authorization header
     map<string|string[]> headers = {
-        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
+        "Authorization": "Basic random"
     };
     http:Response response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    test:assertContains(response.getTextPayload(), "Unauthorized");
 
+    
+    //Request with correct authorization header
+    map<string|string[]> headers = {
+        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
+    };
     response = check testClient->get("/accounts/account", headers);
     test:assertEquals(response.statusCode, http:STATUS_OK);
     test:assertEquals(response.getTextPayload(), "Hello, World!");
