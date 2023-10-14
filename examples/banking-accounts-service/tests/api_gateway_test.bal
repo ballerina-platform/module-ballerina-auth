@@ -21,10 +21,18 @@ public function testGet() returns error? {
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     
     //Request with correct authorization header
-    //User has Authorization for scope get-account
+    //User has Authorization for scope read-account
     headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
+    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+
+    //Request with correct authorization header
+    //User has Authorization for scope read-balance
+    headers = {
+        "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
+    };
+    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/balance", headers);
     test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
 }
