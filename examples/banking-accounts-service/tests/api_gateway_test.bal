@@ -42,5 +42,5 @@ public function testGet() returns error? {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
-    test:assertEquals(paymentResponse.status, "Success1");
+    test:assertEquals(paymentResponse.status, "Success");
 }
