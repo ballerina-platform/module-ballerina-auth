@@ -8,28 +8,34 @@ http:Client testClient = check new ("https://localhost:9090",
 );
 
 @test:Config {}
-public function testGet() returns error? {
+public function testRequestsWithoutAuthorizationHeader() returns error? {
     //Request without authorization header
     http:Response response = check testClient->get("/accounts/account");
-    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    http:Response response = check testClient->get("/accounts/balances");
-    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" });
-    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-
-    //Request with invalid authorization header
-    map<string|string[]> headers = {
-        "Authorization": "Basic random"
-    };
-    response = check testClient->get("/accounts/account");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     response = check testClient->get("/accounts/balances");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" });
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
-    
+}
+
+@test:Config {}
+public function testRequestsWithInvalidAuthorizationHeader() returns error? {
+    //Request with invalid authorization header
+    map<string|string[]> headers = {
+        "Authorization": "Basic random"
+    };
+    http:Response response = check testClient->get("/accounts/account");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    response = check testClient->get("/accounts/balances");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" });
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+}
+
+@test:Config {}
+public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns error? {
     //Request with correct authorization header
-    headers = {
+    map<string|string[]> headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
     //User has Authorization for scope read-account
