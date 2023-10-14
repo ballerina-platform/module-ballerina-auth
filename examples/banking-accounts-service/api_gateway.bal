@@ -41,6 +41,14 @@ type AccountWithBalances readonly & record {|
     Balance[] balances;
 |};
 
+table<AccountWithBalances> key(customerId) accountBalances = table [
+    {id: "vgshdkrokjhbbb", accountNumber: "1234 1234 1234", customerId: "alice", customerName: "Alice Alice", productType: "Savings Account", status: "Active"},
+
+    {id: "vgksurbkfldppd", accountNumber: "1234 1234 6789", customerId: "bob", customerName: "Bob Bob", productType: "Current Account", status: "Active"},
+
+    {id: "vgskspwldkdddn", accountNumber: "1234 1234 2345", customerId: "david", customerName: "David David", productType: "Savings Account", status: "Active"}
+];
+
 listener http:Listener apiGateway = new (9090,
     secureSocket = {
         key: {
