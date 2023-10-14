@@ -33,6 +33,6 @@ public function testGet() returns error? {
     headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
-    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/balance", headers);
+    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/balances", headers);
     test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
 }
