@@ -1,7 +1,7 @@
 [[ballerina.auth.users]]
-username="alice"
-password="alice@123"
-scopes=["read", "write"]
+username = "alice"
+password = "alice@123"
+scopes = ["read", "write"]
 
 [ballerina.log]
 level = "DEBUG"
