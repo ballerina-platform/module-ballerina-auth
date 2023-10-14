@@ -22,8 +22,8 @@ public function testGet() returns error? {
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     test:assertContains(response.getTextPayload(), "Unauthorized");
 
-    
     //Request with correct authorization header
+    //User has Authorization for scope get-account
     map<string|string[]> headers = {
         "Authorization": "Basic YWxpY2U6YWxpY2VAMTIz"
     };
