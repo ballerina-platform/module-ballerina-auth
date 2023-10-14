@@ -20,7 +20,7 @@ listener http:Listener apiGateway = new (9090,
     secureSocket = {
         key: {
             certFile: "./banking-accounts-service/resources/public.crt",
-            keyFile: "/home/runner/work/module-ballerina-auth/module-ballerina-auth/examples/banking-accounts-service/resources/private.key"
+            keyFile: "./banking-accounts-service/resources/private.key"
         }
     }
 );
