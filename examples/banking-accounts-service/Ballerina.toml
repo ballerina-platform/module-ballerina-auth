@@ -1,6 +1,6 @@
 [package]
 org = "auth"
-name = "api_gateway"
+name = "banking_account_service"
 version = "1.0.0"
 
 [build-options]
