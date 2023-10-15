@@ -114,6 +114,12 @@ service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
         string customerId = getCustomerId(Authorization);
         AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == customerId).toArray();
+        Balance[]? balancesOp = accountBalance[0].balances;
+        if(balancesOp is ()) {
+            io:println("No Balances");
+        } else {
+            Balance[] balances = accountBalance[0].balances;
+        }
         Balance[] balances = (accountBalance[0].balances is () ? [] : accountBalance[0].balances);
         io:println(balances);
         io:println(balances is ());
