@@ -17,7 +17,7 @@
 import ballerina/http;
 import ballerina/io;
 
-type Account readonly & record {|
+type Account record {|
     string id;
     string accountNumber;
     string customerId;
@@ -26,13 +26,13 @@ type Account readonly & record {|
     string status;
 |};
 
-type Balance readonly & record {|
+type Balance record {|
     string name;
     string amount;
     string currency;
 |};
 
-type AccountWithBalances readonly & record {|
+type AccountWithBalances record {|
     string id;
     string accountNumber;
     string customerId;
