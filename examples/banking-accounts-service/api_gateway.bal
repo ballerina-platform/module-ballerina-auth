@@ -115,6 +115,7 @@ service /payments on apiGateway {
         string customerId = getCustomerId(Authorization);
         AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == customerId).toArray();
         Balance[] balances = accountBalance[0].balances;
+        io:println(balances);
         Balance[] availableBalance = balances.filter(bal => bal.type == "Available");
         io:println(availableBalance);
         return {
