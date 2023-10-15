@@ -60,7 +60,7 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     };
     //User has Authorization for scope read-account
     AccountWithBalances[] accountsBob = check testClient->get("/accounts/account", headers);
-    test:assertEquals(accountsAlice, getExpectedAccounts("bob"));
+    test:assertEquals(accountsBob, getExpectedAccounts("bob"));
     //User has Authorization for scope read-balance
     AccountWithBalances[] accountsWithBalanceBob = check testClient->get("/accounts/balances", headers);
     test:assertEquals(accountsWithBalanceBob, getExpectedAccountsWithBalance("bob"));
@@ -78,7 +78,7 @@ public function testRequestsWithUserHavingAuthorizationOfOnlyOneScope() returns 
     };
     //User has Authorization for scope read-account
     AccountWithBalances[] accountsDavid = check testClient->get("/accounts/account", headers);
-    test:assertEquals(accountsAlice, getExpectedAccounts("david"));
+    test:assertEquals(accountsDavid, getExpectedAccounts("david"));
     //User does not have Authorization for scope read-balance
     http:Response response = check testClient->get("/accounts/balances");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
