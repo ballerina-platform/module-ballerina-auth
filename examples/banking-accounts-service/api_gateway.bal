@@ -79,7 +79,7 @@ service /accounts on apiGateway {
     resource function get account(@http:Header string? Authorization) returns AccountWithBalances[] {
         string customerId = getCustomerId(Authorization);
         AccountWithBalances[] accountBalance = check accountBalances
-            .filter(acc => acc.customerId == "alice")
+            .filter(acc => acc.customerId == customerId)
             .toArray();
         AccountWithBalances[] accountBalance1 = accountBalance.clone();
         accountBalance1[0].balances = null;
@@ -95,7 +95,9 @@ service /accounts on apiGateway {
         ]
     }
     resource function get balances() returns AccountWithBalances[] {
-        return accountBalances.filter(acc => acc.customerId == "alice").toArray();
+        return accountBalances
+            .filter(acc => acc.customerId == "alice")
+            .toArray();
     }
 }
 
