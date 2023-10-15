@@ -120,13 +120,11 @@ service /payments on apiGateway {
     }
 }
 
-public function getCustomerId(string? authorization = "") returns string {
-    auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization);
+public function getCustomerId(string? authorization) returns string {
+    auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization is () ? "" : authorization);
     string customerId = "";
     if authn is auth:UserDetails {
         customerId = authn.username;
-        io:println("customerId");
-        io:println(customerId);
     }
     return customerId;
 }
