@@ -71,6 +71,23 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
 
+@test:Config {}
+public function testRequestsWithUserHavingAuthorizationOfOnlyOneScope() returns error? {
+    //Request with correct authorization header
+    map<string|string[]> headers = {
+        "Authorization": "Basic Ym9iOmJvYkAxMjM="
+    };
+    //User has Authorization for scope read-account
+    AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
+    test:assertEquals(accountsAlice, getExpectedAccounts());
+    //User does not have Authorization for scope read-balance
+    response = check testClient->get("/accounts/balances");
+    test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
+    //User does not have Authorization for scope funds-transfer
+    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
+    test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
+}
+
 public function getExpectedAccounts() returns AccountWithBalances[] {
     AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
