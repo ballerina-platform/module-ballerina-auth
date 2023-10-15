@@ -43,7 +43,7 @@ type PaymentRequest readonly & record {|
 type PaymentResponse readonly & record {|
     string id;
     string status;
-    string error?;
+    string failureReason?;
 |};
 
 table<AccountWithBalances> key(customerId) accountBalances = table [
@@ -124,7 +124,7 @@ service /payments on apiGateway {
             return {
                 id: "123",
                 status: "Failed",
-                error: "Insufficient Balance in account"
+                failureReason: "Insufficient Balance in account"
             };
         }
         return {
