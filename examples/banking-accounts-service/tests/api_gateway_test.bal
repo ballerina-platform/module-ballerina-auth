@@ -41,7 +41,8 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     };
     //User has Authorization for scope read-account
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
-    io:println("accountsAlice=" + accountsAlice);
+    io:println("accountsAlice=");
+    io:println(accountsAlice);
     test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
     //User has Authorization for scope read-balance
     AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
