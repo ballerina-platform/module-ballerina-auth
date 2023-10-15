@@ -116,7 +116,7 @@ service /payments on apiGateway {
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == customerId)
             .toArray();
-        Balance[] balances1 = accountBalance[0].balances
+        Balance[] balances1 = accountBalance[0].balances;
         io:println("test");
         io:println(balances1);
         //Balance avlBalance = accountBalance
