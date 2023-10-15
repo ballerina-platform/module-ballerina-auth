@@ -121,7 +121,7 @@ service /payments on apiGateway {
 }
 
 public function getCustomerId(string? authorization = "") returns string {
-    auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization is () ? "" : authorization);
+    auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization);
     string customerId = "";
     if authn is auth:UserDetails {
         customerId = authn.username;
