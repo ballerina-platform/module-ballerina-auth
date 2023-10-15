@@ -80,9 +80,11 @@ listener http:Listener apiGateway = new (9090,
 }
 service /accounts on apiGateway {
     resource function get account() returns AccountWithBalances[] {
-        return accountBalances
+        AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
+        accountBalance[0].balances = [];
+        return accountBalance;
     }
 
     @http:ResourceConfig {
