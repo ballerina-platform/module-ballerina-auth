@@ -116,12 +116,12 @@ service /payments on apiGateway {
         AccountWithBalances accountBalancesForCustomer = from AccountWithBalances accountWithBalance in accountBalances
             where accountWithBalance.customerId == customerId
             limit 1
-            select accountWithBalance;
+            select accountWithBalance.balances;
         io:println(accountBalancesForCustomer);
-        Balance avlBalance = from Balance balance1 in accountBalancesForCustomer.balances
-            where balance1.type == "Available"
-            select balance1;
-        io:println(avlBalance);
+        //Balance avlBalance = from Balance balance1 in accountBalancesForCustomer.balances
+        //    where balance1.type == "Available"
+        //    select balance1;
+        //io:println(avlBalance);
         return {
            id: "jduridhhddhhd",
            status: "Success"
