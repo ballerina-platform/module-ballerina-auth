@@ -1,6 +1,6 @@
 import ballerina/test;
 import ballerina/http;
-import ballerina/io;
+//import ballerina/io;
 
 http:Client testClient = check new ("https://localhost:9090",
     secureSocket= {
