@@ -117,12 +117,11 @@ service /payments on apiGateway {
             where accountWithBalance.customerId == customerId
             select accountWithBalance.balances;
         io:println(accountBalancesForCustomer);
-        Balance balance = from Balance balance in accountBalancesForCustomer
+        Balance avlBalance = from Balance balance in accountBalancesForCustomer
             where balance.type == "Available"
             select balance;
-        io:println(balance);
-        Balance[] availableBalance = balances.filter(bal => bal.type == "Available");
-        io:println(availableBalance);
+        io:println(avlBalance);
+        //io:println(availableBalance);
         return {
            id: "jduridhhddhhd",
            status: "Success"
