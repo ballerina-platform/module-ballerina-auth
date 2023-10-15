@@ -20,7 +20,7 @@ import ballerina/io;
 type Account record {|
     string id;
     string accountNumber;
-    string customerId;
+    readonly string customerId;
     string customerName;
     string productType;
     string status;
@@ -35,7 +35,7 @@ type Balance record {|
 type AccountWithBalances record {|
     string id;
     string accountNumber;
-    string customerId;
+    readonly string customerId;
     string customerName;
     string productType;
     string status;
