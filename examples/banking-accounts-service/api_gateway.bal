@@ -17,15 +17,6 @@
 import ballerina/http;
 import ballerina/io;
 
-type Account record {|
-    string id;
-    string accountNumber;
-    readonly string customerId;
-    string customerName;
-    string productType;
-    string status;
-|};
-
 type Balance record {|
     string name;
     string amount;
@@ -39,7 +30,7 @@ type AccountWithBalances record {|
     string customerName;
     string productType;
     string status;
-    Balance[] balances;
+    Balance[] balances?;
 |};
 
 type PaymentRequest readonly & record {|
@@ -83,7 +74,7 @@ service /accounts on apiGateway {
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
-        accountBalance[0].balances = [];
+        accountBalance[0].balances = null;
         return accountBalance;
     }
 
