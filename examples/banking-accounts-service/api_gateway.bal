@@ -74,7 +74,7 @@ listener http:Listener apiGateway = new (9090,
     ]
 }
 service /accounts on apiGateway {
-    resource function get account(@http:Header string Authorization) returns AccountWithBalances[] {
+    resource function get account() returns AccountWithBalances[] {
         //auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
         //string customerId;
         //if authn is auth:UserDetails {
@@ -98,7 +98,7 @@ service /accounts on apiGateway {
             }
         ]
     }
-    resource function get balances(@http:Header string Authorization) returns AccountWithBalances[] {
+    resource function get balances() returns AccountWithBalances[] {
         return accountBalances.filter(acc => acc.customerId == "alice").toArray();
     }
 }
