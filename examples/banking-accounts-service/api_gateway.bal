@@ -75,13 +75,7 @@ http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 }
 service /accounts on apiGateway {
     resource function get account(@http:Header string? Authorization) returns AccountWithBalances[] {
-        //auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
-        //string customerId;
-        //if authn is auth:UserDetails {
-        //    customerId = authn.username;
-        //    io:println("customerId");
-        //    io:println(customerId);
-        //}
+        string customerId = getCustomerId(Authorization);
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
@@ -122,4 +116,15 @@ service /payments on apiGateway {
            status: "Success"
         };
     }
+}
+
+public getCustomerId() returns UserDetails {
+    auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
+    string customerId;
+    if authn is auth:UserDetails {
+        customerId = authn.username;
+        io:println("customerId");
+        io:println(customerId);
+    }
+    return customerId;
 }
