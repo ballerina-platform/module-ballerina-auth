@@ -61,6 +61,9 @@ listener http:Listener apiGateway = new (9090,
     }
 );
 
+http:FileUserStoreConfig config = {};
+http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
+
 @http:ServiceConfig {
     auth: [
         {
@@ -70,7 +73,14 @@ listener http:Listener apiGateway = new (9090,
     ]
 }
 service /accounts on apiGateway {
-    resource function get account() returns AccountWithBalances[] {
+    resource function get account(@http:Header string Authorization) returns AccountWithBalances[] {
+        auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
+        string customerId;
+        if authn is auth:UserDetails {
+            customerId = authn.username;
+            io:println("customerId");
+            io:println(customerId);
+        }
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
@@ -87,7 +97,7 @@ service /accounts on apiGateway {
             }
         ]
     }
-    resource function get balances() returns AccountWithBalances[] {
+    resource function get balances(@http:Header string Authorization) returns AccountWithBalances[] {
         return accountBalances.filter(acc => acc.customerId == "alice").toArray();
     }
 }
@@ -101,7 +111,7 @@ service /accounts on apiGateway {
     ]
 }
 service /payments on apiGateway {
-    resource function post transfer(@http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
+    resource function post transfer(@http:Header string Authorization, @http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
         AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == "alice").toArray();
         io:println(accountBalance);
         accountBalance[0].balances = [];
