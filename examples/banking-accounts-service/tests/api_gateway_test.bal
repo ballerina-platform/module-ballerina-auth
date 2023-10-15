@@ -71,7 +71,7 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
 
-private function getExpectedAccounts() {
+private function getExpectedAccounts() returns AccountWithBalances[] {
     AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
@@ -80,7 +80,7 @@ private function getExpectedAccounts() {
     return accountBalance1;
 }
 
-private function getExpectedAccountsWithBalance() {
+private function getExpectedAccountsWithBalance() returns AccountWithBalances[] {
     AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
