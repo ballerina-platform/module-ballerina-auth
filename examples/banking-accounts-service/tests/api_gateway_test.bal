@@ -50,7 +50,7 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(paymentResponse.status, "Success");
     //User tried to do transfer for amount more than available balance
-    PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
+    paymentResponse = check testClient->post("/payments/transfer", { amount: "1001", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(paymentResponse.status, "Failed");
     test:assertEquals(paymentResponse.failureReason, "Insufficient Balance in account");
 }
