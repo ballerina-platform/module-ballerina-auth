@@ -75,7 +75,7 @@ listener http:Listener apiGateway = new (9090,
     ]
 }
 service /accounts on apiGateway {
-    resource function get account(@http:Header string Authorization?) returns AccountWithBalances[] {
+    resource function get account(@http:Header string? Authorization) returns AccountWithBalances[] {
         //auth:UserDetails|http:Unauthorized authn = handler.authenticate(Authorization);
         //string customerId;
         //if authn is auth:UserDetails {
