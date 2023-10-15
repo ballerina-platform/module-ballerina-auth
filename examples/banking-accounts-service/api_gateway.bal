@@ -123,7 +123,7 @@ service /payments on apiGateway {
             io:println("Insufficient Balance in account");
             return {
                 id: "123",
-                status: "Failed";
+                status: "Failed",
                 error: "Insufficient Balance in account"
             };
         }
