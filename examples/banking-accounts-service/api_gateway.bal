@@ -120,7 +120,7 @@ service /payments on apiGateway {
             .filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
         io:println(balAvailable);
         io:println("test");
-        io:println(balances1);
+        //io:println(balances1);
         //boolean balAvailable = balances1.filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
         //io:println(balAvailable);
         return {
