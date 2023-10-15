@@ -33,7 +33,7 @@ public function testRequestsWithInvalidAuthorizationHeader() returns error? {
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 }
 
-//Test for user bob, scopes = read-account, read-balance, funds-transfer
+//Test for user alice, scopes = read-account, read-balance, funds-transfer
 @test:Config {}
 public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns error? {
     //Request with correct authorization header
@@ -84,10 +84,10 @@ public function testRequestsWithUserHavingAuthorizationOfOnlyOneScope() returns 
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
     test:assertEquals(accountsAlice, getExpectedAccounts());
     //User does not have Authorization for scope read-balance
-    response = check testClient->get("/accounts/balances");
+    http:Response response = check testClient->get("/accounts/balances");
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
     //User does not have Authorization for scope funds-transfer
-    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
+    response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
 
