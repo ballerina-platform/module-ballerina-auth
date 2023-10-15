@@ -119,7 +119,7 @@ service /payments on apiGateway {
         Balance[] balances1 = accountBalance[0].balances;
         io:println("test");
         io:println(balances1);
-        Balance avlBalance = balances1.some(bal => bal.name=="Available");
+        Balance avlBalance = balances1.filter(bal => bal.name=="Available");
         //Balance avlBalance = accountBalance
         //    where balance1.type == "Available"
         //    select balance1;
