@@ -116,11 +116,13 @@ service /payments on apiGateway {
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == customerId)
             .toArray();
-        Balance[] balances1 = accountBalance[0].balances;
+        boolean balAvailable = accountBalance[0].balances
+            .filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
+        io:println(balAvailable);
         io:println("test");
         io:println(balances1);
-        boolean balAvailable = balances1.filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
-        io:println(balAvailable);
+        //boolean balAvailable = balances1.filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
+        //io:println(balAvailable);
         return {
            id: "jduridhhddhhd",
            status: "Success"
