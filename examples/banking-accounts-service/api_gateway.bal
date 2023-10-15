@@ -16,7 +16,7 @@
 
 import ballerina/http;
 import ballerina/io;
-//import ballerina/auth;
+import ballerina/auth;
 
 type Balance record {|
     string name;
@@ -62,9 +62,8 @@ listener http:Listener apiGateway = new (9090,
     }
 );
 
-//http:FileUserStoreConfig config = {};
-//http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
-//@http:Header string Authorization
+http:FileUserStoreConfig config = {};
+http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 
 @http:ServiceConfig {
     auth: [
