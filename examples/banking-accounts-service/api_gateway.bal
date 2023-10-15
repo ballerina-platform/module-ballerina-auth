@@ -31,7 +31,7 @@ type AccountWithBalances record {|
     string customerName;
     string productType;
     string status;
-    Balance[] balances?;
+    Balance[] balances;
 |};
 
 type PaymentRequest readonly & record {|
@@ -82,7 +82,7 @@ service /accounts on apiGateway {
             .filter(acc => acc.customerId == customerId)
             .toArray();
         AccountWithBalances[] accountBalance1 = accountBalance.clone();
-        accountBalance1[0].balances = null;
+        accountBalance1[0].balances = [];
         return accountBalance1;
     }
 
