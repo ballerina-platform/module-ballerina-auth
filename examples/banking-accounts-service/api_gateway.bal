@@ -46,7 +46,7 @@ type PaymentResponse readonly & record {|
 |};
 
 table<AccountWithBalances> key(customerId) accountBalances = table [
-    {id: "vgshdkrokjhbbb", accountNumber: "1234 1234 1234", customerId: "alice", customerName: "Alice Alice", productType: "Savings Account", status: "Active", balances: [ { name: "Available", amount: "1000", currency: "INR" } ] },
+    {id: "vgshdkrokjhbbb", accountNumber: "1234 1234 1234", customerId: "alice", customerName: "Alice Alice", productType: "Savings Account", status: "Active", balances: [ { name: "Available", amount: "1000", currency: "INR" }, { name: "Ledger", amount: "1000", currency: "INR" }, { name: "Uncleared", amount: "0", currency: "INR" } ] },
 
     {id: "vgksurbkfldppd", accountNumber: "1234 1234 6789", customerId: "bob", customerName: "Bob Bob", productType: "Current Account", status: "Active", balances: [] },
 
