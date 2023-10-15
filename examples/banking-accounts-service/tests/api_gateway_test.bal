@@ -69,7 +69,7 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     AccountWithBalances[] accountsWithBalanceBob = check testClient->get("/accounts/balances", headers);
     test:assertEquals(accountsWithBalanceBob, getExpectedAccountsWithBalance("bob"));
     //User does not have Authorization for scope funds-transfer
-    http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
+    http:Response response = check testClient->post("/payments/transfer", { amount: "1001", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
 
