@@ -118,7 +118,7 @@ service /payments on apiGateway {
         if(balancesOp is ()) {
             io:println("No Balances");
         } else {
-            Balance[] balances = accountBalance[0].balances;
+            Balance[] balances = check accountBalance[0].balances;
         }
         Balance[] balances = (accountBalance[0].balances is () ? [] : accountBalance[0].balances);
         io:println(balances);
