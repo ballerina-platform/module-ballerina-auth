@@ -75,8 +75,8 @@ service /accounts on apiGateway {
             .filter(acc => acc.customerId == "alice")
             .toArray();
         AccountWithBalances[] accountBalance1 = accountBalance.clone();
-        accountBalance[0].balances = null;
-        return accountBalance;
+        accountBalance1[0].balances = null;
+        return accountBalance1;
     }
 
     @http:ResourceConfig {
