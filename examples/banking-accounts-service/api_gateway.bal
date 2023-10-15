@@ -95,8 +95,9 @@ service /accounts on apiGateway {
         ]
     }
     resource function get balances(@http:Header string? Authorization) returns AccountWithBalances[] {
+        string customerId = getCustomerId(Authorization);
         return accountBalances
-            .filter(acc => acc.customerId == "alice")
+            .filter(acc => acc.customerId == customerId)
             .toArray();
     }
 }
@@ -111,9 +112,9 @@ service /accounts on apiGateway {
 }
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
-        AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == "alice").toArray();
-        io:println(accountBalance);
-        accountBalance[0].balances = [];
+        string customerId = getCustomerId(Authorization);
+        AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == customerId).toArray();
+        io:println(accountBalance[0].balances["available"]);
         io:println(accountBalance[0]);
         return {
            id: "jduridhhddhhd",
