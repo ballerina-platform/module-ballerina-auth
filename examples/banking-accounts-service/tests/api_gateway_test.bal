@@ -4,7 +4,7 @@ import ballerina/io;
 
 http:Client testClient = check new ("https://localhost:9090",
     secureSocket= {
-        cert: "/home/runner/work/module-ballerina-auth/module-ballerina-auth/examples/banking-accounts-service/resources/public.crt"
+        cert: "./banking-accounts-service/resources/public.crt"
     }
 );
 
