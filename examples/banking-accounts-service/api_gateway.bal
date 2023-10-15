@@ -113,7 +113,9 @@ service /accounts on apiGateway {
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == customerId).toArray();
+        AccountWithBalances[] accountBalance = from AccountWithBalances accountWithBalance in accountBalances
+            where accountWithBalance.customerId = customerId
+            select accountWithBalance.balances;
         Balance[] balances = accountBalance[0].balances;
         io:println(balances);
         Balance[] availableBalance = balances.filter(bal => bal.type == "Available");
