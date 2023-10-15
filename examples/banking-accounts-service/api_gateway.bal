@@ -125,7 +125,7 @@ service /payments on apiGateway {
                 id: "123",
                 status: "Failed";
                 error: "Insufficient Balance in account"
-            }
+            };
         }
         return {
            id: "jduridhhddhhd",
