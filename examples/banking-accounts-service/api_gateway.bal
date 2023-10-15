@@ -43,6 +43,7 @@ type PaymentRequest readonly & record {|
 type PaymentResponse readonly & record {|
     string id;
     string status;
+    string error?;
 |};
 
 table<AccountWithBalances> key(customerId) accountBalances = table [
@@ -118,11 +119,14 @@ service /payments on apiGateway {
             .toArray();
         boolean balAvailable = accountBalance[0].balances
             .filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
-        io:println(balAvailable);
-        io:println("test");
-        //io:println(balances1);
-        //boolean balAvailable = balances1.filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
-        //io:println(balAvailable);
+        if(!balAvailable) {
+            io:println("Insufficient Balance in account");
+            return {
+                id: "123",
+                status: "Failed";
+                error: "Insufficient Balance in account"
+            }
+        }
         return {
            id: "jduridhhddhhd",
            status: "Success"
