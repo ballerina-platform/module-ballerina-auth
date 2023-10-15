@@ -112,7 +112,7 @@ service /accounts on apiGateway {
     ]
 }
 service /payments on apiGateway {
-    resource function post transfer(@http:Header string Authorization, @http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
+    resource function post transfer(@http:Payload PaymentRequest paymentRequest) returns PaymentResponse {
         AccountWithBalances[] accountBalance = check accountBalances.filter(acc => acc.customerId == "alice").toArray();
         io:println(accountBalance);
         accountBalance[0].balances = [];
