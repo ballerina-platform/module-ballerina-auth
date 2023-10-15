@@ -113,15 +113,15 @@ service /accounts on apiGateway {
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
         string customerId = getCustomerId(Authorization);
-        Balance accountBalancesForCustomer = from AccountWithBalances accountWithBalance in accountBalances
+        AccountWithBalances accountBalancesForCustomer = from AccountWithBalances accountWithBalance in accountBalances
             where accountWithBalance.customerId == customerId
-            select accountWithBalance.balances;
+            limit 1
+            select accountWithBalance;
         io:println(accountBalancesForCustomer);
-        Balance avlBalance = from Balance balance1 in accountBalancesForCustomer
+        Balance avlBalance = from Balance balance1 in accountBalancesForCustomer.balances
             where balance1.type == "Available"
             select balance1;
         io:println(avlBalance);
-        //io:println(availableBalance);
         return {
            id: "jduridhhddhhd",
            status: "Success"
