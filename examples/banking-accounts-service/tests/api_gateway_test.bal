@@ -43,12 +43,12 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
     io:println("accountsAlice=");
     io:println(accountsAlice);
-    test:assertEquals(accountsAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    test:assertEquals(accountsAlice, getExpectedAccounts());
     //User has Authorization for scope read-balance
     AccountWithBalances[] accountsWithBalanceAlice = check testClient->get("/accounts/balances", headers);
     io:println("accountsWithBalanceAlice=");
     io:println(accountsWithBalanceAlice);
-    test:assertEquals(accountsWithBalanceAlice, accountBalances.filter(acc => acc.customerId == "alice").toArray());
+    test:assertEquals(accountsWithBalanceAlice, getExpectedAccountsWithBalance());
     //User has Authorization for scope funds-transfer
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(paymentResponse.status, "Success");
@@ -69,4 +69,20 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     //User does not have Authorization for scope funds-transfer
     http:Response response = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
+}
+
+private function getExpectedAccounts() {
+    AccountWithBalances[] accountBalance = check accountBalances
+            .filter(acc => acc.customerId == "alice")
+            .toArray();
+    AccountWithBalances[] accountBalance1 = accountBalance.clone();
+    accountBalance1[0].balances = null;
+    return accountBalance1;
+}
+
+private function getExpectedAccountsWithBalance() {
+    AccountWithBalances[] accountBalance = check accountBalances
+            .filter(acc => acc.customerId == "alice")
+            .toArray();
+    return accountBalance;
 }
