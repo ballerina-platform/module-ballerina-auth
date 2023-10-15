@@ -118,8 +118,8 @@ service /payments on apiGateway {
     }
 }
 
-public getCustomerId(string autherization) returns UserDetails {
-    auth:UserDetails|http:Unauthorized authn = handler.authenticate(autherization);
+public getCustomerId(string? authorization) returns UserDetails {
+    auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization);
     string customerId;
     if authn is auth:UserDetails {
         customerId = authn.username;
