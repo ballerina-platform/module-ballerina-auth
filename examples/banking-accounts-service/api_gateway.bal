@@ -62,6 +62,8 @@ listener http:Listener apiGateway = new (9090,
     }
 );
 
+// Imperative approach as we need to know about customer authozation details for filtering data
+// https://ballerina.io/spec/http/#912-imperative-approach
 http:FileUserStoreConfig config = {};
 http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 
@@ -118,7 +120,7 @@ service /payments on apiGateway {
     }
 }
 
-public function getCustomerId(string? authorization = ()) returns string {
+public function getCustomerId(string? authorization = "") returns string {
     auth:UserDetails|http:Unauthorized authn = handler.authenticate(authorization is () ? "" : authorization);
     string customerId = "";
     if authn is auth:UserDetails {
