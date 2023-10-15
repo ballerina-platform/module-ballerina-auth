@@ -74,7 +74,7 @@ service /accounts on apiGateway {
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
             .toArray();
-        AccountWithBalances[] accountBalance1 = check accountBalance.cloneWithType();
+        AccountWithBalances[] accountBalance1 = accountBalance.cloneWithType();
         accountBalance[0].balances = null;
         return accountBalance;
     }
