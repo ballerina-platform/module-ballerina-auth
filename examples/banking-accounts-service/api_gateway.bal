@@ -62,8 +62,8 @@ listener http:Listener apiGateway = new (9090,
     }
 );
 
-http:FileUserStoreConfig config = {};
-http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
+//http:FileUserStoreConfig config = {};
+//http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 
 @http:ServiceConfig {
     auth: [
