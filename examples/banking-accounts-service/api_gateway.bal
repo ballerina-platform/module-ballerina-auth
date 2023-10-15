@@ -16,7 +16,7 @@
 
 import ballerina/http;
 import ballerina/io;
-import ballerina/auth;
+//import ballerina/auth;
 
 type Balance record {|
     string name;
