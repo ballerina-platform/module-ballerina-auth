@@ -92,7 +92,7 @@ public function getExpectedAccounts(string customerId) returns AccountWithBalanc
             .filter(acc => acc.customerId == customerId)
             .toArray();
     AccountWithBalances[] accountBalance1 = accountBalance.clone();
-    accountBalance1[0].balances = null;
+    accountBalance1[0].balances = [];
     return accountBalance1;
 }
 
