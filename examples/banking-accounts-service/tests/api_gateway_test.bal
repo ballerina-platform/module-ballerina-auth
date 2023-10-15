@@ -33,6 +33,7 @@ public function testRequestsWithInvalidAuthorizationHeader() returns error? {
     test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 }
 
+//Test for user bob, scopes = read-account, read-balance, funds-transfer
 @test:Config {}
 public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns error? {
     //Request with correct authorization header
@@ -54,6 +55,7 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     test:assertEquals(paymentResponse.status, "Success");
 }
 
+//Test for user bob, scopes = read-account, read-balance
 @test:Config {}
 public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns error? {
     //Request with correct authorization header
@@ -71,11 +73,12 @@ public function testRequestsWithUserHavingAuthorizationOfFewScopes() returns err
     test:assertEquals(response.statusCode, http:STATUS_FORBIDDEN);
 }
 
+//Test for User david, scopes = read-account
 @test:Config {}
 public function testRequestsWithUserHavingAuthorizationOfOnlyOneScope() returns error? {
     //Request with correct authorization header
     map<string|string[]> headers = {
-        "Authorization": "Basic Ym9iOmJvYkAxMjM="
+        "Authorization": "Basic ZGF2aWQ6ZGF2aWRAMTIz"
     };
     //User has Authorization for scope read-account
     AccountWithBalances[] accountsAlice = check testClient->get("/accounts/account", headers);
