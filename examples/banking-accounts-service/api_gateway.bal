@@ -73,8 +73,8 @@ service /accounts on apiGateway {
     resource function get account() returns AccountWithBalances[] {
         AccountWithBalances[] accountBalance = check accountBalances
             .filter(acc => acc.customerId == "alice")
-            .toArray()
-            .cloneWithType();
+            .toArray();
+        AccountWithBalances[] accountBalance1 = accountBalance.cloneWithType();
         accountBalance[0].balances = null;
         return accountBalance;
     }
