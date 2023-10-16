@@ -2,7 +2,7 @@
 
 [![Star on Github](https://img.shields.io/badge/-Star%20on%20Github-blue?style=social&logo=github)](https://github.com/ballerina-platform/module-ballerina-auth)
 
-_Authors_: @harshalkh  
+_Authors_: [@harshalkh](https://github.com/harshalkh)  
 _Reviewers_:   
 _Created_: 2023/10/16  
 _Updated_: 2023/10/16
@@ -82,10 +82,11 @@ test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 
 | Scenario\User | Alice | Bob | David |
 | --- | --- | --- | --- |
+| Scopes | `read-account` `read-balance` `funds-transfer` | `read-account` `read-balance` | `read-account` |
 | Accessing `GET /accounts/account` | `200` Account Details for Alice | `200` Account Details for Bob | `200` Account Details for David |
-| Accessing `GET /accounts/balance` | `200` Account Details with Balance for Alice | `200` Account Details with Balance for Bob | `403` |
-| Accessing `POST /payments/transfer` where transaction amount within available balance | `200` Response with unique paymentId and status as SUCCESS | `403` | `403` |
-| Accessing `POST /payments/transfer` where transaction amount higher than available balance| `200` Response with unique paymentId and status as FAILED | `403` | `403` |
+| Accessing `GET /accounts/balance` | `200` Account Details with Balance for Alice | `200` Account Details with Balance for Bob | `403` Forbidden |
+| Accessing `POST /payments/transfer` where transaction amount within available balance | `200` Response with unique paymentId and status as SUCCESS | `403` Forbidden | `403` Forbidden |
+| Accessing `POST /payments/transfer` where transaction amount higher than available balance| `200` Response with unique paymentId and status as FAILED | `403` Forbidden | `403` Forbidden |
 
 
 
