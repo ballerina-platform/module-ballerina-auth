@@ -14,4 +14,4 @@ password = "david@123"
 scopes = ["read-account"]
 
 [ballerina.log]
-level = "DEBUG"
+level = "INFO"
