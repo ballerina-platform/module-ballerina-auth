@@ -15,7 +15,8 @@ The end-user (customer) in this example, Alice, Bob and David, interacts with th
 This web/mobile app acts as a 'Client' on behalf of the user’s actions and calls to the 'API Gateway'. The 'API Gateway'
 routes the requests to 'Banking Service', which is responsible for processing the requests for the customer. 
 
-**NOTE**: For this guide, since we are discussing the File Store based Basic Auth security aspects, we are focussing on the network 
+> [!NOTE]
+> For this guide, since we are discussing the File Store based Basic Auth security aspects, we are focussing on the network 
 interactions once the 'API Gateway' receives a request, do data is stored locally in [table](https://ballerina.io/learn/by-example/table/)
 
 - The 'API Gateway' intercepts the request from the end-user, extracts the credentials (username and password which is 
@@ -35,7 +36,8 @@ interactions once the 'API Gateway' receives a request, do data is stored locall
   as service needs to have granular control on authorization of customer. For example knowing customer id of user to fetch
   account details, available balance before proceeding for execution of payment.
 
-**NOTE**: For the simplicity of the article, since we are interested only in Basic Auth security aspects the rest of the
+> [!NOTE]
+> For the simplicity of the article, since we are interested only in Basic Auth security aspects the rest of the
 components like Database Management System is not implemented. But, to complete the story, we
 will be returning a response from the 'API Gateway' referring to data stored locally in table or records.
 
