@@ -50,9 +50,9 @@ type PaymentResponse readonly & record {|
 table<AccountWithBalances> key(customerId) accountBalances = table [
     {id: "vgshdkrokjhbbb", accountNumber: "1234 1234 1234", customerId: "alice", customerName: "Alice Alice", productType: "Savings Account", status: "Active", balances: [ { name: "Available", amount: "1000", currency: "INR" }, { name: "Ledger", amount: "1000", currency: "INR" }, { name: "Uncleared", amount: "0", currency: "INR" } ] },
 
-    {id: "vgksurbkfldppd", accountNumber: "1234 1234 6789", customerId: "bob", customerName: "Bob Bob", productType: "Current Account", status: "Active", balances: [] },
+    {id: "vgksurbkfldppd", accountNumber: "1234 1234 6789", customerId: "bob", customerName: "Bob Bob", productType: "Current Account", status: "Active", balances: [ { name: "Available", amount: "10000", currency: "INR" }, { name: "Ledger", amount: "1000", currency: "INR" }, { name: "Uncleared", amount: "0", currency: "INR" } ] },
 
-    {id: "vgskspwldkdddn", accountNumber: "1234 1234 2345", customerId: "david", customerName: "David David", productType: "Savings Account", status: "Active", balances: [] }
+    {id: "vgskspwldkdddn", accountNumber: "1234 1234 2345", customerId: "david", customerName: "David David", productType: "Savings Account", status: "Active", balances: [ { name: "Available", amount: "8000", currency: "INR" }, { name: "Ledger", amount: "1000", currency: "INR" }, { name: "Uncleared", amount: "0", currency: "INR" } ] }
 ];
 
 listener http:Listener apiGateway = new (9090,
