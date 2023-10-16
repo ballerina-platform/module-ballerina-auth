@@ -48,10 +48,10 @@ public function testRequestsWithUserHavingAuthorizationOfAllScopes() returns err
     test:assertEquals(accountsWithBalanceAlice, getExpectedAccountsWithBalance("alice"));
     //User has Authorization for scope funds-transfer
     PaymentResponse paymentResponse = check testClient->post("/payments/transfer", { amount: "100", currency: "INR", creditor: "bob" }, headers);
-    test:assertEquals(paymentResponse.status, "Success");
+    test:assertEquals(paymentResponse.status, "SUCCESS");
     //User tried to do transfer for amount more than available balance
     paymentResponse = check testClient->post("/payments/transfer", { amount: "1001", currency: "INR", creditor: "bob" }, headers);
-    test:assertEquals(paymentResponse.status, "Failed");
+    test:assertEquals(paymentResponse.status, "FAILED");
     test:assertEquals(paymentResponse.failureReason, "Insufficient Balance in account");
 }
 
