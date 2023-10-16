@@ -1,4 +1,4 @@
-# Secured Banking Account Management Service with File Store based Basic Auth with Scopes
+# Secured Banking Account Management Service with File Store Basic Auth with Scopes
 
 [![Star on Github](https://img.shields.io/badge/-Star%20on%20Github-blue?style=social&logo=github)](https://github.com/ballerina-platform/module-ballerina-auth)
 
@@ -9,9 +9,9 @@ _Updated_: 2023/10/16
 
 ## Overview
 
-This guide explains how to secure an 'Banking Account Management Service' (RESTful service) with Basic Auth using File Store in Ballerina. 
+This guide explains how to secure the 'Banking Account Management Service' (RESTful service) with Basic Auth using File Store in Ballerina. 
 
-The end-user (customer), in this example, Alice, Bob, and David, interacts with the system using the web/mobile app provided.
+The end-user (customer) in this example, Alice, Bob and David, interacts with the system using the web/mobile app provided.
 This web/mobile app acts as a 'Client' on behalf of the user’s actions and calls to the 'API Gateway'. The 'API Gateway'
 routes the requests to 'Banking Service', which is responsible for processing the requests for the customer. 
 
@@ -82,10 +82,10 @@ test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 
 | Scenario\User | Alice | Bob | David |
 | --- | --- | --- | --- |
-| Accessing /accounts/account | Ok | Ok | Ok |
-| Accessing /accounts/balance | Ok | Ok | 403 |
-| Accessing /payments/transfer within available balance| Ok | 403 | 403 |
-| Accessing /payments/transfer more than available balance| Error Response | 403 | 403 |
+| Accessing `GET /accounts/account` | `200` Account Details for Alice | `200` Account Details for Bob | `200` Account Details for David |
+| Accessing `GET /accounts/balance` | `200` Account Details with Balance for Alice | `200` Account Details with Balance for Bob | `403` |
+| Accessing `POST /payments/transfer` where transaction amount within available balance | `200` Response with unique paymentId and status as SUCCESS | `403` | `403` |
+| Accessing `POST /payments/transfer` where transaction amount higher than available balance| `200` Response with unique paymentId and status as FAILED | `403` | `403` |
 
 
 
