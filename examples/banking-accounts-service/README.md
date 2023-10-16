@@ -80,6 +80,12 @@ test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 
 #### Detailed scenarios:
 
+| Scenario\User | Alice | Bob | David |
+| Accessing /accounts/account | Ok | Ok | Ok |
+| Accessing /accounts/balance | Ok | Ok | 403 |
+| Accessing /payments/transfer within available balance| Ok | 403 | 403 |
+| Accessing /payments/transfer more than available balance| Error Response | 403 | 403 |
+
 
 
 ## Deployment
