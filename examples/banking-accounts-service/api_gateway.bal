@@ -14,9 +14,10 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerina/auth;
 import ballerina/http;
 import ballerina/io;
-import ballerina/auth;
+import ballerina/uuid;
 
 type Balance record {|
     string name;
@@ -122,14 +123,14 @@ service /payments on apiGateway {
         if(!balAvailable) {
             io:println("Insufficient Balance in account");
             return {
-                id: "123",
-                status: "Failed",
+                id: uuid:createType4AsString(),
+                status: "FAILED",
                 failureReason: "Insufficient Balance in account"
             };
         }
         return {
-           id: "jduridhhddhhd",
-           status: "Success"
+           id: uuid:createType4AsString(),
+           status: "SUCCESS"
         };
     }
 }
