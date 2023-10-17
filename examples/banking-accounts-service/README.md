@@ -36,10 +36,7 @@ interactions once the 'API Gateway' receives a request, do data is stored locall
   as service needs to have granular control on authorization of customer. For example knowing customer id of user to fetch
   account details, available balance before proceeding for execution of payment.
 
-> [!NOTE]
-> For the simplicity of the article, since we are interested only in Basic Auth security aspects the rest of the
-components like Database Management System is not implemented. But, to complete the story, we
-will be returning a response from the 'API Gateway' referring to data stored locally in table or records.
+> **NOTE:** The rest of the components such as Database Management System are not implemented as the main purpose of this article is to showcase the Basic Auth functionalities. But for the completeness of the story, the API Gateway will return a response from the data stored on in-memory tables.
 
 ## Testing
 
