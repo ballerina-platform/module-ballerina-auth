@@ -1,10 +1,9 @@
 import ballerina/test;
 import ballerina/http;
-//import ballerina/io;
 
 http:Client testClient = check new ("https://localhost:9090",
     secureSocket= {
-        cert: "./banking-accounts-service/resources/public.crt"
+        cert: "../banking-accounts-service/resources/public.crt"
     }
 );
 
@@ -92,7 +91,7 @@ public function testRequestsWithUserHavingAuthorizationOfOnlyOneScope() returns 
 }
 
 public function getExpectedAccounts(string customerId) returns AccountWithBalances[] {
-    AccountWithBalances[] accountBalance = check accountBalances
+    AccountWithBalances[] accountBalance = accountBalances
             .filter(acc => acc.customerId == customerId)
             .toArray();
     AccountWithBalances[] accountBalance1 = accountBalance.clone();
@@ -101,7 +100,7 @@ public function getExpectedAccounts(string customerId) returns AccountWithBalanc
 }
 
 public function getExpectedAccountsWithBalance(string customerId) returns AccountWithBalances[] {
-    AccountWithBalances[] accountBalance = check accountBalances
+    AccountWithBalances[] accountBalance = accountBalances
             .filter(acc => acc.customerId == customerId)
             .toArray();
     return accountBalance;

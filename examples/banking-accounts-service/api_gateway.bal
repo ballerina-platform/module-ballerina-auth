@@ -80,11 +80,10 @@ http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 service /accounts on apiGateway {
     resource function get account(@http:Header string? Authorization) returns AccountWithBalances[] {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = check accountBalances
-            .filter(acc => acc.customerId == customerId)
-            .toArray();
-        AccountWithBalances[] accountBalance1 = accountBalance.clone();
-        accountBalance1[0].balances = [];
+        AccountWithBalances[] accountBalance = from AccountWithBalance account in accountBalance 
+                select account 
+                where account.customerId == customerId;
+        accountBalance[0].balances = [];
         return accountBalance1;
     }
 
@@ -115,12 +114,12 @@ service /accounts on apiGateway {
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = check accountBalances
+        AccountWithBalances[] accountBalance = accountBalances
             .filter(acc => acc.customerId == customerId)
             .toArray();
         boolean balAvailable = accountBalance[0].balances
             .filter(bal => bal.name=="Available").some(bal1 => bal1.amount>=paymentRequest.amount);
-        if(!balAvailable) {
+        if !balAvailable {
             io:println("Insufficient Balance in account");
             return {
                 id: uuid:createType4AsString(),
