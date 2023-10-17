@@ -2,9 +2,9 @@
 
 [![Star on Github](https://img.shields.io/badge/-Star%20on%20Github-blue?style=social&logo=github)](https://github.com/ballerina-platform/module-ballerina-auth)
 
-_Authors_: [@harshalkh](https://github.com/harshalkh)  
-_Reviewers_:   
-_Created_: 2023/10/16  
+_Authors_: [@harshalkh](https://github.com/harshalkh) \
+_Reviewers_: @ThisaruGuruge @DimuthuMadushan \
+_Created_: 2023/10/16 \
 _Updated_: 2023/10/16
 
 ## Overview
@@ -31,7 +31,7 @@ interactions once the 'API Gateway' receives a request, do data is stored locall
   it is 'Banking Account Service'. The 'API Gateway' service is secured by setting the `auth` attribute of `http:ServiceConfig`
   with the Basic Auth - File user store configurations, so that the Ballerina HTTP service knows how to validate the 
   credentials with the configured File user store from Config.toml. Once validated, the business logic defined inside the resource 
-  will get executed. In this case, it will call the 'Banking Accoint Service' via mTLS and return the response to the 'Client'.
+  will get executed. In this case, it will call the 'Banking Account Service' via mTLS and return the response to the 'Client'.
   In addition to declarative approach for Authentication and Authorization, service uses [Imperative Approach](https://ballerina.io/spec/http/#912-imperative-approach)
   as service needs to have granular control on authorization of customer. For example knowing customer id of user to fetch
   account details, available balance before proceeding for execution of payment.
@@ -65,14 +65,14 @@ For example, we have used the Unit Tests to test each scenario as follows.
 
 #### Without authentication
 
-```java
+```ballerina
 http:Response response = check testClient->get("/accounts/account");
 test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 ```
 
 #### Authenticating as anonymous user
 
-```shell
+```ballerina
 map<string|string[]> headers = {
     "Authorization": "Basic random"
 };
@@ -94,18 +94,20 @@ test:assertEquals(response.statusCode, http:STATUS_UNAUTHORIZED);
 
 ## Deployment
 
-Once we are done with the development, we can deploy the service using any of the methods that are listed below.
+Once the development is done, you can deploy the service using any of the methods that are listed below.
 
 ### Deploying Locally
 
 Now, we can build Ballerina executable files (.jar) of the components that we developed above. Open the terminal and
 navigate to [`examples/banking-account-service/api_gateway`](./api_gateway), and execute the following command for
 each of them.
+
 ```shell
 $ bal build
 ```
 
 The successful execution of the above command should show us the following outputs in order.
+
 ```shell
 Compiling source
         auth/api_gateway:1.0.0
@@ -116,6 +118,7 @@ Generating executable
 
 Once the `*.jar` file is created inside the `target/bin` directories, we can run the components with the following
 commands in order.
+
 ```shell
 $ bal run target/bin/api_gateway.jar
 ```
