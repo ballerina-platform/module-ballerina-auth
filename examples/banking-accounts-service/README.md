@@ -15,9 +15,8 @@ The end-user (customer) in this example, Alice, Bob and David, interacts with th
 This web/mobile app acts as a 'Client' on behalf of the user’s actions and calls to the 'API Gateway'. The 'API Gateway'
 routes the requests to 'Banking Service', which is responsible for processing the requests for the customer. 
 
-> [!NOTE]
-> For this guide, since we are discussing the File Store based Basic Auth security aspects, we are focussing on the network 
-interactions once the 'API Gateway' receives a request, do data is stored locally in [table](https://ballerina.io/learn/by-example/table/)
+> **NOTE:** For this guide, since discussion is about the File Store based Basic Auth security aspects, focus is on the network 
+interactions once the 'API Gateway' receives a request. The transaction data is stored locally in [table](https://ballerina.io/learn/by-example/table/)
 
 - The 'API Gateway' intercepts the request from the end-user, extracts the credentials (username and password which is 
   concatenated with a `:` and Base64 encoded), and then talks to File Store Listener to validate the credentials.
@@ -26,7 +25,7 @@ interactions once the 'API Gateway' receives a request, do data is stored locall
 
 ## Implementation
 
-- We can get started with the 'API Gateway', which is responsible to authorize the requests using Basic Auth with
+- You can get started with the 'API Gateway', which is responsible to authorize the requests using Basic Auth with
   the use of File user store and forward the request to the actual microservice via mTLS (mutual TLS). In this scenario,
   it is 'Banking Account Service'. The 'API Gateway' service is secured by setting the `auth` attribute of `http:ServiceConfig`
   with the Basic Auth - File user store configurations, so that the Ballerina HTTP service knows how to validate the 
@@ -40,8 +39,8 @@ interactions once the 'API Gateway' receives a request, do data is stored locall
 
 ## Testing
 
-We can run the 'API Gateway' that we developed above, in our local environment.
-In order to run this serice you need to setup prerequisite of Ballerina.
+You can run the 'API Gateway' that we developed above, in our local environment.
+In order to run this service you need to setup prerequisite of Ballerina.
 You can refer documentation [here](https://ballerina.io/learn/get-started/)
 
 Now, navigate to [`examples`](../) directory and execute the following command.
@@ -57,8 +56,8 @@ Compiling source
 Running executable
 ```
 
-Now, we can test authentication and authorization checks being enforced on different actions by sending HTTP requests.
-For example, we have used the Unit Tests to test each scenario as follows.
+Now, you can test authentication and authorization checks being enforced on different actions by sending HTTP requests.
+This example uses the Unit Tests to test each scenario as follows.
 
 #### Without authentication
 
@@ -95,7 +94,7 @@ Once the development is done, you can deploy the service using any of the method
 
 ### Deploying Locally
 
-Now, we can build Ballerina executable files (.jar) of the components that we developed above. Open the terminal and
+Now, you can build Ballerina executable files (.jar) of the components that we developed above. Open the terminal and
 navigate to [`examples/banking-account-service/api_gateway`](./api_gateway), and execute the following command for
 each of them.
 
