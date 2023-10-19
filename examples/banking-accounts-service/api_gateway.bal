@@ -80,9 +80,9 @@ http:ListenerFileUserStoreBasicAuthHandler handler = new (config);
 service /accounts on apiGateway {
     resource function get account(@http:Header string? Authorization) returns AccountWithBalances[] {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = from AccountWithBalance account in accountBalance 
-                select account 
-                where account.customerId == customerId;
+        AccountWithBalances[] accountBalance = from AccountWithBalances account in accountBalances 
+                where account.customerId == customerId
+                select account;
         accountBalance[0].balances = [];
         return accountBalance1;
     }
