@@ -83,8 +83,9 @@ service /accounts on apiGateway {
         AccountWithBalances[] accountBalance = from AccountWithBalances account in accountBalances 
                 where account.customerId == customerId
                 select account;
-        accountBalance[0].balances = [];
-        return accountBalance;
+        AccountWithBalances[] accountBalance1 = accountBalance.clone();
+        accountBalance1[0].balances = [];
+        return accountBalance1;
     }
 
     @http:ResourceConfig {
