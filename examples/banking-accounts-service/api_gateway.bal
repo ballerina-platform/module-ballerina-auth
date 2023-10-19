@@ -84,7 +84,7 @@ service /accounts on apiGateway {
                 where account.customerId == customerId
                 select account;
         accountBalance[0].balances = [];
-        return accountBalance1;
+        return accountBalance;
     }
 
     @http:ResourceConfig {
@@ -97,7 +97,7 @@ service /accounts on apiGateway {
     }
     resource function get balances(@http:Header string? Authorization) returns AccountWithBalances[] {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = from AccountWithBalance account in accountBalance 
+        AccountWithBalances[] accountBalance = from AccountWithBalances account in accountBalances 
                 select account 
                 where account.customerId == customerId;
         return accountBalance;
@@ -115,7 +115,7 @@ service /accounts on apiGateway {
 service /payments on apiGateway {
     resource function post transfer(@http:Payload PaymentRequest paymentRequest, @http:Header string? Authorization) returns PaymentResponse {
         string customerId = getCustomerId(Authorization);
-        AccountWithBalances[] accountBalance = from AccountWithBalance account in accountBalance 
+        AccountWithBalances[] accountBalance = from AccountWithBalances account in accountBalances 
                 select account 
                 where account.customerId == customerId;
         boolean balAvailable = accountBalance[0].balances
