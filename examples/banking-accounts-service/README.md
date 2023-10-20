@@ -84,7 +84,7 @@ Once the development is done, you can deploy the service using any of the method
 ### Deploying Locally
 
 Now, you can build Ballerina executable files (.jar) of the components that we developed above. Open the terminal and
-navigate to [`examples/banking-account-service/api_gateway`](./api_gateway), and execute the following command for
+navigate to [`examples/banking-account-service`](../banking-accounts-service/), and execute the following command for
 each of them.
 
 ```shell
