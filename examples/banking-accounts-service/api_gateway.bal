@@ -77,7 +77,7 @@ table<AccountWithBalances> key(customerId) accountBalances = table [
     {
         id: "vgskspwldkdddn",
         accountNumber: "1234 1234 2345",
-        customerId: "David",
+        customerId: "david",
         customerName: "David David",
         productType: "Savings Account",
         status: "Active",
