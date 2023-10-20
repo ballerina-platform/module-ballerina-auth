@@ -115,5 +115,5 @@ Refer to [Code to Cloud](https://ballerina.io/learn/user-guide/deployment/code-t
 ## Observability
 
 HTTP/HTTPS based Ballerina services and any client connectors are observable by default.
-[Observing Ballerina Code](https://ballerina.io/learn/user-guide/observability/observing-ballerina-code/) guide provides
+[Observing Ballerina Code](https://ballerina.io/learn/observe-ballerina-programs/#provide-observability-in-ballerina) guide provides
 information on enabling Ballerina service observability with some of its supported systems.
