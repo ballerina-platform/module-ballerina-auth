@@ -11,9 +11,7 @@ _Updated_: 2023/10/16
 
 This guide explains how to secure the 'Banking Account Management Service' (RESTful service) with Basic Auth using File Store in Ballerina. 
 
-The end-user (customer) in this example, Alice, Bob and David, interacts with the system using the web/mobile app provided.
-This web/mobile app acts as a 'Client' on behalf of the user’s actions and calls to the 'API Gateway'. The 'API Gateway'
-routes the requests to 'Banking Service', which is responsible for processing the requests for the customer. 
+The end-user (customer) in this example, Alice, Bob and David, interacts with the system using the web/mobile app provided. This web/mobile app acts as a 'Client' on behalf of the user’s actions and calls to the 'API Gateway'. The 'API Gateway' routes the requests to 'Banking Service', which is responsible for processing the requests for the customer. 
 
 > **NOTE:** For this guide, since discussion is about the File Store based Basic Auth security aspects, focus is on the network 
 interactions once the 'API Gateway' receives a request. The transaction data is stored locally in [table](https://ballerina.io/learn/by-example/table/)
@@ -25,23 +23,14 @@ interactions once the 'API Gateway' receives a request. The transaction data is 
 
 ## Implementation
 
-- You can get started with the 'API Gateway', which is responsible to authorize the requests using Basic Auth with
-  the use of File user store and forward the request to the actual microservice via mTLS (mutual TLS). In this scenario,
-  it is 'Banking Account Service'. The 'API Gateway' service is secured by setting the `auth` attribute of `http:ServiceConfig`
-  with the Basic Auth - File user store configurations, so that the Ballerina HTTP service knows how to validate the 
-  credentials with the configured File user store from Config.toml. Once validated, the business logic defined inside the resource 
-  will get executed. In this case, it will call the 'Banking Account Service' via mTLS and return the response to the 'Client'.
-  In addition to declarative approach for Authentication and Authorization, service uses [Imperative Approach](https://ballerina.io/spec/http/#912-imperative-approach)
-  as service needs to have granular control on authorization of customer. For example knowing customer id of user to fetch
-  account details, available balance before proceeding for execution of payment.
+- You can get started with the 'API Gateway', which is responsible to authorize the requests using Basic Auth with the use of File user store and forward the request to the actual microservice via mTLS (mutual TLS). In this scenario, it is 'Banking Account Service'. The 'API Gateway' service is secured by setting the `auth` attribute of `http:ServiceConfig` with the Basic Auth - File user store configurations, so that the Ballerina HTTP service knows how to validate the credentials with the configured File user store from Config.toml. Once validated, the business logic defined inside the resource will get executed. In this case, it will call the 'Banking Account Service' via mTLS and return the response to the 'Client'.
+- In addition to declarative approach for Authentication and Authorization, service uses [Imperative Approach](https://ballerina.io/spec/http/#912-imperative-approach) as service needs to have granular control on authorization of customer. For example knowing customer id of user to fetch account details, available balance before proceeding for execution of payment.
 
 > **NOTE:** The rest of the components such as Database Management System are not implemented as the main purpose of this article is to showcase the Basic Auth functionalities. But for the completeness of the story, the API Gateway will return a response from the data stored on in-memory tables.
 
 ## Testing
 
-You can run the 'API Gateway' that we developed above, in our local environment.
-In order to run this service you need to setup prerequisite of Ballerina.
-You can refer documentation [here](https://ballerina.io/learn/get-started/)
+You can run the 'API Gateway' that we developed above, in our local environment. In order to run this service you need to setup prerequisite of Ballerina. You can refer documentation [here](https://ballerina.io/learn/get-started/)
 
 Now, navigate to [`examples`](../) directory and execute the following command.
 ```shell
@@ -112,8 +101,7 @@ Generating executable
         target/bin/api_gateway.jar
 ```
 
-Once the `*.jar` file is created inside the `target/bin` directories, we can run the components with the following
-commands in order.
+Once the `*.jar` file is created inside the `target/bin` directories, we can run the components with the following commands in order.
 
 ```shell
 $ bal run target/bin/api_gateway.jar
