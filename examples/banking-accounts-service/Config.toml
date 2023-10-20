@@ -1,0 +1,17 @@
+[[ballerina.auth.users]]
+username = "alice"
+password = "alice@123"
+scopes = ["read-account", "read-balance", "funds-transfer"]
+
+[[ballerina.auth.users]]
+username = "bob"
+password = "bob@123"
+scopes = ["read-account", "read-balance"]
+
+[[ballerina.auth.users]]
+username = "david"
+password = "david@123"
+scopes = ["read-account"]
+
+[ballerina.log]
+level = "INFO"
