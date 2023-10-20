@@ -110,7 +110,7 @@ $ bal run target/bin/api_gateway.jar
 ### Deploying Code to Cloud
 
 Ballerina code to cloud supports generating the deployment artifacts of the Docker and Kubernetes.
-Refer to [Code to Cloud](https://ballerina.io/learn/user-guide/deployment/code-to-cloud/) guide for more information.
+Refer to [Code to Cloud](https://ballerina.io/learn/code-to-cloud-deployment/) guide for more information.
 
 ## Observability
 
