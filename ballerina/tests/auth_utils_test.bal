@@ -67,3 +67,19 @@ isolated function testExtractUsernameAndPasswordForEmptyUsername() returns Error
         test:assertFail("Expected error not found.");
     }
 }
+
+@test:Config {}
+isolated function testExtractUsernameAndPasswordWherePasswordIncludesColon() returns Error? {
+    string usernameAndPassword = "YWxpY2U6YWxpY2U6QDU=";
+    [string, string] [username, password] = check extractUsernameAndPassword(usernameAndPassword);
+    test:assertEquals(username, "alice");
+    test:assertEquals(password, "alice:@5");
+}
+
+@test:Config {}
+isolated function testExtractUsernameAndPasswordWherePasswordEndsWithColon() returns Error? {
+    string usernameAndPassword = "YWxpY2U6YWxpY2UxMjM6YWxpY2U6";
+    [string, string] [username, password] = check extractUsernameAndPassword(usernameAndPassword);
+    test:assertEquals(username, "alice");
+    test:assertEquals(password, "alice123:alice:");
+}
