@@ -29,13 +29,15 @@ public isolated function extractUsernameAndPassword(string credential) returns [
     if base64Decoded is byte[] {
         string|error base64DecodedResults = 'string:fromBytes(base64Decoded);
         if base64DecodedResults is string {
-            string[] decodedCredentials = re `:`.split(base64DecodedResults);
-            if decodedCredentials.length() != 2 ||
-                decodedCredentials[0].length() == 0 || decodedCredentials[1].length() == 0 {
-                return prepareError("Incorrect credential format. Format should be username:password");
-            } else {
-                return [decodedCredentials[0], decodedCredentials[1]];
+            int? colonIndex = base64DecodedResults.indexOf(":");
+            if colonIndex is int {
+                string username = base64DecodedResults.substring(0, colonIndex);
+                string password = base64DecodedResults.substring(colonIndex + 1);
+                if username.length() != 0 && password.length() != 0 {
+                    return [username, password];
+                }
             }
+            return prepareError("Incorrect credential format. Format should be username:password");
         } else {
             return prepareError("Failed to convert byte[] credential to string.", base64DecodedResults);
         }

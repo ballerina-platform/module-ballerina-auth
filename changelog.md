@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- [Fix Incorrect Username and Password Extraction](https://github.com/ballerina-platform/ballerina-library/issues/6773)
+
 ## [2.11.0] - 2024-05-03
 
 - This version maintains compatibility with dependencies without any external changes.
