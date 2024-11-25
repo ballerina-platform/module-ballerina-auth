@@ -7,7 +7,7 @@ keywords = ["security", "authentication", "basic auth"]
 repository = "https://github.com/ballerina-platform/module-ballerina-auth"
 icon = "icon.png"
 license = ["Apache-2.0"]
-distribution = "2201.11.0-20241112-214900-6b80ab87"
+distribution = "2201.11.0"
 
 [platform.java21]
 graalvmCompatible = true
