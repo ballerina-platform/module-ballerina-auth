@@ -1,0 +1,35 @@
+# Test configuration file
+# Same configuration as main Config.toml for testing
+
+[[ballerina.auth.users]]
+username = "alice"
+password = "alice@123"
+scopes = ["products:read", "orders:create", "orders:read"]
+
+[[ballerina.auth.users]]
+username = "bob"
+password = "bob@123"
+scopes = ["products:read"]
+
+[[ballerina.auth.users]]
+username = "inventory_manager"
+password = "inv_mgr@456"
+scopes = ["products:read", "inventory:manage"]
+
+[[ballerina.auth.users]]
+username = "cs_rep"
+password = "cs_rep@789"
+scopes = ["products:read", "orders:read"]
+
+[[ballerina.auth.users]]
+username = "admin"
+password = "admin@999"
+scopes = ["products:read", "inventory:manage", "orders:create", "orders:read", "admin"]
+
+[[ballerina.auth.users]]
+username = "inventory_service"
+password = "inv_secret123"
+scopes = ["system:inventory"]
+
+[ballerina.log]
+level = "INFO"
