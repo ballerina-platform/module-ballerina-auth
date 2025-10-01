@@ -1,0 +1,10 @@
+[package]
+org = "ballerina"
+name = "file_user_store_with_client_auth"
+version = "0.1.0"
+distribution = "2201.10.0"
+description = "Demonstrates File User Store authentication with Client Authentication in Ballerina"
+keywords = ["auth", "security", "file-user-store", "client-auth", "microservices"]
+
+[build-options]
+observabilityIncluded = true
