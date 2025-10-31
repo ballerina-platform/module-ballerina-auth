@@ -1,0 +1,47 @@
+# File User Store Configuration for Listener Authentication
+# Each user has different scopes demonstrating role-based access control
+
+# Customer with basic read access to products and ability to create/read own orders
+[[ballerina.auth.users]]
+username = "alice"
+password = "alice@123"
+scopes = ["products:read", "orders:create", "orders:read"]
+
+# Customer with product read access only (cannot create orders)
+[[ballerina.auth.users]]
+username = "bob"
+password = "bob@123"
+scopes = ["products:read"]
+
+# Inventory manager with product read access and inventory management capabilities
+[[ballerina.auth.users]]
+username = "inventory_manager"
+password = "inv_mgr@456"
+scopes = ["products:read", "inventory:manage"]
+
+# Customer service representative with product and order read access
+[[ballerina.auth.users]]
+username = "cs_rep"
+password = "cs_rep@789"
+scopes = ["products:read", "orders:read"]
+
+# System administrator with full access to all resources
+[[ballerina.auth.users]]
+username = "admin"
+password = "admin@999"
+scopes = ["products:read", "inventory:manage", "orders:create", "orders:read", "admin"]
+
+# Service account for backend inventory service client authentication
+[[ballerina.auth.users]]
+username = "inventory_service"
+password = "inv_secret123"
+scopes = ["system:inventory"]
+
+# Logging configuration
+[ballerina.log]
+level = "INFO"
+
+# HTTP configuration
+[ballerina.http]
+# Configure maximum request size if needed (commented out as unused)
+# maxRequestSize = 8388608

@@ -1,0 +1,8 @@
+[package]
+org = "wso2"
+name = "file_user_store_with_client_auth"
+version = "0.1.0"
+description = "Demonstrates File User Store authentication with Client Authentication in Ballerina"
+
+[build-options]
+observabilityIncluded = true
