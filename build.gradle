@@ -17,10 +17,10 @@
  */
 
 plugins {
-    id "com.github.spotbugs" version "6.0.18"
+    id "com.github.spotbugs" version "${spotbugsPluginVersion}"
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id "de.undercouch.download" version "5.4.0"
-    id "net.researchgate.release" version "2.8.0"
+    id "net.researchgate.release" version "${researchgateReleaseVersion}"
 }
 
 ext.puppycrawlCheckstyleVersion = project.puppycrawlCheckstyleVersion
@@ -90,6 +90,14 @@ subprojects {
         ballerinaStdLibs "io.ballerina.stdlib:observe-ballerina:${observeVersion}"
         ballerinaStdLibs "io.ballerina:observe-ballerina:${observeInternalVersion}"
     }
+
+    plugins.withId('java') {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(25)
+            }
+        }
+    }
 }
 
 def moduleVersion = project.version.replace("-SNAPSHOT", "")
@@ -108,6 +116,6 @@ release {
     }
 }
 
-task build {
+tasks.named('build') {
     dependsOn('auth-ballerina:build')
 }
