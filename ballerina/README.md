@@ -1,10 +1,12 @@
 ## Overview
 
-This module provides a framework for authentication/authorization based on the Basic Authentication scheme specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617).
+This module provides a framework for authentication and authorization based on the Basic Authentication scheme specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617), used to define auth providers for clients and listeners of different protocol connectors.
 
-The Basic Authentication scheme transmits credentials as user-id/password pairs encoded using Base64. This scheme is not considered to be a secure method of user authentication unless used in conjunction with some external secure system such as TLS as the user ID and password are passed over the network as cleartext.
+## Key Features
 
-The Ballerina `auth` module facilitates auth providers that are to be used by the clients and listeners of different protocol connectors.
+- File-based and LDAP-based Basic Auth providers for listeners
+- Basic Auth provider for clients
+- Credentials transmitted as Base64-encoded user-id/password pairs, per RFC 7617
 
 ### Listener file user store Basic Auth provider
 
