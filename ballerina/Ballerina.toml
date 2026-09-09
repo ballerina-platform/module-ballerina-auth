@@ -1,9 +1,9 @@
 [package]
 org = "ballerina"
 name = "auth"
-version = "2.14.0"
+version = "2.14.1"
 authors = ["Ballerina"]
-keywords = ["security", "authentication", "basic auth"]
+keywords = ["security", "authentication", "basic auth", "Type/Library", "Area/Built-in", "Area/Security & Identity"]
 repository = "https://github.com/ballerina-platform/module-ballerina-auth"
 icon = "icon.png"
 license = ["Apache-2.0"]
@@ -15,5 +15,5 @@ graalvmCompatible = true
 [[platform.java21.dependency]]
 groupId = "io.ballerina.stdlib"
 artifactId = "auth-native"
-version = "2.14.0"
-path = "../native/build/libs/auth-native-2.14.0.jar"
+version = "2.14.1"
+path = "../native/build/libs/auth-native-2.14.1-SNAPSHOT.jar"
