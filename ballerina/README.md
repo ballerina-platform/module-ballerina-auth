@@ -2,7 +2,7 @@
 
 This module provides a framework for authentication and authorization based on the Basic Authentication scheme specified in [RFC 7617](https://datatracker.ietf.org/doc/html/rfc7617), used to define auth providers for clients and listeners of different protocol connectors.
 
-## Key Features
+### Key Features
 
 - File-based and LDAP-based Basic Auth providers for listeners
 - Basic Auth provider for clients
