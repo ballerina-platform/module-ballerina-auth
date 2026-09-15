@@ -17,10 +17,10 @@
  */
 
 plugins {
-    id "com.github.spotbugs" version "6.0.18"
+    id "com.github.spotbugs" version "6.5.1"
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id "de.undercouch.download" version "5.4.0"
-    id "net.researchgate.release" version "2.8.0"
+    id "net.researchgate.release" version "3.1.0"
 }
 
 ext.puppycrawlCheckstyleVersion = project.puppycrawlCheckstyleVersion
@@ -39,6 +39,9 @@ allprojects {
     version = project.version
 
     apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = jacocoVersion
+    }
     apply plugin: 'maven-publish'
 
     repositories {
@@ -108,6 +111,14 @@ release {
     }
 }
 
-task build {
-    dependsOn('auth-ballerina:build')
+if (tasks.names.contains('build')) {
+    tasks.named('build') {
+        dependsOn('auth-ballerina:build')
+
+    }
+} else {
+    tasks.register('build') {
+        dependsOn('auth-ballerina:build')
+
+    }
 }
