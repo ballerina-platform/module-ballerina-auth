@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.14.1] - 2026-10-08
+
+### Added
+- Add the `file-user-store-with-client-auth` example, a real-world API gateway example using file user store Basic Auth
+
 ### Changed
 - [[#9132] Updated Keywords and Reformat README for Connector Store Discoverability](https://github.com/ballerina-platform/ballerina-library/issues/9132)
+- Upgrade Gradle to 9.5.1 and the Ballerina Gradle plugin to 4.0.0
 
 ## [2.12.0] - 2024-088-20
 
