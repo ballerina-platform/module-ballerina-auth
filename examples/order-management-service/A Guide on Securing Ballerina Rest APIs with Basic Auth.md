@@ -51,7 +51,9 @@ This will take few seconds to start and run.
 $ docker-compose -f docker-compose.yml up
 ```
 
-Now, navigate to [`examples/order-management-service/api_gateway`](./api_gateway) directory and execute the following command.
+Now, navigate to [`examples/order-management-service/api_gateway`](./api_gateway) directory. The LDAP admin password is
+a configurable value (`ldapAdminPassword`) provided through the `Config.toml` file in that directory (it matches the
+`LDAP_ADMIN_PASSWORD` set in the `docker-compose.yml` of the 'Active Directory'). Then execute the following command.
 ```shell
 $ bal run
 ```

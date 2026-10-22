@@ -1,0 +1,4 @@
+# False positive: ballerina:14 matches the identifier 'auth' (the http ServiceConfig/ResourceConfig/ClientConfig field name), handler variables
+# and credentials supplied via configurable values; no secret is assigned a fixed value.
+[rule]
+exclude = ["ballerina:14"]

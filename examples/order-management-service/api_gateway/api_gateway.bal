@@ -16,6 +16,9 @@
 
 import ballerina/http;
 
+// Password of the LDAP admin user. Provide it via Config.toml (see the accompanying Config.toml).
+configurable string ldapAdminPassword = ?;
+
 listener http:Listener apiGateway = new (9090,
     secureSocket = {
         key: {
@@ -32,7 +35,7 @@ listener http:Listener apiGateway = new (9090,
                 domainName: "avix.lk",
                 connectionUrl: "ldap://localhost:389",
                 connectionName: "cn=admin,dc=avix,dc=lk",
-                connectionPassword: "avix123",
+                connectionPassword: ldapAdminPassword,
                 userSearchBase: "ou=Users,dc=avix,dc=lk",
                 userEntryObjectClass: "inetOrgPerson",
                 userNameAttribute: "uid",

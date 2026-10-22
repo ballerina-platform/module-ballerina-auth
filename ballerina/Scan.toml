@@ -1,0 +1,5 @@
+# False positives: the rules match identifier names containing words such as password/token/auth.
+# ballerina:13 flags the 'users' configurable whose default is an empty placeholder table (username: "", password: ""), not a real credential.
+# ballerina:14 flags local variables/parameters (password, token, authInfo) that hold runtime values extracted from credentials; no secret is hardcoded.
+[rule]
+exclude = ["ballerina:13", "ballerina:14"]
