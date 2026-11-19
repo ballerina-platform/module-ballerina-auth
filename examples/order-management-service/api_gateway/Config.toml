@@ -1,0 +1,2 @@
+# Demo value matching LDAP_ADMIN_PASSWORD in ../active_directory/docker-compose.yml. Change for any real deployment.
+ldapAdminPassword = "avix123"

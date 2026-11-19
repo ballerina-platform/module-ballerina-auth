@@ -1,0 +1,8 @@
+# False positives: the rules match identifier names containing words such as password/token/auth.
+# ballerina:13 flags the 'users' configurable whose default is an empty placeholder table (username: "", password: ""), not a real credential.
+# ballerina:14 flags local variables/parameters (password, token, authInfo) that hold runtime values extracted from credentials; no secret is hardcoded.
+# TODO: replace this rule exclusion with a targeted scan suppression (with a reason) once `bal scan` supports it
+# (planned for v0.13.0), and fix the false positives on the scan tool side: a secret-named identifier should only be
+# reported when it is assigned a fixed value.
+[rule]
+exclude = ["ballerina:13", "ballerina:14"]
