@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- [Fix LDAP group lookup matching other users' groups when the username contains a `*`](https://github.com/ballerina-platform/ballerina-library/issues/9717)
+- [Fix LDAP authentication panicking when the user DN ends with a backslash](https://github.com/ballerina-platform/ballerina-library/issues/9708)
+
 ## [2.14.1] - 2026-10-08
 
 ### Added

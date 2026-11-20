@@ -42,3 +42,49 @@ cn: developer
 objectClass: groupOfNames
 member: uid=ldclakmal,ou=Users,dc=avix,dc=lk
 member: uid=alice,ou=Users,dc=avix,dc=lk
+
+dn: uid=*,ou=Users,dc=avix,dc=lk
+changetype: add
+objectClass: inetOrgPerson
+cn: Wildcard User
+sn: User
+uid: *
+userpassword: star@123
+
+dn: uid=bob\\,ou=Users,dc=avix,dc=lk
+changetype: add
+objectClass: inetOrgPerson
+cn: Backslash User
+sn: User
+uid: bob\
+userpassword: bob@123
+
+dn: uid=eve(qa),ou=Users,dc=avix,dc=lk
+changetype: add
+objectClass: inetOrgPerson
+cn: Parentheses User
+sn: User
+uid: eve(qa)
+userpassword: eve@123
+
+dn: cn=contractor,ou=Groups,dc=avix,dc=lk
+changetype: add
+cn: contractor
+objectClass: groupOfNames
+member: uid=*,ou=Users,dc=avix,dc=lk
+member: uid=bob\\,ou=Users,dc=avix,dc=lk
+
+dn: cn=staff,ou=Groups,dc=avix,dc=lk
+changetype: add
+cn: staff
+objectClass: posixGroup
+gidNumber: 5001
+memberUid: alice
+
+dn: cn=ops,ou=Groups,dc=avix,dc=lk
+changetype: add
+cn: ops
+objectClass: posixGroup
+gidNumber: 5002
+memberUid: ldclakmal
+memberUid: eve(qa)

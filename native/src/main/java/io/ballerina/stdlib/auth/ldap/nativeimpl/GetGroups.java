@@ -99,7 +99,7 @@ public class GetGroups {
             if (LdapConstants.MEMBER_UID.equals(ldapAuthConfig.getMembershipAttribute())) {
                 // membership value of posixGroup is not DN of the user
                 List<Rdn> rdns = ldn.getRdns();
-                membershipValue = (rdns.get(rdns.size() - 1)).getValue().toString();
+                membershipValue = LdapUtils.escapeFilterValue((rdns.get(rdns.size() - 1)).getValue().toString());
             } else {
                 membershipValue = escapeLdapNameForFilter(ldn);
             }
@@ -178,47 +178,12 @@ public class GetGroups {
         // escaping the rdns separately and re-constructing the DN
         StringBuilder escapedDN = new StringBuilder();
         for (int i = ldn.size() - 1; i > -1; i--) {
-            escapedDN.append(escapeSpecialCharactersForFilterWithStarAsRegex(ldn.get(i)));
+            escapedDN.append(LdapUtils.escapeFilterValue(ldn.get(i)));
             if (i != 0) {
                 escapedDN.append(",");
             }
         }
         LOG.debug("Escaped DN value for filter '{}'", escapedDN.toString());
         return escapedDN.toString();
-    }
-
-    /**
-     * Escaping ldap search filter special characters in a string.
-     *
-     * @param filter LDAP search filter
-     * @return A String which special characters are escaped
-     */
-    private static String escapeSpecialCharactersForFilterWithStarAsRegex(String filter) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < filter.length(); i++) {
-            char currentChar = filter.charAt(i);
-            switch (currentChar) {
-                case '\\':
-                    if (filter.charAt(i + 1) == '*') {
-                        sb.append("\\2a");
-                        i++;
-                        break;
-                    }
-                    sb.append("\\5c");
-                    break;
-                case '(':
-                    sb.append("\\28");
-                    break;
-                case ')':
-                    sb.append("\\29");
-                    break;
-                case '\u0000':
-                    sb.append("\\00");
-                    break;
-                default:
-                    sb.append(currentChar);
-            }
-        }
-        return sb.toString();
     }
 }

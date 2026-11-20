@@ -146,10 +146,19 @@ public class LdapUtils {
      * @return String by replacing the special characters
      */
     private static String escapeSpecialCharactersForFilter(String dnPartial) {
-        dnPartial = dnPartial.replace("\\*", "*");
+        return escapeFilterValue(dnPartial.replace("\\*", "*"));
+    }
+
+    /**
+     * Escapes a value so that an LDAP search filter matches it literally, as defined in RFC 4515.
+     *
+     * @param value value to be used in a search filter
+     * @return value with the special characters of a search filter escaped
+     */
+    public static String escapeFilterValue(String value) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < dnPartial.length(); i++) {
-            char currentChar = dnPartial.charAt(i);
+        for (int i = 0; i < value.length(); i++) {
+            char currentChar = value.charAt(i);
             switch (currentChar) {
                 case '\\':
                     sb.append("\\5c");
