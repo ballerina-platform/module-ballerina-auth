@@ -252,3 +252,72 @@ isolated function testLdapAuthenticationFailureWithLdaps2() {
         test:assertFail("Expected error not found.");
     }
 }
+
+isolated function getLdapPosixGroupUserStoreConfig() returns LdapUserStoreConfig {
+    LdapUserStoreConfig ldapUserStoreConfig = getLdapUserStoreConfig();
+    ldapUserStoreConfig.groupEntryObjectClass = "posixGroup";
+    ldapUserStoreConfig.groupNameSearchFilter = "(&(objectClass=posixGroup)(cn=?))";
+    ldapUserStoreConfig.groupNameListFilter = "(objectClass=posixGroup)";
+    ldapUserStoreConfig.membershipAttribute = "memberUid";
+    return ldapUserStoreConfig;
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapGroupsOfUserWithAsteriskAsUsername() returns Error? {
+    string usernameAndPassword = "*:star@123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails result = check basicAuthProvider.authenticate(credential);
+    test:assertEquals(result.username, "*");
+    test:assertEquals(result?.scopes, ["contractor"]);
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapGroupsOfUserWithTrailingBackslashInUsername() returns Error? {
+    string usernameAndPassword = "bob\\:bob@123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails result = check basicAuthProvider.authenticate(credential);
+    test:assertEquals(result.username, "bob\\");
+    test:assertEquals(result?.scopes, ["contractor"]);
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapPosixGroupsOfUser() returns Error? {
+    string usernameAndPassword = "alice:alice@123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapPosixGroupUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails result = check basicAuthProvider.authenticate(credential);
+    test:assertEquals(result.username, "alice");
+    test:assertEquals(result?.scopes, ["staff"]);
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapPosixGroupsOfUserWithAsteriskAsUsername() returns Error? {
+    string usernameAndPassword = "*:star@123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapPosixGroupUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails result = check basicAuthProvider.authenticate(credential);
+    test:assertEquals(result.username, "*");
+    test:assertEquals(result?.scopes, ());
+}
+
+@test:Config {
+    groups: ["ldap"]
+}
+isolated function testLdapPosixGroupsOfUserWithParenthesesInUsername() returns Error? {
+    string usernameAndPassword = "eve(qa):eve@123";
+    ListenerLdapUserStoreBasicAuthProvider basicAuthProvider = new(getLdapPosixGroupUserStoreConfig());
+    string credential = usernameAndPassword.toBytes().toBase64();
+    UserDetails result = check basicAuthProvider.authenticate(credential);
+    test:assertEquals(result.username, "eve(qa)");
+    test:assertEquals(result?.scopes, ["ops"]);
+}
